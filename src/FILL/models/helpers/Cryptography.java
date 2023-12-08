@@ -13,17 +13,32 @@ public class Cryptography {
     /**
      * hashString
      * hashes a string using PBKDF2WithHmacSHA1
-     * @param string
-     * @param salt
+     * @param String content
+     * @param String salt
      * @return String hashedString
      * @throws Exception
      */
     public static String hashStringPBKDF2(String content, String salt) throws Exception 
     {
+        return hashStringPBKDF2(content, salt, 65536, 128);
+    }
+
+    /**
+     * hashString
+     * hashes a string using PBKDF2WithHmacSHA1
+     * @param String content
+     * @param String salt
+     * @param int iterationCount
+     * @param int keyLength
+     * @return String hashedString
+     * @throws Exception
+     */
+    public static String hashStringPBKDF2(String content, String salt, int iterationCount, int keyLength) throws Exception 
+    {
         try {
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec spec = new PBEKeySpec(content.toCharArray(), salt.getBytes(), 65536, 128);
+            KeySpec spec = new PBEKeySpec(content.toCharArray(), salt.getBytes(), iterationCount, keyLength);
 
             byte[] hash = factory.generateSecret(spec).getEncoded();
 
