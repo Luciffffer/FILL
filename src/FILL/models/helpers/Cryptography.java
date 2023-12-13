@@ -2,6 +2,7 @@ package FILL.models.helpers;
 
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -14,13 +15,28 @@ public class Cryptography {
      * hashString
      * hashes a string using PBKDF2WithHmacSHA1
      * @param String content
-     * @param String salt
+     * @param byte[] salt
      * @return String hashedString
-     * @throws Exception
+     * @throws runtimeException
      */
-    public static String hashStringPBKDF2(String content, String salt) throws Exception 
+    public static String hashStringPBKDF2(String content, byte[] salt) throws RuntimeException 
     {
         return hashStringPBKDF2(content, salt, 65536, 128);
+    }
+
+    /**
+     * hashString
+     * hashes a string using PBKDF2WithHmacSHA1
+     * @param string content
+     * @param string salt
+     * @param int iterationCount
+     * @param int keyLength
+     * @return String hashedString
+     * @throws RuntimeException
+     */
+    public static String hashStringPBKDF2(String content, String salt, int iterationCount, int keyLength) throws RuntimeException
+    {
+        return hashStringPBKDF2(content, Base64.getDecoder().decode(salt), iterationCount, keyLength);
     }
 
     /**
@@ -31,18 +47,17 @@ public class Cryptography {
      * @param int iterationCount
      * @param int keyLength
      * @return String hashedString
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public static String hashStringPBKDF2(String content, String salt, int iterationCount, int keyLength) throws Exception 
+    public static String hashStringPBKDF2(String content, byte[] salt, int iterationCount, int keyLength) throws RuntimeException 
     {
         try {
-
+            KeySpec spec = new PBEKeySpec(content.toCharArray(), salt, iterationCount, keyLength);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec spec = new PBEKeySpec(content.toCharArray(), salt.getBytes(), iterationCount, keyLength);
 
             byte[] hash = factory.generateSecret(spec).getEncoded();
 
-            return hash.toString() + ":" + salt.toString() + ":PBDKF2WithHmacSHA1:" + 65536 + ":" + 128;
+            return Base64.getEncoder().encodeToString(hash) + ":" + Base64.getEncoder().encodeToString(salt) + ":PBDKF2WithHmacSHA1:" + iterationCount + ":" + keyLength;
 
         } catch (Exception e) {
 
@@ -50,8 +65,8 @@ public class Cryptography {
 
             ErrorLog error = new ErrorLog(e);
             error.save();
-
-            throw new Exception("Something went wrong, please try again later.");
+            
+            throw new RuntimeException("Something went wrong, please try again later.");
             
         }
     }
@@ -59,15 +74,15 @@ public class Cryptography {
     /**
      * generateSalt
      * generates a salt for hashing
-     * @return String salt
+     * @return byte[] salt
      */
-    public static String generateSalt() 
+    public static byte[] generateSalt() 
     {
         SecureRandom random = new SecureRandom();
 
         byte[] salt = new byte[16];
         random.nextBytes(salt);
 
-        return salt.toString();
+        return salt;
     }
 }

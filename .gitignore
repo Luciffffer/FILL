@@ -23,5 +23,9 @@
 hs_err_pid*
 replay_pid*
 
-# vscode
+# vscode en intellij
 .vscode/
+.idea/
+
+# user-data
+user-data.bin
