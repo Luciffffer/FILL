@@ -7,7 +7,7 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class Cryptography {
+public abstract class Cryptography {
 
     // STATIC METHODS
 
@@ -43,7 +43,7 @@ public class Cryptography {
      * hashString
      * hashes a string using PBKDF2WithHmacSHA1
      * @param String content
-     * @param String salt
+     * @param byte[] salt
      * @param int iterationCount
      * @param int keyLength
      * @return String hashedString

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import FILL.models.helpers.Cryptography;
 import FILL.models.helpers.ErrorLog;
+import FILL.models.helpers.UserFile;
 
 public class User {
     private String username;
@@ -73,6 +74,16 @@ public class User {
         return this.username;
     }
 
+    /**
+     * getPassword
+     * returns the password of the user
+     * @return String password
+     */
+    public String getPassword()
+    {
+        return this.password;
+    }
+
 
     // SETTERS
     
@@ -89,6 +100,8 @@ public class User {
             throw new IllegalArgumentException("Username cannot be null");
         } else if (username.length() < 3 && username.length() > 20) {
             throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
+        } else if (User.getUserByUsername(username) != null) {
+            throw new IllegalArgumentException("Username already exists");
         }
 
         this.username = username;
@@ -124,31 +137,7 @@ public class User {
      */
     public void register() throws RuntimeException
     {
-        File file = new File(FILENAME);
-
-        try {
-
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            
-            FileOutputStream fos = new FileOutputStream(file);
-            DataOutputStream dos = new DataOutputStream(fos);
-
-            String data = this.username + "::" + this.password + "\n";
-            dos.writeUTF(data);
-
-            dos.close();
-            fos.close();
-
-        } catch (IOException e) {
-
-            System.err.println(e);
-            ErrorLog error = new ErrorLog(e);
-            error.save();
-            throw new RuntimeException("Something went wrong, please try again later.");
-
-        }
+        UserFile.addUser(this);
     }
 
     /**
@@ -163,7 +152,7 @@ public class User {
     {
         User user = getUserByUsername(username);
 
-        if (user.canLogin(username, password)) {
+        if (user != null && user.canLogin(username, password)) {
             return user;
         } else {
             throw new RuntimeException("Username or password is incorrect");
@@ -201,18 +190,17 @@ public class User {
 
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            DataInputStream dis = new DataInputStream(fis);
-            String[] users = dis.readUTF().split("\n");
+            
 
-            for (String user : users) {
-                String[] userDetails = user.split("::");
+            // for (String user : users) {
+            //     String[] userDetails = user.split("::");
 
-                if (userDetails[0].equals(username)) {
-                    return new User(userDetails[0], userDetails[1], Map.of(new World(), new Level()));
-                }
-            }
+            //     if (userDetails[0].equals(username)) {
+            //         return new User(userDetails[0], userDetails[1], Map.of(new World(), new Level()));
+            //     }
+            // }
 
-            throw new RuntimeException("User not found");
+            return null;
 
         } catch (IOException e) {
 
