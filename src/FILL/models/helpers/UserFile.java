@@ -1,10 +1,12 @@
 package FILL.models.helpers;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Base64;
+import java.util.ArrayList;
 
 import FILL.models.core.User;
 
@@ -12,16 +14,27 @@ public abstract class UserFile {
 
     private static File file;
     private static final String FILENAME = "data/user-data.bin";
+    private static ArrayList<String> data;
+
+    /**
+     * static constructor
+     */
+    static 
+    {
+        getFile();
+        getDataFromFile();
+    }
 
     /**
      * getFile
      * gets the file
-     * @return File
-     * @throws IOException
+     * @return void
+     * @throws RuntimeException
      */
-    private static File getFile() throws IOException
+    private static void getFile() throws RuntimeException
     {
-        if (file == null) {
+        try {
+
             file = new File(FILENAME);
 
             if (!file.exists()) {
@@ -29,9 +42,15 @@ public abstract class UserFile {
                 file.createNewFile();
 
             }
-        }
 
-        return file;
+        } catch (IOException e) {
+
+            System.err.println(e);
+            ErrorLog error = new ErrorLog(e);
+            error.save();
+            throw new RuntimeException("Something went wrong, please try again later.");
+
+        }
     }
 
     /**
@@ -42,17 +61,27 @@ public abstract class UserFile {
      */
     public static void addUser(User user) 
     {
-        try {
-     
-            File file = getFile();
+        String dataString = user.getUsername() + "::" + user.getPassword() + "\n";
+        data.add(dataString);
 
-            FileOutputStream fos = new FileOutputStream(file, true);
+        save();
+    }
+
+    /**
+     * save
+     * saves the data to the file
+     * @return void
+     */
+    public static void save()
+    {
+        try {
+
+            FileOutputStream fos = new FileOutputStream(file, false);
             DataOutputStream dos = new DataOutputStream(fos);
 
-            String dataString = user.getUsername() + "::" + user.getPassword() + "\n";
-            byte[] data = Base64.getDecoder().decode(dataString);
+            String dataString = String.join("\n", data);
 
-            dos.write(data);
+            dos.writeUTF(dataString);
 
             dos.close();
             fos.close();
@@ -64,21 +93,48 @@ public abstract class UserFile {
             error.save();
             throw new RuntimeException("Something went wrong, please try again later.");
 
-        }  
+        }
+    }
+
+    public static String getUserDataByUsername(String username)
+    {
+        for (String user : data) {
+            String[] userData = user.split("::");
+
+            if (userData[0].equals(username)) {
+                return user;
+            }
+        }
+
+        return null;
     }
 
     /**
      * getData
      * gets the data from the file
-     * @return String
+     * @return void
      */
-    public static String getData()
+    private static void getDataFromFile()
     {
         try {
 
-            file = getFile();
+            data = new ArrayList<String>();
 
-            return new String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(FILENAME)));
+            if (file.length() == 0) {
+                return;
+            }
+
+            FileInputStream fis = new FileInputStream(file);
+            DataInputStream dis = new DataInputStream(fis);
+
+            String[] users = dis.readUTF().split("\n");
+
+            for (String user : users) {
+                data.add(user);
+            }
+
+            dis.close();
+            fis.close();
 
         } catch (IOException e) {
 

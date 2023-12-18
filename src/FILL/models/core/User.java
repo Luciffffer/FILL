@@ -1,23 +1,14 @@
 package FILL.models.core;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Map;
 
 import FILL.models.helpers.Cryptography;
-import FILL.models.helpers.ErrorLog;
 import FILL.models.helpers.UserFile;
 
 public class User {
     private String username;
     private String password;
     private Map<World, Level> progress;
-
-    private static final String FILENAME = "data/user-data.bin";
 
 
     // CONSTRUCTORS
@@ -100,7 +91,7 @@ public class User {
             throw new IllegalArgumentException("Username cannot be null");
         } else if (username.length() < 3 && username.length() > 20) {
             throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
-        } else if (User.getUserByUsername(username) != null) {
+        } else if (UserFile.getUserDataByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
         }
 
@@ -146,70 +137,26 @@ public class User {
      * @param username
      * @param password
      * @return User
-     * @throws RuntimeException
+     * @throws illegalArgumentException
      */
-    public static User login(String username, String password) throws RuntimeException
+    public static User login(String username, String password) throws IllegalArgumentException
     {
-        User user = getUserByUsername(username);
+        String userData = UserFile.getUserDataByUsername(username);
 
-        if (user != null && user.canLogin(username, password)) {
-            return user;
-        } else {
-            throw new RuntimeException("Username or password is incorrect");
+        if (userData == null) {
+            throw new IllegalArgumentException("Username or password is incorrect");
         }
-    }
 
-    /**
-     * canLogin
-     * checks if the user can login
-     * @param username
-     * @param password
-     * @return boolean
-     */
-    public boolean canLogin(String username, String password)
-    {
-        String[] passwordDetails = this.password.split(":");
-        String hashedPassword = Cryptography.hashStringPBKDF2(password, passwordDetails[1], Integer.parseInt(passwordDetails[3]), Integer.parseInt(passwordDetails[4]));
+        String[] userDataArray = userData.split("::");
+        String[] passwordData = userDataArray[1].split(":");
 
-        if (this.username.equals(username) && this.password.equals(hashedPassword)) {
-            return true;
-        } else {
-            return false;
+        String hashedPassword = Cryptography.hashStringPBKDF2(password, passwordData[1], Integer.parseInt(passwordData[3]), Integer.parseInt(passwordData[4]));
+
+        if (!hashedPassword.equals(userDataArray[1])) {
+            throw new IllegalArgumentException("Username or password is incorrect");
         }
+
+        return new User(userDataArray[0], userDataArray[1], null);
+        
     }
-
-   /**
-    * getUserByUsername
-    * returns a user by username
-    * @param String username
-    * @return User
-    */
-    public static User getUserByUsername(String username)
-    {
-        File file = new File(FILENAME);
-
-        try (FileInputStream fis = new FileInputStream(file)) {
-
-            
-
-            // for (String user : users) {
-            //     String[] userDetails = user.split("::");
-
-            //     if (userDetails[0].equals(username)) {
-            //         return new User(userDetails[0], userDetails[1], Map.of(new World(), new Level()));
-            //     }
-            // }
-
-            return null;
-
-        } catch (IOException e) {
-
-            System.err.println(e);
-            ErrorLog error = new ErrorLog(e);
-            error.save();
-            throw new RuntimeException("Something went wrong, please try again later.");
-
-        }
-    }
-
 }
