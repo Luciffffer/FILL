@@ -1,0 +1,17 @@
+{
+    "name": "Overworld",
+    "imagePath": "test",
+    "difficulty": 1,
+    "levels": [
+        {
+            "id": 1,
+            "pattern": [
+                [0, 1, 1, 0],
+                [1, 1, 1, 1],
+                [1, 1, 1, 1],
+                [0, 1, 1, 0]
+            ],
+            "start": [2, 0]
+        }
+    ]
+}
