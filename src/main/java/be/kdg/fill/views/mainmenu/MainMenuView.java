@@ -1,6 +1,7 @@
 package be.kdg.fill.views.mainmenu;
 
 import be.kdg.fill.FillApplication;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -14,6 +15,8 @@ public class MainMenuView extends StackPane {
     private ImageView logo;
     private ImageView sideImageLeft;
     private ImageView sideImageRight;
+    private Button loginButton;
+    private Button registerButton;
 
     public MainMenuView() 
     {
@@ -28,6 +31,8 @@ public class MainMenuView extends StackPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
         this.sideImageLeft = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
         this.sideImageRight = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
+        this.loginButton = new Button("Log in");
+        this.registerButton = new Button("Sign up");
     }
 
     private void layoutNodes() 
@@ -72,7 +77,9 @@ public class MainMenuView extends StackPane {
 
         textGroup.getChildren().addAll(title, subtitle);
 
-        contentPane.getChildren().addAll(logo, textGroup);
+        this.loginButton.getStyleClass().add("button");
+
+        contentPane.getChildren().addAll(logo, textGroup, loginButton, registerButton);
         
         this.getChildren().add(contentPane);
     }
