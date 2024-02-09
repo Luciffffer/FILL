@@ -18,6 +18,7 @@ public class FillApplication extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("images/fill-icon.png")));
         stage.setWidth(800);
         stage.setHeight(600);
+        stage.setMinWidth(400);
         stage.show();
     }
 
