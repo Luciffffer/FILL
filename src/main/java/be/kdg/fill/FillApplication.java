@@ -1,20 +1,28 @@
 package be.kdg.fill;
 
+import be.kdg.fill.views.mainmenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class FillApplication extends Application {
     @Override
-    public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(new BorderPane(), 800, 600);
+    public void start(Stage stage) 
+    {
+        MainMenuView mainMenuView = new MainMenuView();
+        Scene scene = new Scene(mainMenuView);
+        scene.getStylesheets().add(getClass().getResource("styles/style.css").toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("Fill");
+        stage.setTitle("FILL: A Classic Line Fill Puzzle Game");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("images/fill-icon.png")));
+        stage.setWidth(800);
+        stage.setHeight(600);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         launch();
     }
 }

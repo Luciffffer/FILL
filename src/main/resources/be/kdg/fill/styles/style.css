@@ -1,0 +1,18 @@
+/* Ain't no way you can use CSS with JavaFX */
+
+/*
+ * TYPE SCALE:
+ * 1.2 minor second
+ *
+ * small:       14px
+ * body:        16px
+ * large:       19.2px
+ * xlarge:      23.04px
+ * xxlarge:     27.65px
+ * xxxlarge:    33.18px
+ */
+
+.h1 {
+    -fx-font-size: 33.18px;
+    -fx-font-weight: bold;
+}
