@@ -20,3 +20,29 @@
 .body {
     -fx-font-size: 16px;
 }
+
+.button {
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+}
+
+.button-reset {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.primary-btn-label {
+    -fx-text-fill: #FAF9FB; 
+    -fx-font-size: 16px; 
+    -fx-background-color: #A26CE6;
+}
+
+.secondary-btn-label {
+    -fx-text-fill: #A26CE6; 
+    -fx-font-size: 16px; 
+    -fx-border-style: solid none solid none;
+    -fx-border-color: #A26CE6;
+    -fx-border-width: 2;
+}

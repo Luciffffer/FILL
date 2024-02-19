@@ -1,6 +1,8 @@
 package be.kdg.fill.views.mainmenu;
 
 import be.kdg.fill.FillApplication;
+import be.kdg.fill.views.compontents.PrimaryButton;
+import be.kdg.fill.views.compontents.SecondaryButton;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,8 +17,8 @@ public class MainMenuView extends StackPane {
     private ImageView logo;
     private ImageView sideImageLeft;
     private ImageView sideImageRight;
-    private Button loginButton;
-    private Button registerButton;
+    private PrimaryButton loginButton;
+    private SecondaryButton registerButton;
 
     public MainMenuView() 
     {
@@ -31,8 +33,8 @@ public class MainMenuView extends StackPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
         this.sideImageLeft = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
         this.sideImageRight = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
-        this.loginButton = new Button("Log in");
-        this.registerButton = new Button("Sign up");
+        this.loginButton = new PrimaryButton("Log in");
+        this.registerButton = new SecondaryButton("Sign up");
     }
 
     private void layoutNodes() 
@@ -77,11 +79,30 @@ public class MainMenuView extends StackPane {
 
         textGroup.getChildren().addAll(title, subtitle);
 
-        this.loginButton.getStyleClass().add("button");
+        VBox buttonGroup = new VBox();
+        buttonGroup.setAlignment(javafx.geometry.Pos.CENTER);
+        buttonGroup.setSpacing(16.0);
+        buttonGroup.getChildren().addAll(loginButton, registerButton);
 
-        contentPane.getChildren().addAll(logo, textGroup, loginButton, registerButton);
-        
+        loginButton.setMinWidth(200);
+        registerButton.setMinWidth(200);
+
+        contentPane.getChildren().addAll(logo, textGroup, buttonGroup);
+
         this.getChildren().add(contentPane);
+    }
+
+
+    // GETTERS
+
+    public Button getLoginButton() 
+    {
+        return loginButton;
+    }
+
+    public Button getRegisterButton() 
+    {
+        return registerButton;
     }
 
 }

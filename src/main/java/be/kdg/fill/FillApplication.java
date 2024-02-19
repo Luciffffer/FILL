@@ -1,5 +1,6 @@
 package be.kdg.fill;
 
+import be.kdg.fill.views.mainmenu.MainMenuPresenter;
 import be.kdg.fill.views.mainmenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,9 +12,11 @@ public class FillApplication extends Application {
     public void start(Stage stage) 
     {
         MainMenuView mainMenuView = new MainMenuView();
+        MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView);
         Scene scene = new Scene(mainMenuView);
         scene.getStylesheets().add(getClass().getResource("styles/style.css").toExternalForm());
         stage.setScene(scene);
+
         stage.setTitle("FILL: A Classic Line Fill Puzzle Game");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("images/fill-icon.png")));
         stage.setWidth(800);
@@ -24,6 +27,6 @@ public class FillApplication extends Application {
 
     public static void main(String[] args) 
     {
-        launch();
+        launch(args);
     }
 }
