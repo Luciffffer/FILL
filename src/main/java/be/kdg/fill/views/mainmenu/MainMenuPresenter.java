@@ -1,7 +1,7 @@
 package be.kdg.fill.views.mainmenu;
 
-import be.kdg.fill.views.login.LoginPresenter;
-import be.kdg.fill.views.login.LoginView;
+import be.kdg.fill.views.gamemenu.GameMenuPresenter;
+import be.kdg.fill.views.gamemenu.GameMenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -34,9 +34,10 @@ public class MainMenuPresenter {
 
     private void updateViewToLogin() 
     {
-        LoginView loginView = new LoginView();
-        LoginPresenter loginPresenter = new LoginPresenter(loginView);
-        this.view.getScene().setRoot(loginView);
+        // TEMP CODE
+        GameMenuView gameMenuView = new GameMenuView(null);
+        GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView);
+        this.view.getScene().setRoot(gameMenuView);
     }
 
     private void updateViewToRegister() 

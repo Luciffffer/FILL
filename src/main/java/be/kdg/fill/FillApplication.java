@@ -22,6 +22,7 @@ public class FillApplication extends Application {
         stage.setWidth(800);
         stage.setHeight(600);
         stage.setMinWidth(400);
+        stage.setMinHeight(300);
         stage.show();
     }
 

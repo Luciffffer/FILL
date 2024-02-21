@@ -46,3 +46,7 @@
     -fx-border-color: #A26CE6;
     -fx-border-width: 2;
 }
+
+.text-button:hover {
+    -fx-text-fill: #A26CE6;
+}
