@@ -12,18 +12,24 @@
  * xxxlarge:    33.18px
  */
 
+.root {
+    -fx-font-family: 'Inter Medium', sans-serif;
+}
+
 .h1 {
     -fx-font-size: 27.65px;
-    -fx-font-weight: bold;
+    -fx-font-family: 'Inter Bold', sans-serif;
 }
 
 .body {
     -fx-font-size: 16px;
+    -fx-font-family: 'Inter Medium', sans-serif;
 }
 
 .button {
     -fx-cursor: hand;
     -fx-font-size: 16px;
+    -fx-font-family: 'Inter Medium', sans-serif;
 }
 
 .button-reset {
@@ -49,4 +55,32 @@
 
 .text-button:hover {
     -fx-text-fill: #A26CE6;
+}
+
+.game-menu {
+    -fx-border-color: rgb(180, 180, 180);
+    -fx-border-width: 0 0 2 0;
+}
+
+.small {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter Regular', sans-serif;
+    -fx-text-fill: #626262;
+}
+
+.level-card {
+    -fx-border-color: linear-gradient(to bottom right, #696969, #000000);
+    -fx-border-width: 4;
+    -fx-border-radius: 8;
+    -fx-font-size: 27.65px;
+    -fx-font-family: 'Inter Bold', sans-serif;
+}
+
+.completed {
+    -fx-text-fill: #2db02b;
+    -fx-border-color: linear-gradient(to bottom right, #38D23E, #208C25);
+}
+
+.locked {
+    -fx-border-color: linear-gradient(to bottom right, #B4B4B4, #9F9F9F);
 }

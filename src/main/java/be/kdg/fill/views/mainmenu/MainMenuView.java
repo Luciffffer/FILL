@@ -84,8 +84,8 @@ public class MainMenuView extends StackPane {
         buttonGroup.setSpacing(16.0);
         buttonGroup.getChildren().addAll(loginButton, registerButton);
 
-        loginButton.setMinWidth(176);
-        registerButton.setMinWidth(176);
+        this.loginButton.setMinWidth(176);
+        this.registerButton.setMinWidth(176);
 
         contentPane.getChildren().addAll(logo, textGroup, buttonGroup);
 

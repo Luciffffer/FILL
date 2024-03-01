@@ -21,6 +21,7 @@ public class User {
     {
         this.username = null;
         this.password = null;
+        this.progress = null;
     }
 
     /**
@@ -35,6 +36,7 @@ public class User {
     {
         this.setUsername(username);
         this.setPassword(password);
+        this.progress = null;
     }
 
 

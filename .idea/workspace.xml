@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/be/kdg/fill/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/be/kdg/fill/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +43,28 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.FillApplication.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Maven.fill [clean].executor": "Run",
+    "Maven.fill [install].executor": "Run",
+    "Maven.fill [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.fill [validate].executor": "Run",
+    "Maven.fill [verify].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "world-select",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.39310345",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -56,6 +78,9 @@
       <updated>1707447459532</updated>
       <workItem from="1707447460667" duration="37000" />
       <workItem from="1707482136216" duration="234000" />
+      <workItem from="1708574379353" duration="90000" />
+      <workItem from="1708574817708" duration="1013000" />
+      <workItem from="1708575855139" duration="225000" />
     </task>
     <servers />
   </component>

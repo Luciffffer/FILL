@@ -46,7 +46,7 @@ public abstract class Cryptography {
     }
 
     /**
-     * hashString
+     * hashStringPBKDF2
      * hashes a string using PBKDF2WithHmacSHA1
      * @param String content
      * @param byte[] salt

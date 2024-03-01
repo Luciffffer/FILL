@@ -1,25 +1,20 @@
 package be.kdg.fill.views.compontents;
 
-import javafx.animation.ScaleTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Duration;
 
-public abstract class FillButton extends Button {
+public abstract class FillButton extends HoverClickable {
     
     public FillButton(String text, String className, String sideImagePath) 
     {
-        super();
+        super(100, 1.05);
         BorderPane borderPane = new BorderPane();
 
         Label label = new Label(text);
         label.getStyleClass().add(className);
-        label.setPadding(new Insets(8, 24, 8, 24));
+        label.setPadding(new Insets(12, 24, 12, 24));
         label.setMaxWidth(Double.MAX_VALUE);
         label.setAlignment(javafx.geometry.Pos.CENTER);
         borderPane.setCenter(label);
@@ -41,46 +36,6 @@ public abstract class FillButton extends Button {
 
         this.setGraphic(borderPane);
         this.getStyleClass().add("button-reset");
-        this.addHoverAnimation(1.05, 100);
-    }
-    
-    private void addHoverAnimation(double scale, int durationMS)
-    {
-        this.setOnMouseEntered(e -> {
-            // hover gained
-            ScaleTransition st = new ScaleTransition(Duration.millis(durationMS), this);
-            st.setToX(scale);
-            st.setToY(scale);
-            st.play();
-        });
-        this.setOnMouseExited(e -> {
-            if (!this.isFocused()) {
-                // hover lost and not focused
-                ScaleTransition st = new ScaleTransition(Duration.millis(durationMS), this);
-                st.setToX(1.0);
-                st.setToY(1.0);
-                st.play();
-            }
-        });
-
-        this.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    // Focus gained
-                    ScaleTransition st = new ScaleTransition(Duration.millis(durationMS), FillButton.this);
-                    st.setToX(scale);
-                    st.setToY(scale);
-                    st.play();
-                } else {
-                    // Focus lost
-                    ScaleTransition st = new ScaleTransition(Duration.millis(durationMS), FillButton.this);
-                    st.setToX(1.0);
-                    st.setToY(1.0);
-                    st.play();
-                }
-            }
-        });
     }
 
 }

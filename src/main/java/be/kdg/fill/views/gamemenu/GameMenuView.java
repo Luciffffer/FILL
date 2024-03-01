@@ -2,29 +2,30 @@ package be.kdg.fill.views.gamemenu;
 
 import be.kdg.fill.FillApplication;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class GameMenuView extends StackPane {
+public class GameMenuView extends BorderPane {
     
     private ImageView background;
     private ImageView logo;
     private Button resetButton;
     private Button logOutButton;
-    private BorderPane menuPane;
-    private Region content;
+    private StackPane contentPane;
+    private Pane content;
+    private AnchorPane backgroundPane;
 
     public static final int TOP_MENU_HEIGHT = 56;
 
-    public GameMenuView(Region content) 
+    public GameMenuView() 
     {
         this.initializeNodes();
         this.layoutNodes();
-        this.setContent(content);
     }
 
     private void initializeNodes() 
@@ -33,28 +34,16 @@ public class GameMenuView extends StackPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
         this.resetButton = new Button("Reset Game");
         this.logOutButton = new Button("Log Out");
-        this.menuPane = new BorderPane();
+        this.contentPane = new StackPane();
+        this.backgroundPane = new AnchorPane();
     }
 
     private void layoutNodes() 
     {
-        // Layer 1: Background
-        AnchorPane backgroundPane = new AnchorPane();
-
-        this.background.setFitWidth(250);
-        this.background.setFitHeight(250);
-        this.background.setPreserveRatio(true);
-        this.background.setRotate(180.0);
-
-        AnchorPane.setRightAnchor(this.background, 0.0);
-        AnchorPane.setBottomAnchor(this.background, 0.0);
-        backgroundPane.getChildren().add(this.background);
-        
-        // Layer 2: Menu and content
-        BorderPane contentPane = new BorderPane();
-
         // Menu
+        BorderPane menuPane = new BorderPane();
         menuPane.setPrefHeight(TOP_MENU_HEIGHT);
+        menuPane.getStyleClass().add("game-menu");
 
         javafx.geometry.Insets padding = new javafx.geometry.Insets(12, 12, 12, 12);
         menuPane.paddingProperty().setValue(padding);
@@ -81,15 +70,38 @@ public class GameMenuView extends StackPane {
         BorderPane.setAlignment(menuButtons, javafx.geometry.Pos.CENTER);
         menuPane.setRight(menuButtons);
 
-        contentPane.setTop(menuPane);
+        this.setTop(menuPane);
 
-        this.getChildren().addAll(backgroundPane, contentPane);
+        // scrollpane
+
+        ScrollPane scrollPane = new ScrollPane();
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+
+        // Layer 1: Background
+        this.background.setFitWidth(250);
+        this.background.setFitHeight(250);
+        this.background.setPreserveRatio(true);
+        this.background.setRotate(180.0);
+
+        AnchorPane.setRightAnchor(this.background, 0.0);
+        AnchorPane.setBottomAnchor(this.background, 0.0);
+        this.backgroundPane.getChildren().add(this.background);
+
+        this.contentPane.getChildren().add(backgroundPane);
+        scrollPane.setContent(this.contentPane);
+
+        this.setCenter(scrollPane);
     }
 
-    public void setContent(Region content) 
+    public void setContent(Pane content) 
     {
         this.content = content;
-        this.menuPane.setCenter(content);
+        this.contentPane.getChildren().clear();
+        this.contentPane.getChildren().addAll(backgroundPane, content);
     }
 
 

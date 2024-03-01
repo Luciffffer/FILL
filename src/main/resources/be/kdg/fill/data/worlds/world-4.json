@@ -1,0 +1,20 @@
+{
+    "name": "Underworld",
+    "imagePath": "images/Underworld-image.png",
+    "difficulty": {
+        "id": 4,
+        "name": "Hell"
+    },
+    "levels": [
+        {
+            "id": 1,
+            "pattern": [
+                [0, 1, 1, 0],
+                [1, 1, 1, 1],
+                [1, 1, 1, 1],
+                [0, 1, 1, 0]
+            ],
+            "start": [2, 0]
+        }
+    ]
+}
