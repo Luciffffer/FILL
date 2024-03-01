@@ -1,5 +1,6 @@
 package be.kdg.fill.views.gamemenu;
 
+import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
@@ -13,11 +14,13 @@ public class GameMenuPresenter implements Presenter {
     private GameMenuView view;
     private ScreenManager mainScreenManager;
     private ScreenManager subScreenManager;
+    private User loggedInUser;
 
-    public GameMenuPresenter(GameMenuView gameMenuView, ScreenManager mainScreenManager) 
+    public GameMenuPresenter(GameMenuView gameMenuView, ScreenManager mainScreenManager, User loggedInUser) 
     {
         this.view = gameMenuView;
         this.mainScreenManager = mainScreenManager;
+        this.loggedInUser = loggedInUser;
         this.initializeScreenManager();
         this.addEventHandlers();
     }

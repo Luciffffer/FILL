@@ -1,6 +1,5 @@
-package be.kdg.fill.views.login;
+package be.kdg.fill.views.signup;
 
-import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
@@ -10,52 +9,57 @@ import be.kdg.fill.views.mainmenu.MainMenuPresenter;
 import be.kdg.fill.views.mainmenu.MainMenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
+public class SignUpPresenter implements Presenter {
 
-public class LoginPresenter implements Presenter {
-
-    private LoginView loginView;
+    private SignUpView signUpView;
     private ScreenManager mainScreenManager;
-    private User user;
+    private User model;
 
-    public static final String SCREEN_NAME = "login";
+    public static final String SCREEN_NAME = "signup";
 
-    public LoginPresenter(LoginView loginView, ScreenManager mainScreenManager)
+    public SignUpPresenter(SignUpView signUpView, ScreenManager mainScreenManager) 
     {
+        this.signUpView = signUpView;
         this.mainScreenManager = mainScreenManager;
-        this.loginView = loginView;
         this.addEventHandlers();
     }
 
     private void addEventHandlers() 
     {
-        Button loginButton = loginView.getLoginButton();
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+        signUpView.getSignUpButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String username = String.valueOf(loginView.getUsernameTextField().getText());
-                String password = String.valueOf(loginView.getPasswordPasswordField().getText());
+                String username = String.valueOf((signUpView.getUsernameTextField().getText()));
+                String password = String.valueOf((signUpView.getPasswordPasswordField().getText()));
 
                 try {
-                    user = User.login(username, password);
+                    model = new User(username, password);
+                    model.register();
                     updateViewToGameMenu();
-
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-        Button cancelButton = loginView.getCancelButton();
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+        signUpView.getCancelButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 updateViewToMainMenu();
             }
         });
+    }
 
+    private void updateViewToGameMenu() 
+    {
+        if (mainScreenManager.screenExists("gamemenu")) {
+            mainScreenManager.switchScreen("gamemenu");
+        } else {
+            GameMenuView gameMenuView = new GameMenuView();
+            GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, model);
+            mainScreenManager.addScreen(gameMenuPresenter);
+        }
     }
 
     private void updateViewToMainMenu() 
@@ -69,26 +73,15 @@ public class LoginPresenter implements Presenter {
         }
     }
 
-    private void updateViewToGameMenu() 
-    {
-        if (mainScreenManager.screenExists("gamemenu")) {
-            mainScreenManager.switchScreen("gamemenu");
-        } else {
-            GameMenuView gameMenuView = new GameMenuView();
-            GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, user);
-            mainScreenManager.addScreen(gameMenuPresenter);
-        }
-    }
-
     @Override
-    public LoginView getView() 
+    public SignUpView getView() 
     {
-        return loginView;
+        return signUpView;
     }
 
     @Override
     public String getScreenName() 
     {
         return SCREEN_NAME;
-    }
+    } 
 }

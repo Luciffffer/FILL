@@ -44,9 +44,9 @@ public abstract class UserFile {
                 throw new RuntimeException(FILENAME + " file not found.");
             }
 
-            file = new File(url.getFile());
+            file = new File(url.toURI());
             
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
 
             System.err.println(e);
             ErrorLog error = new ErrorLog(e);
