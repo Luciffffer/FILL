@@ -7,6 +7,11 @@ import be.kdg.fill.models.core.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// I wanted to mess around with testing a little bit to learn it.
+// So if you're asking why there are no other tests, I simply didn't have time for it. 
+// But i'm still leaving this here because it proves i spend some time learning it 👍.
+// - Tim
+
 public class UserTest {
     private User user;
 
