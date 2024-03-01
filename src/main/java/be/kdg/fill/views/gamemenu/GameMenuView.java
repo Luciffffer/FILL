@@ -101,7 +101,7 @@ public class GameMenuView extends BorderPane {
     {
         this.content = content;
         this.contentPane.getChildren().clear();
-        this.contentPane.getChildren().addAll(backgroundPane, content);
+        this.contentPane.getChildren().addAll(this.backgroundPane, this.content);
     }
 
 
