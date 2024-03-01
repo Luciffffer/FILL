@@ -1,12 +1,9 @@
 package be.kdg.fill.views.mainmenu;
 
-import be.kdg.fill.FillApplication;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
 import be.kdg.fill.views.gamemenu.GameMenuView;
-import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
-import be.kdg.fill.views.gamemenu.worldselect.WorldSelectView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 

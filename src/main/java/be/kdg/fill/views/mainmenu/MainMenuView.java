@@ -81,7 +81,7 @@ public class MainMenuView extends StackPane {
 
         VBox buttonGroup = new VBox();
         buttonGroup.setAlignment(javafx.geometry.Pos.CENTER);
-        buttonGroup.setSpacing(16.0);
+        buttonGroup.setSpacing(12.0);
         buttonGroup.getChildren().addAll(loginButton, registerButton);
 
         this.loginButton.setMinWidth(176);
