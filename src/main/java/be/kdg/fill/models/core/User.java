@@ -9,6 +9,7 @@ public class User {
     private String username;
     private String password;
     private Map<World, Level> progress;
+    private UserFile userFile;
 
 
     // CONSTRUCTORS
@@ -16,42 +17,14 @@ public class User {
     /**
      * User
      * creates a new user
+     * @param userFile
      */
-    public User() 
+    public User(UserFile userFile) 
     {
         this.username = null;
         this.password = null;
         this.progress = null;
-    }
-
-    /**
-     * User
-     * creates a new user
-     * @param username
-     * @param password
-     * @throws Exception
-     * @throws IllegalArgumentException
-     */
-    public User(String username, String password) throws Exception, IllegalArgumentException 
-    {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.progress = null;
-    }
-
-
-    /**
-     * User
-     * creates a new user from inside class
-     * @param username
-     * @param password
-     * @param progress
-     */
-    private User(String username, String password, Map<World, Level> progress)
-    {
-        this.username = username;
-        this.password = password;
-        this.progress = progress;
+        this.userFile = userFile;
     }
     
 
@@ -77,6 +50,16 @@ public class User {
         return this.password;
     }
 
+    /**
+     * getProgress
+     * returns the progress of the user
+     * @return Map<World, Level> progress
+     */
+    public Map<World, Level> getProgress()
+    {
+        return this.progress;
+    }
+
 
     // SETTERS
     
@@ -93,7 +76,9 @@ public class User {
             throw new IllegalArgumentException("Username cannot be null");
         } else if (username.length() < 3 || username.length() > 20) {
             throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
-        } else if (UserFile.getUserDataByUsername(username) != null) {
+        } else if (username.matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Username cannot contain spaces");
+        } else if (this.userFile.getUserDataByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
         }
 
@@ -130,7 +115,7 @@ public class User {
      */
     public void register() throws RuntimeException
     {
-        UserFile.addUser(this);
+        this.userFile.addUser(this);
     }
 
     /**
@@ -141,9 +126,9 @@ public class User {
      * @return User
      * @throws illegalArgumentException
      */
-    public static User login(String username, String password) throws IllegalArgumentException
+    public void login(String username, String password) throws IllegalArgumentException
     {
-        String userData = UserFile.getUserDataByUsername(username);
+        String userData = this.userFile.getUserDataByUsername(username);
 
         if (userData == null) {
             throw new IllegalArgumentException("Username or password is incorrect");
@@ -158,7 +143,9 @@ public class User {
             throw new IllegalArgumentException("Username or password is incorrect");
         }
 
-        return new User(userDataArray[0], userDataArray[1], null);
+        this.username = userDataArray[0];
+        this.password = userDataArray[1];
+        this.progress = null;
         
     }
 }

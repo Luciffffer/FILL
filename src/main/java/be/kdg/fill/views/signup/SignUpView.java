@@ -70,7 +70,8 @@ public class SignUpView extends BorderPane {
         vbox.getChildren().addAll(logo, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, signUpMessageLabel,
                 signUpButton, cancelButton);
 
-        vbox.setAlignment(Pos.CENTER_LEFT);
+        innerBorderPane.setAlignment(vbox, Pos.CENTER);
+        vbox.setAlignment(Pos.CENTER);
         innerBorderPane.setCenter(vbox);
         outerBorderPane.setCenter(innerBorderPane);
 

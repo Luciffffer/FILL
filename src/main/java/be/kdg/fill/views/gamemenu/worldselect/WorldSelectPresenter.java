@@ -2,6 +2,7 @@ package be.kdg.fill.views.gamemenu.worldselect;
 
 import java.util.LinkedList;
 
+import be.kdg.fill.models.core.User;
 import be.kdg.fill.models.core.World;
 import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
@@ -12,16 +13,20 @@ import be.kdg.fill.views.gamemenu.levelselect.LevelSelectView;
 
 public class WorldSelectPresenter implements Presenter {
     
-    public static final String SCREEN_NAME = "worldselect";
     private WorldSelectView view;
     private ScreenManager mainScreenManager;
     private ScreenManager subScreenManager;
+    private User loggedInUser;
 
-    public WorldSelectPresenter(WorldSelectView worldSelectView, ScreenManager mainScreenManager, ScreenManager subScreenManager) 
+    public static final String SCREEN_NAME = "worldselect";
+
+    public WorldSelectPresenter(WorldSelectView worldSelectView, ScreenManager mainScreenManager, ScreenManager subScreenManager, User loggedInUser) 
     {
         this.view = worldSelectView;
         this.mainScreenManager = mainScreenManager;
         this.subScreenManager = subScreenManager;
+        this.loggedInUser = loggedInUser;
+        this.view.setSmallTitle("Hello " + loggedInUser.getUsername() + "!");
         this.addWorldsToView();
     }
 

@@ -5,8 +5,6 @@ import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectView;
-import be.kdg.fill.views.mainmenu.MainMenuPresenter;
-import be.kdg.fill.views.mainmenu.MainMenuView;
 
 public class GameMenuPresenter implements Presenter {
  
@@ -36,7 +34,7 @@ public class GameMenuPresenter implements Presenter {
     {
         this.subScreenManager = new ScreenManager();
         WorldSelectView worldSelectView = new WorldSelectView();
-        WorldSelectPresenter worldSelectPresenter = new WorldSelectPresenter(worldSelectView, mainScreenManager, subScreenManager);
+        WorldSelectPresenter worldSelectPresenter = new WorldSelectPresenter(worldSelectView, mainScreenManager, subScreenManager, loggedInUser);
         subScreenManager.addScreen(worldSelectPresenter);
 
         this.view.setContent(subScreenManager.getRootNode());
@@ -44,13 +42,7 @@ public class GameMenuPresenter implements Presenter {
 
     private void updateViewToLogOut() 
     {
-        if (mainScreenManager.screenExists("mainmenu")) {
-            mainScreenManager.switchScreen("mainmenu");
-        } else {
-            MainMenuView mainMenuView = new MainMenuView();
-            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager);
-            mainScreenManager.addScreen(mainMenuPresenter);
-        }
+        mainScreenManager.switchScreen("mainmenu");
     }
 
 

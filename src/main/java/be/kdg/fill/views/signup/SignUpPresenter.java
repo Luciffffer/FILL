@@ -14,14 +14,15 @@ public class SignUpPresenter implements Presenter {
 
     private SignUpView signUpView;
     private ScreenManager mainScreenManager;
-    private User model;
+    private User user;
 
     public static final String SCREEN_NAME = "signup";
 
-    public SignUpPresenter(SignUpView signUpView, ScreenManager mainScreenManager) 
+    public SignUpPresenter(SignUpView signUpView, ScreenManager mainScreenManager, User user) 
     {
         this.signUpView = signUpView;
         this.mainScreenManager = mainScreenManager;
+        this.user = user;
         this.addEventHandlers();
     }
 
@@ -34,8 +35,9 @@ public class SignUpPresenter implements Presenter {
                 String password = String.valueOf((signUpView.getPasswordPasswordField().getText()));
 
                 try {
-                    model = new User(username, password);
-                    model.register();
+                    user.setUsername(username);
+                    user.setPassword(password);
+                    user.register();
                     updateViewToGameMenu();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -57,7 +59,7 @@ public class SignUpPresenter implements Presenter {
             mainScreenManager.switchScreen("gamemenu");
         } else {
             GameMenuView gameMenuView = new GameMenuView();
-            GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, model);
+            GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, user);
             mainScreenManager.addScreen(gameMenuPresenter);
         }
     }
@@ -68,7 +70,7 @@ public class SignUpPresenter implements Presenter {
             mainScreenManager.switchScreen("mainmenu");
         } else {
             MainMenuView mainMenuView = new MainMenuView();
-            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager);
+            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager, user);
             mainScreenManager.addScreen(mainMenuPresenter);
         }
     }

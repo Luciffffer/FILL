@@ -1,6 +1,5 @@
 package be.kdg.fill.views.login;
 
-import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
@@ -11,7 +10,6 @@ import be.kdg.fill.views.mainmenu.MainMenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 
 public class LoginPresenter implements Presenter {
@@ -22,10 +20,11 @@ public class LoginPresenter implements Presenter {
 
     public static final String SCREEN_NAME = "login";
 
-    public LoginPresenter(LoginView loginView, ScreenManager mainScreenManager)
+    public LoginPresenter(LoginView loginView, ScreenManager mainScreenManager, User user)
     {
         this.mainScreenManager = mainScreenManager;
         this.loginView = loginView;
+        this.user = user;
         this.addEventHandlers();
     }
 
@@ -39,7 +38,8 @@ public class LoginPresenter implements Presenter {
                 String password = String.valueOf(loginView.getPasswordPasswordField().getText());
 
                 try {
-                    user = User.login(username, password);
+
+                    user.login(username, password);
                     updateViewToGameMenu();
 
                 } catch (Exception e) {
@@ -64,7 +64,7 @@ public class LoginPresenter implements Presenter {
             mainScreenManager.switchScreen("mainmenu");
         } else {
             MainMenuView mainMenuView = new MainMenuView();
-            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager);
+            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager, user);
             mainScreenManager.addScreen(mainMenuPresenter);
         }
     }

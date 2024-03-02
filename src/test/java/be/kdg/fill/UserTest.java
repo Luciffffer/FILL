@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import be.kdg.fill.models.core.User;
+import be.kdg.fill.models.helpers.UserFile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,15 +19,10 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         try {
-            user = new User("username", "password");
+            user = new User(new UserFile("user-data.bin"));
         } catch (Exception e) {
             fail("User constructor should not throw an exception");
         }
-    }
-
-    @Test
-    public void testGetUsername() {
-        assertEquals("username", user.getUsername());
     }
 
     @Test
@@ -34,8 +30,8 @@ public class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user.setUsername(null));
         assertThrows(IllegalArgumentException.class, () -> user.setUsername("ab"));
         assertThrows(IllegalArgumentException.class, () -> user.setUsername("a".repeat(21)));
-        user.setUsername("newUsername");
-        assertEquals("newUsername", user.getUsername());
+        user.setUsername("username");
+        assertEquals("username", user.getUsername());
     }
 
     @Test

@@ -1,9 +1,8 @@
 package be.kdg.fill.views.mainmenu;
 
+import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
-import be.kdg.fill.views.gamemenu.GameMenuPresenter;
-import be.kdg.fill.views.gamemenu.GameMenuView;
 import be.kdg.fill.views.login.LoginPresenter;
 import be.kdg.fill.views.login.LoginView;
 import be.kdg.fill.views.signup.SignUpPresenter;
@@ -15,13 +14,15 @@ public class MainMenuPresenter implements Presenter {
 
     private MainMenuView view;
     private ScreenManager mainScreenManager;
+    private User user;
 
     public static final String SCREEN_NAME = "mainmenu";
 
-    public MainMenuPresenter(MainMenuView mainMenuView, ScreenManager mainScreenManager) 
+    public MainMenuPresenter(MainMenuView mainMenuView, ScreenManager mainScreenManager, User user) 
     {
         this.view = mainMenuView;
         this.mainScreenManager = mainScreenManager;
+        this.user = user;
         this.addEventHandlers();
     }
 
@@ -49,7 +50,7 @@ public class MainMenuPresenter implements Presenter {
             mainScreenManager.switchScreen("login");
         } else {
             LoginView loginView = new LoginView();
-            LoginPresenter loginPresenter = new LoginPresenter(loginView, mainScreenManager);
+            LoginPresenter loginPresenter = new LoginPresenter(loginView, mainScreenManager, user);
             mainScreenManager.addScreen(loginPresenter);
         }
     }
@@ -60,7 +61,7 @@ public class MainMenuPresenter implements Presenter {
             mainScreenManager.switchScreen("signup");
         } else {
             SignUpView signUpView = new SignUpView();
-            SignUpPresenter signUpPresenter = new SignUpPresenter(signUpView, mainScreenManager);
+            SignUpPresenter signUpPresenter = new SignUpPresenter(signUpView, mainScreenManager, user);
             mainScreenManager.addScreen(signUpPresenter);
         }
     }

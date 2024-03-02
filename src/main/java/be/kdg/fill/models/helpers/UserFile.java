@@ -6,52 +6,98 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.User;
 
-public abstract class UserFile {
+public class UserFile {
 
-    private static File file;
-    private static ArrayList<String> data;
-
-    private static final String FILENAME = "data/user-data.bin";
+    private File file;
+    private ArrayList<String> data;
 
     /**
-     * static constructor
+     * UserFile
+     * constructor
+     * @param fileName
      */
-    static 
+    public UserFile(String fileName)
     {
-        getFile();
-        getDataFromFile();
+        this.getFile(fileName);
+        this.getDataFromFile();
     }
 
     /**
      * getFile
      * gets the file
+     * if the file does not exist, it creates it
+     * @param fileName
      * @return void
-     * @throws RuntimeException
+     * @throws RuntimeException in case of a URISyntaxException for display to the user. Check the error log for more details.
      */
-    private static void getFile() throws RuntimeException
+    private void getFile(String fileName) throws RuntimeException
     {
         try {
             
-            URL url = FillApplication.class.getResource(FILENAME);
+            // gets file URL
+            URL url = FillApplication.class.getResource("data/" + fileName);
             
             if (url == null) {
-                throw new RuntimeException(FILENAME + " file not found.");
-            }
+                // creates file
+                URL dirUrl = FillApplication.class.getResource("data");
+                File dir = new File(dirUrl.toURI());
+                this.file = new File(dir, fileName);
+            } else {
+                // gets file from URL
+                this.file = new File(url.toURI());
+            } 
 
-            file = new File(url.toURI());
-            
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
 
             System.err.println(e);
             ErrorLog error = new ErrorLog(e);
             error.save();
-            throw new RuntimeException("Something went wrong, please try again later.");
+            throw new RuntimeException("Something went wrong, please check the error log.");
+
+        }
+    }
+
+    /**
+     * getDataFromFile
+     * gets a local copy of data from file
+     * @return void
+     * @throws RuntimeException
+     */
+    private void getDataFromFile() throws RuntimeException
+    {
+        try {
+
+            data = new ArrayList<String>();
+
+            if (this.file.length() == 0) {
+                return;
+            }
+
+            FileInputStream fis = new FileInputStream(this.file);
+            DataInputStream dis = new DataInputStream(fis);
+
+            String[] users = dis.readUTF().split("\n");
+
+            for (String user : users) {
+                data.add(user);
+            }
+
+            dis.close();
+            fis.close();
+
+        } catch (IOException e) {
+
+            System.err.println(e);
+            ErrorLog error = new ErrorLog(e);
+            error.save();
+            throw new RuntimeException("Something went wrong, please check the error log.");
 
         }
     }
@@ -60,26 +106,26 @@ public abstract class UserFile {
      * addUser
      * adds a user to the file
      * @param user
-     * @return boolean
+     * @return void
      */
-    public static void addUser(User user) 
+    public void addUser(User user) 
     {
-        String dataString = user.getUsername() + "::" + user.getPassword() + "\n";
+        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgress();
         data.add(dataString);
 
-        save();
+        this.save();
     }
 
     /**
      * save
-     * saves the data to the file
+     * saves the local copy of data to fil, overwriting anything that was there.
      * @return void
      */
-    public static void save()
+    public void save()
     {
         try {
 
-            FileOutputStream fos = new FileOutputStream(file, false);
+            FileOutputStream fos = new FileOutputStream(this.file, false);
             DataOutputStream dos = new DataOutputStream(fos);
 
             String dataString = String.join("\n", data);
@@ -99,9 +145,9 @@ public abstract class UserFile {
         }
     }
 
-    public static String getUserDataByUsername(String username)
+    public String getUserDataByUsername(String username)
     {
-        for (String user : data) {
+        for (String user : this.data) {
             String[] userData = user.split("::");
 
             if (userData[0].equals(username)) {
@@ -110,42 +156,5 @@ public abstract class UserFile {
         }
 
         return null;
-    }
-
-    /**
-     * getData
-     * gets the data from the file
-     * @return void
-     */
-    private static void getDataFromFile()
-    {
-        try {
-
-            data = new ArrayList<String>();
-
-            if (file.length() == 0) {
-                return;
-            }
-
-            FileInputStream fis = new FileInputStream(file);
-            DataInputStream dis = new DataInputStream(fis);
-
-            String[] users = dis.readUTF().split("\n");
-
-            for (String user : users) {
-                data.add(user);
-            }
-
-            dis.close();
-            fis.close();
-
-        } catch (IOException e) {
-
-            System.err.println(e);
-            ErrorLog error = new ErrorLog(e);
-            error.save();
-            throw new RuntimeException("Something went wrong, please try again later.");
-
-        }
     }
 }

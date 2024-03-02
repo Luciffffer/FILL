@@ -1,5 +1,7 @@
 package be.kdg.fill;
 
+import be.kdg.fill.models.core.User;
+import be.kdg.fill.models.helpers.UserFile;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.mainmenu.MainMenuPresenter;
 import be.kdg.fill.views.mainmenu.MainMenuView;
@@ -12,15 +14,17 @@ import javafx.stage.Stage;
 public class FillApplication extends Application {
 
     @Override
-    public void start(Stage stage) 
+    public void start(Stage stage)
     {
         Font.loadFont(getClass().getResource("fonts/Inter-Bold.ttf").toExternalForm(), 16);
         Font.loadFont(getClass().getResource("fonts/Inter-Regular.ttf").toExternalForm(), 16);
         Font.loadFont(getClass().getResource("fonts/Inter-Medium.ttf").toExternalForm(), 16);
 
+        User user = new User(new UserFile("user-data.bin"));
         ScreenManager mainScreenManager = new ScreenManager();
         MainMenuView mainMenuView = new MainMenuView();
-        MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager);
+
+        MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager, user);
         mainScreenManager.addScreen(mainMenuPresenter);
 
         Scene scene = mainScreenManager.getScene();
@@ -41,4 +45,5 @@ public class FillApplication extends Application {
     {
         launch(args);
     }
+
 }
