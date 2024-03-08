@@ -11,16 +11,23 @@ import org.json.simple.parser.JSONParser;
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.World;
 
-public abstract class WorldLoader {
-    private static LinkedList<World> worlds;
+public class WorldLoader {
+    private LinkedList<World> worlds;
+    private String directoryPath;
+
+
+    // CONSTRUCTORS
 
     /**
-     * static constructor
+     * WorldLoader
+     * creates a new WorldLoader
+     * @param directoryPath
      */
-    static 
+    public WorldLoader(String directoryPath) 
     {
-        loadWorlds();
-        sortWorlds();
+        this.directoryPath = directoryPath;
+        this.loadWorlds();
+        this.sortWorlds();
     }
 
 
@@ -31,7 +38,7 @@ public abstract class WorldLoader {
      * gets the worlds
      * @return LinkedList<World>
      */
-    public static LinkedList<World> getWorlds()
+    public LinkedList<World> getWorlds()
     {
         return worlds;
     }
@@ -42,7 +49,7 @@ public abstract class WorldLoader {
      * @param name
      * @return World
      */
-    public static World getWorld(String name)
+    public World getWorld(String name)
     {
         for (World world: worlds) {
             if (world.getName().equals(name)) {
@@ -60,7 +67,7 @@ public abstract class WorldLoader {
      * loadWorlds
      * loads the worlds from the files
      */
-    private static void loadWorlds() throws RuntimeException
+    private void loadWorlds() throws RuntimeException
     {
         if (worlds != null) {
             worlds.clear();
@@ -73,7 +80,7 @@ public abstract class WorldLoader {
         try {
             // load worlds from files
 
-            File directory = new File(FillApplication.class.getResource("data/worlds").getFile());
+            File directory = new File(FillApplication.class.getResource("data/" + this.directoryPath).getFile());
             File[] files = directory.listFiles();
 
             for (File file: files) {
@@ -102,7 +109,7 @@ public abstract class WorldLoader {
      * sortWorlds
      * sorts the worlds
      */
-    public static void sortWorlds()
+    public void sortWorlds()
     {
         Collections.sort(worlds);
     }

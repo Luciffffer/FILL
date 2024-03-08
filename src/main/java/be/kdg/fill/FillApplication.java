@@ -3,8 +3,8 @@ package be.kdg.fill;
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.models.helpers.UserFile;
 import be.kdg.fill.views.ScreenManager;
-import be.kdg.fill.views.mainmenu.MainMenuPresenter;
-import be.kdg.fill.views.mainmenu.MainMenuView;
+import be.kdg.fill.views.startmenu.StartMenuPresenter;
+import be.kdg.fill.views.startmenu.StartMenuView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,10 +22,10 @@ public class FillApplication extends Application {
 
         User user = new User(new UserFile("user-data.bin"));
         ScreenManager mainScreenManager = new ScreenManager();
-        MainMenuView mainMenuView = new MainMenuView();
-
-        MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager, user);
-        mainScreenManager.addScreen(mainMenuPresenter);
+        StartMenuView startMenuView = new StartMenuView();
+        
+        StartMenuPresenter startMenuPresenter = new StartMenuPresenter(startMenuView, mainScreenManager, user);
+        mainScreenManager.addScreen(startMenuPresenter);
 
         Scene scene = mainScreenManager.getScene();
 

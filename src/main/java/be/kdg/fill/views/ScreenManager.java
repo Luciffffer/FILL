@@ -2,6 +2,7 @@ package be.kdg.fill.views;
 
 import java.util.Stack;
 
+import be.kdg.fill.views.startmenu.mainmenu.MainMenuPresenter;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -71,6 +72,16 @@ public class ScreenManager {
     public Presenter getCurrentScreen()
     {
         return screens.peek();
+    }
+
+    public void reset()
+    {
+        this.switchScreen("mainmenu");
+        
+        MainMenuPresenter mainMenuPresenter = (MainMenuPresenter) screens.peek();
+
+        this.screens.clear();
+        this.screens.push(mainMenuPresenter);
     }
 
 }

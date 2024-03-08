@@ -110,8 +110,30 @@ public class UserFile {
      */
     public void addUser(User user) 
     {
-        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgress();
+        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgressString();
         data.add(dataString);
+
+        this.save();
+    }
+
+    /**
+     * updateUser
+     * updates the user in the file
+     * @param user
+     * @return void
+     */
+    public void updateUser(User user)
+    {
+        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgressString();
+
+        for (int i = 0; i < data.size(); i++) {
+            String[] userData = data.get(i).split("::");
+
+            if (userData[0].equals(user.getUsername())) {
+                data.set(i, dataString);
+                break;
+            }
+        }
 
         this.save();
     }

@@ -1,4 +1,4 @@
-package be.kdg.fill.views.signup;
+package be.kdg.fill.views.startmenu.login;
 
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.views.compontents.PrimaryButton;
@@ -15,95 +15,83 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class SignUpView extends BorderPane {
+public class LoginView extends BorderPane {
     private ImageView logo;
-    private Button signUpButton;
+    private Button loginButton;
     private TextField usernameTextField;
     private Label usernameLabel;
     private PasswordField passwordPasswordField;
     private Label passwordLabel;
-    private Text signUpMessageLabel;
+    private Text loginMessageLabel;
     private Button cancelButton;
-
-    public SignUpView(){
+    
+    public LoginView() 
+    {
         this.initializeNodes();
         this.layoutNodes();
     }
 
-    private void initializeNodes() {
+    private void initializeNodes()
+    {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
 
-        this.signUpButton = new PrimaryButton("Sign Up");
+        this.loginButton = new PrimaryButton("Log in");
         this.cancelButton = new SecondaryButton("Cancel");
 
-        this.usernameTextField = new TextField();
-        usernameTextField.setPromptText("Type your new username here");
-
-        this.passwordPasswordField = new PasswordField();
-        passwordPasswordField.setPromptText("Type your new password here");
-
         this.usernameLabel = new Label("Username");
-        usernameLabel.setFont(Font.font("Arial", 15));
+        this.usernameLabel.setFont(Font.font("Arial", 15));
 
         this.passwordLabel = new Label("Password");
-        passwordLabel.setFont(Font.font("Arial", 15));
+        this.passwordLabel.setFont(Font.font("Arial", 15));
 
-        this.signUpMessageLabel = new Text();
-        signUpMessageLabel.setText("Errors komen hier");
-        signUpMessageLabel.setFill(Color.web("#e42e2e"));
+        this.usernameTextField = new TextField();
+        this.usernameTextField.setPromptText("Type your username here");
+
+        this.passwordPasswordField = new PasswordField();
+        this.passwordPasswordField.setPromptText("Type your password here");
+
+        this.loginMessageLabel = new Text();
+        this.loginMessageLabel.setText("");
+        this.loginMessageLabel.setFill(Color.web("#e42e2e"));
     }
 
-    private void layoutNodes() {
+    private void layoutNodes()
+    {
         BorderPane outerBorderPane = new BorderPane();
         outerBorderPane.setPrefSize(800, 600);
 
         BorderPane innerBorderPane = new BorderPane();
         innerBorderPane.setPrefSize(600, 400);
 
-        logo.setFitHeight(120);
-        usernameTextField.setMaxWidth(300);
-        passwordPasswordField.setMaxWidth(300);
-        signUpButton.setMinWidth(200);
-        cancelButton.setMinWidth(200);
 
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(logo, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, signUpMessageLabel,
-                signUpButton, cancelButton);
+        vbox.getChildren().addAll(logo, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, loginMessageLabel,
+                loginButton, cancelButton);
 
-        innerBorderPane.setAlignment(vbox, Pos.CENTER);
-        vbox.setAlignment(Pos.CENTER);
+        vbox.setAlignment(Pos.CENTER_LEFT);
         innerBorderPane.setCenter(vbox);
         outerBorderPane.setCenter(innerBorderPane);
 
         this.setRight(innerBorderPane);
+
+        logo.setFitHeight(120);
+
+        usernameTextField.setMaxWidth(300);
+        passwordPasswordField.setMaxWidth(300);
+        loginButton.setMinWidth(200);
+        cancelButton.setMinWidth(200);
     }
 
-    public ImageView getLogo() {
-        return logo;
-    }
-
-    public Button getSignUpButton() {
-        return signUpButton;
+    public Button getLoginButton() {
+        return loginButton;
     }
 
     public TextField getUsernameTextField() {
         return usernameTextField;
     }
 
-    public Label getUsernameLabel() {
-        return usernameLabel;
-    }
-
     public PasswordField getPasswordPasswordField() {
         return passwordPasswordField;
-    }
-
-    public Label getPasswordLabel() {
-        return passwordLabel;
-    }
-
-    public Text getSignUpMessageLabel() {
-        return signUpMessageLabel;
     }
 
     public Button getCancelButton() {

@@ -1,28 +1,22 @@
-package be.kdg.fill.views.signup;
+package be.kdg.fill.views.startmenu.signup;
 
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
-import be.kdg.fill.views.ScreenManager;
-import be.kdg.fill.views.gamemenu.GameMenuPresenter;
-import be.kdg.fill.views.gamemenu.GameMenuView;
-import be.kdg.fill.views.mainmenu.MainMenuPresenter;
-import be.kdg.fill.views.mainmenu.MainMenuView;
+import be.kdg.fill.views.startmenu.StartMenuPresenter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class SignUpPresenter implements Presenter {
 
     private SignUpView signUpView;
-    private ScreenManager mainScreenManager;
-    private User user;
+    private StartMenuPresenter parent;
 
     public static final String SCREEN_NAME = "signup";
 
-    public SignUpPresenter(SignUpView signUpView, ScreenManager mainScreenManager, User user) 
+    public SignUpPresenter(SignUpView signUpView, StartMenuPresenter startMenuPresenter) 
     {
         this.signUpView = signUpView;
-        this.mainScreenManager = mainScreenManager;
-        this.user = user;
+        this.parent = startMenuPresenter;
         this.addEventHandlers();
     }
 
@@ -35,10 +29,12 @@ public class SignUpPresenter implements Presenter {
                 String password = String.valueOf((signUpView.getPasswordPasswordField().getText()));
 
                 try {
+                    User user = parent.getModel();
+
                     user.setUsername(username);
                     user.setPassword(password);
                     user.register();
-                    updateViewToGameMenu();
+                    parent.updateViewToGameMenu();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -53,26 +49,9 @@ public class SignUpPresenter implements Presenter {
         });
     }
 
-    private void updateViewToGameMenu() 
-    {
-        if (mainScreenManager.screenExists("gamemenu")) {
-            mainScreenManager.switchScreen("gamemenu");
-        } else {
-            GameMenuView gameMenuView = new GameMenuView();
-            GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, user);
-            mainScreenManager.addScreen(gameMenuPresenter);
-        }
-    }
-
     private void updateViewToMainMenu() 
     {
-        if (mainScreenManager.screenExists("mainmenu")) {
-            mainScreenManager.switchScreen("mainmenu");
-        } else {
-            MainMenuView mainMenuView = new MainMenuView();
-            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager, user);
-            mainScreenManager.addScreen(mainMenuPresenter);
-        }
+        parent.getSubScreenManager().switchScreen("mainmenu");
     }
 
     @Override
