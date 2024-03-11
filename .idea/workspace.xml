@@ -5,19 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/NewLevel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/addcheckboxes/CheckBoxesPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/addcheckboxes/CheckBoxesView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/dimention/DimentionPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/dimention/DimentionView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/dimentiontest/AddLevelPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/admin/dimentiontest/AddLevelView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/ScreenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/ScreenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/GameMenuPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/GameMenuPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/GameMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/GameMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/worldselect/WorldSelectView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/worldselect/WorldSelectView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/login/LoginPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/login/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/login/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/mainmenu/MainMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/signup/SignUpPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/signup/SignUpPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/signup/SignUpView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/signup/SignUpView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/be/kdg/fill/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/be/kdg/fill/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,7 +75,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "world-select",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -65,9 +86,56 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.39310345",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\amirk\OneDrive\Desktop\Fill2" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="be.kdg.fill.views.dimention" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="FillApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="be.kdg.fill.FillApplication" />
+      <module name="fill" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="be.kdg.fill.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.FillApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -81,6 +149,25 @@
       <workItem from="1708574379353" duration="90000" />
       <workItem from="1708574817708" duration="1013000" />
       <workItem from="1708575855139" duration="225000" />
+      <workItem from="1709304682181" duration="528000" />
+      <workItem from="1709305388007" duration="131000" />
+      <workItem from="1709305529211" duration="11407000" />
+      <workItem from="1709327774164" duration="48000" />
+      <workItem from="1709327870207" duration="151000" />
+      <workItem from="1709332202452" duration="1577000" />
+      <workItem from="1709398653782" duration="721000" />
+      <workItem from="1709556143689" duration="1009000" />
+      <workItem from="1709735641324" duration="4000" />
+      <workItem from="1709735794569" duration="113000" />
+      <workItem from="1709843135662" duration="13487000" />
+      <workItem from="1709858212901" duration="74000" />
+      <workItem from="1709858296859" duration="95000" />
+      <workItem from="1709858481928" duration="44000" />
+      <workItem from="1709858535791" duration="4549000" />
+      <workItem from="1709926709531" duration="3231000" />
+      <workItem from="1709939385333" duration="4588000" />
+      <workItem from="1710146967359" duration="93000" />
+      <workItem from="1710186637625" duration="7125000" />
     </task>
     <servers />
   </component>

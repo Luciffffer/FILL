@@ -2,6 +2,7 @@ package be.kdg.fill.views.gamemenu;
 
 import be.kdg.fill.FillApplication;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -9,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class GameMenuView extends BorderPane {
     
@@ -16,6 +19,8 @@ public class GameMenuView extends BorderPane {
     private ImageView logo;
     private Button resetButton;
     private Button logOutButton;
+    private Button addLevelButton;
+    private Text addLevelMessage;
     private StackPane contentPane;
     private Pane content;
     private AnchorPane backgroundPane;
@@ -34,6 +39,8 @@ public class GameMenuView extends BorderPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
         this.resetButton = new Button("Reset Game");
         this.logOutButton = new Button("Log Out");
+        this.addLevelButton = new Button("Add Level");
+        this.addLevelMessage = new Text();
         this.contentPane = new StackPane();
         this.backgroundPane = new AnchorPane();
     }
@@ -60,11 +67,15 @@ public class GameMenuView extends BorderPane {
 
         this.resetButton.getStyleClass().add("button-reset");
         this.logOutButton.getStyleClass().add("button-reset");
+        this.addLevelButton.getStyleClass().add("button-reset");
         this.resetButton.getStyleClass().add("text-button");
         this.logOutButton.getStyleClass().add("text-button");
+        this.addLevelButton.getStyleClass().add("text-button");
+
+        this.addLevelMessage.setFill(Color.RED);
 
         menuButtons.setAlignment(javafx.geometry.Pos.CENTER);
-        menuButtons.getChildren().addAll(this.resetButton, this.logOutButton);
+        menuButtons.getChildren().addAll(this.addLevelMessage, this.addLevelButton, this.resetButton, this.logOutButton);
         menuButtons.setSpacing(12);
 
         BorderPane.setAlignment(menuButtons, javafx.geometry.Pos.CENTER);
@@ -115,5 +126,13 @@ public class GameMenuView extends BorderPane {
     public Button getLogOutButton() 
     {
         return logOutButton;
+    }
+
+    public Button getAddLevelButton() {
+        return addLevelButton;
+    }
+
+    public Text getAddLevelMessage() {
+        return addLevelMessage;
     }
 }

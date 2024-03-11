@@ -11,7 +11,7 @@ public class ScreenManager {
     private Stack<Presenter> screens;
     private StackPane rootNode;
     
-    public ScreenManager() 
+    public ScreenManager()
     {
         screens = new Stack<>();
         this.rootNode = new StackPane();

@@ -55,8 +55,7 @@ public class LoginView extends BorderPane {
         this.passwordPasswordField.setPromptText("Type your password here");
 
         this.loginMessageLabel = new Text();
-        this.loginMessageLabel.setText("");
-        this.loginMessageLabel.setFill(Color.web("#e42e2e"));
+        this.loginMessageLabel.setFill(Color.RED);
     }
 
     private void layoutNodes()
@@ -100,5 +99,9 @@ public class LoginView extends BorderPane {
 
     public Button getCancelButton() {
         return cancelButton;
+    }
+
+    public Text getLoginMessageLabel() {
+        return loginMessageLabel;
     }
 }

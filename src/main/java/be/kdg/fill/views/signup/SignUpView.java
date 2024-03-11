@@ -24,6 +24,9 @@ public class SignUpView extends BorderPane {
     private Label passwordLabel;
     private Text signUpMessageLabel;
     private Button cancelButton;
+    private Label instructionsLabel;
+    private ImageView sideImageDown;
+    private ImageView sideImageUp;
 
     public SignUpView(){
         this.initializeNodes();
@@ -32,6 +35,8 @@ public class SignUpView extends BorderPane {
 
     private void initializeNodes() {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
+        this.sideImageUp = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
+        this.sideImageDown = new ImageView(FillApplication.class.getResource("images/background-graphic-blocks.png").toExternalForm());
 
         this.signUpButton = new PrimaryButton("Sign Up");
         this.cancelButton = new SecondaryButton("Cancel");
@@ -49,8 +54,12 @@ public class SignUpView extends BorderPane {
         passwordLabel.setFont(Font.font("Arial", 15));
 
         this.signUpMessageLabel = new Text();
-        signUpMessageLabel.setText("Errors komen hier");
-        signUpMessageLabel.setFill(Color.web("#e42e2e"));
+        signUpMessageLabel.setFill(Color.RED);
+
+        this.instructionsLabel = new Label();
+        instructionsLabel.setText("Username must be between 3 and 20 characters long \nand cannot contain spaces.");
+        instructionsLabel.setTextFill(Color.web("#aa4bc4"));
+        instructionsLabel.setFont(Font.font("Arial Narrow", 15));
     }
 
     private void layoutNodes() {
@@ -67,7 +76,7 @@ public class SignUpView extends BorderPane {
         cancelButton.setMinWidth(200);
 
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(logo, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, signUpMessageLabel,
+        vbox.getChildren().addAll(logo,instructionsLabel, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, signUpMessageLabel,
                 signUpButton, cancelButton);
 
         vbox.setAlignment(Pos.CENTER_LEFT);
@@ -77,9 +86,6 @@ public class SignUpView extends BorderPane {
         this.setRight(innerBorderPane);
     }
 
-    public ImageView getLogo() {
-        return logo;
-    }
 
     public Button getSignUpButton() {
         return signUpButton;
@@ -89,17 +95,10 @@ public class SignUpView extends BorderPane {
         return usernameTextField;
     }
 
-    public Label getUsernameLabel() {
-        return usernameLabel;
-    }
-
     public PasswordField getPasswordPasswordField() {
         return passwordPasswordField;
     }
 
-    public Label getPasswordLabel() {
-        return passwordLabel;
-    }
 
     public Text getSignUpMessageLabel() {
         return signUpMessageLabel;
