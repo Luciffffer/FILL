@@ -49,7 +49,7 @@ public class LevelSelectPresenter implements Presenter {
             gamePresenter.startGame(level);
         } else {
             GameView gameView = new GameView();
-            GamePresenter gamePresenter = new GamePresenter(gameView, this.parent.getLoggedInUser());
+            GamePresenter gamePresenter = new GamePresenter(gameView, this.parent.getMainScreenManager(), this.parent.getLoggedInUser());
             mainScreenManager.addScreen(gamePresenter);
             gamePresenter.startGame(level);
         }

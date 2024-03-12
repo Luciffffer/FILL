@@ -21,6 +21,16 @@
     -fx-font-family: 'Inter Bold', sans-serif;
 }
 
+.h2 {
+    -fx-font-size: 23.04px;
+    -fx-font-family: 'Inter Bold', sans-serif;
+}
+
+.h3 {
+    -fx-font-size: 19.2px;
+    -fx-font-family: 'Inter Bold', sans-serif;
+}
+
 .body {
     -fx-font-size: 16px;
     -fx-font-family: 'Inter Medium', sans-serif;

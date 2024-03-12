@@ -40,7 +40,7 @@ public class World implements Comparable<World> {
         JSONArray levelsArray = (JSONArray) worldObject.get("levels");
         for (Object levelObject: levelsArray) {
             JSONObject level = (JSONObject) levelObject;
-            this.levels.add(new Level(level));
+            this.levels.add(new Level(level, this));
         }
 
         Collections.sort(this.levels);
