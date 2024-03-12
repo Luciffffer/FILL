@@ -1,6 +1,6 @@
 package be.kdg.fill.models.core;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import be.kdg.fill.models.helpers.Cryptography;
 import be.kdg.fill.models.helpers.UserFile;
@@ -8,7 +8,8 @@ import be.kdg.fill.models.helpers.UserFile;
 public class User {
     private String username;
     private String password;
-    private Map<World, Level> progress;
+    private HashMap<Integer, Integer> progress;
+    private UserFile userFile;
 
 
     // CONSTRUCTORS
@@ -16,42 +17,14 @@ public class User {
     /**
      * User
      * creates a new user
+     * @param userFile
      */
-    public User() 
+    public User(UserFile userFile) 
     {
         this.username = null;
         this.password = null;
-        this.progress = null;
-    }
-
-    /**
-     * User
-     * creates a new user
-     * @param username
-     * @param password
-     * @throws Exception
-     * @throws IllegalArgumentException
-     */
-    public User(String username, String password) throws Exception, IllegalArgumentException 
-    {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.progress = null;
-    }
-
-
-    /**
-     * User
-     * creates a new user from inside class
-     * @param username
-     * @param password
-     * @param progress
-     */
-    private User(String username, String password, Map<World, Level> progress)
-    {
-        this.username = username;
-        this.password = password;
-        this.progress = progress;
+        this.progress = new HashMap<Integer, Integer>();
+        this.userFile = userFile;
     }
     
 
@@ -60,7 +33,7 @@ public class User {
     /**
      * getUsername
      * returns the username of the user
-     * @return String username
+     * @return String
      */
     public String getUsername() 
     {
@@ -70,11 +43,42 @@ public class User {
     /**
      * getPassword
      * returns the password of the user
-     * @return String password
+     * @return String
      */
     public String getPassword()
     {
         return this.password;
+    }
+
+    /**
+     * getProgress
+     * returns the progress of the user. Formated as a string
+     * @return String
+     */
+    public String getProgressString()
+    {
+        String progressString = "";
+
+        for (int world: this.progress.keySet()) {
+            progressString += world + "," + this.progress.get(world) + ":";
+        }
+
+        return progressString;
+    }
+
+    /**
+     * getWorldProgress
+     * returns the user's progress in a specific world
+     * @param world
+     * @return int
+     */
+    public int getWorldProgress(int world)
+    {
+        if (this.progress.containsKey(world)) {
+            return this.progress.get(world);
+        } else {
+            return 0;
+        }
     }
 
 
@@ -93,7 +97,9 @@ public class User {
             throw new IllegalArgumentException("Username cannot be null");
         } else if (username.length() < 3 || username.length() > 20) {
             throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
-        } else if (UserFile.getUserDataByUsername(username) != null) {
+        } else if (username.matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Username cannot contain spaces");
+        } else if (this.userFile.getUserDataByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
         }
 
@@ -121,6 +127,19 @@ public class User {
         return this;
     }
 
+    /**
+     * setWorldProgress
+     * sets the progress of the user
+     * @param world
+     * @param progress
+     * @return User
+     */
+    public User setWorldProgress(int world, int progress) 
+    {
+        this.progress.put(world, progress);
+        return this;
+    }
+
 
     // METHODS
 
@@ -130,7 +149,27 @@ public class User {
      */
     public void register() throws RuntimeException
     {
-        UserFile.addUser(this);
+        this.userFile.addUser(this);
+    }
+
+    /**
+     * save
+     * saves the user to the file
+     * @return void
+     */
+    public void save()
+    {
+        this.userFile.updateUser(this);
+    }
+
+    /**
+     * resetProgress
+     * resets the progress of the user
+     * @return void
+     */
+    public void resetProgress()
+    {
+        this.progress = new HashMap<Integer, Integer>();
     }
 
     /**
@@ -141,9 +180,9 @@ public class User {
      * @return User
      * @throws illegalArgumentException
      */
-    public static User login(String username, String password) throws IllegalArgumentException
+    public void login(String username, String password) throws IllegalArgumentException
     {
-        String userData = UserFile.getUserDataByUsername(username);
+        String userData = this.userFile.getUserDataByUsername(username);
 
         if (userData == null) {
             throw new IllegalArgumentException("Username or password is incorrect");
@@ -151,6 +190,7 @@ public class User {
 
         String[] userDataArray = userData.split("::");
         String[] passwordData = userDataArray[1].split(":");
+        String[] progressData = userDataArray.length > 2 ? userDataArray[2].split(":") : new String[]{};
 
         String hashedPassword = Cryptography.hashStringPBKDF2(password, passwordData[1], Integer.parseInt(passwordData[3]), Integer.parseInt(passwordData[4]));
 
@@ -158,7 +198,13 @@ public class User {
             throw new IllegalArgumentException("Username or password is incorrect");
         }
 
-        return new User(userDataArray[0], userDataArray[1], null);
+        this.username = userDataArray[0];
+        this.password = userDataArray[1];
+        this.progress = new HashMap<Integer, Integer>();
         
+        for (String worldProgress: progressData) {
+            String[] worldProgressArray = worldProgress.split(",");
+            progress.put(Integer.parseInt(worldProgressArray[0]), Integer.parseInt(worldProgressArray[1]));
+        }
     }
 }

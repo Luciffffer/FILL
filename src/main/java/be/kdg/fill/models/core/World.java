@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import be.kdg.fill.FillApplication;
 
 public class World implements Comparable<World> {
+    private int id;
     private String name;
     private String imagePath;
     private short difficultyId;
@@ -26,6 +27,7 @@ public class World implements Comparable<World> {
      */
     public World(JSONObject worldObject, String filePath) 
     {
+        this.id = ((Long) worldObject.get("id")).intValue();
         this.name = (String) worldObject.get("name");
         this.imagePath = FillApplication.class.getResource((String) worldObject.get("imagePath")).toExternalForm();
         this.levels = new LinkedList<>();
@@ -38,7 +40,7 @@ public class World implements Comparable<World> {
         JSONArray levelsArray = (JSONArray) worldObject.get("levels");
         for (Object levelObject: levelsArray) {
             JSONObject level = (JSONObject) levelObject;
-            this.levels.add(new Level(level));
+            this.levels.add(new Level(level, this));
         }
 
         Collections.sort(this.levels);
@@ -96,6 +98,17 @@ public class World implements Comparable<World> {
     {
         return levels;
     }
+
+    /**
+     * getId
+     * gets the id of the world.
+     * @return int
+     */
+    public int getId() 
+    {
+        return id;
+    }
+
 
     // METHODS
 

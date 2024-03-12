@@ -1,27 +1,26 @@
-package be.kdg.fill.views.mainmenu;
+package be.kdg.fill.views.startmenu.mainmenu;
 
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
-import be.kdg.fill.views.gamemenu.GameMenuPresenter;
-import be.kdg.fill.views.gamemenu.GameMenuView;
-import be.kdg.fill.views.login.LoginPresenter;
-import be.kdg.fill.views.login.LoginView;
-import be.kdg.fill.views.signup.SignUpPresenter;
-import be.kdg.fill.views.signup.SignUpView;
+import be.kdg.fill.views.startmenu.StartMenuPresenter;
+import be.kdg.fill.views.startmenu.login.LoginPresenter;
+import be.kdg.fill.views.startmenu.login.LoginView;
+import be.kdg.fill.views.startmenu.signup.SignUpPresenter;
+import be.kdg.fill.views.startmenu.signup.SignUpView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class MainMenuPresenter implements Presenter {
 
     private MainMenuView view;
-    private ScreenManager mainScreenManager;
+    private StartMenuPresenter parent;
 
     public static final String SCREEN_NAME = "mainmenu";
 
-    public MainMenuPresenter(MainMenuView mainMenuView, ScreenManager mainScreenManager) 
+    public MainMenuPresenter(MainMenuView mainMenuView, StartMenuPresenter startMenuPresenter) 
     {
         this.view = mainMenuView;
-        this.mainScreenManager = mainScreenManager;
+        this.parent = startMenuPresenter;
         this.addEventHandlers();
     }
 
@@ -45,25 +44,32 @@ public class MainMenuPresenter implements Presenter {
 
     private void updateViewToLogin() 
     {
-        if (mainScreenManager.screenExists("login")) {
-            mainScreenManager.switchScreen("login");
+        ScreenManager screenManager = parent.getSubScreenManager();
+
+        if (screenManager.screenExists("login")) {
+            screenManager.switchScreen("login");
         } else {
             LoginView loginView = new LoginView();
-            LoginPresenter loginPresenter = new LoginPresenter(loginView, mainScreenManager);
-            mainScreenManager.addScreen(loginPresenter);
+            LoginPresenter loginPresenter = new LoginPresenter(loginView, this.parent);
+            screenManager.addScreen(loginPresenter);
         }
     }
 
     private void updateViewToRegister() 
     {
-        if (mainScreenManager.screenExists("signup")) {
-            mainScreenManager.switchScreen("signup");
+        ScreenManager screenManager = parent.getSubScreenManager();
+
+        if (screenManager.screenExists("signup")) {
+            screenManager.switchScreen("signup");
         } else {
             SignUpView signUpView = new SignUpView();
-            SignUpPresenter signUpPresenter = new SignUpPresenter(signUpView, mainScreenManager);
-            mainScreenManager.addScreen(signUpPresenter);
+            SignUpPresenter signUpPresenter = new SignUpPresenter(signUpView, this.parent);
+            screenManager.addScreen(signUpPresenter);
         }
     }
+
+
+    // GETTERS
 
     @Override
     public MainMenuView getView() 

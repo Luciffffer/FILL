@@ -14,19 +14,19 @@ public class WorldCard extends HoverClickable {
     private Text completedLevels;
     public static final int WIDTH = 150;
 
-    public WorldCard(World world) 
+    public WorldCard(World world, int completedLevels) 
     {
         super(100, 1.05);
-        this.initializeNodes(world);
+        this.initializeNodes(world, completedLevels);
         this.layoutNodes();
     }
 
-    private void initializeNodes(World world) 
+    private void initializeNodes(World world, int completedLevels) 
     {
         this.title = new Text(world.getName());
         this.image = new ImageView(world.getImagePath());
         this.difficulty = new Text(world.getDifficultyName());
-        this.completedLevels = new Text("0/" + world.getLevelCount());
+        this.completedLevels = new Text(completedLevels + "/" + world.getLevelCount());
     }
 
     private void layoutNodes() 

@@ -1,12 +1,16 @@
 package be.kdg.fill.views.gamemenu;
 
+import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.User;
+import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectView;
-import be.kdg.fill.views.mainmenu.MainMenuPresenter;
-import be.kdg.fill.views.mainmenu.MainMenuView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class GameMenuPresenter implements Presenter {
  
@@ -15,46 +19,83 @@ public class GameMenuPresenter implements Presenter {
     private ScreenManager mainScreenManager;
     private ScreenManager subScreenManager;
     private User loggedInUser;
+    private WorldLoader worldLoader;
 
     public GameMenuPresenter(GameMenuView gameMenuView, ScreenManager mainScreenManager, User loggedInUser) 
     {
         this.view = gameMenuView;
         this.mainScreenManager = mainScreenManager;
         this.loggedInUser = loggedInUser;
-        this.initializeScreenManager();
+        this.worldLoader = new WorldLoader("worlds");
+        this.initializeSubScreenManager();
         this.addEventHandlers();
     }
 
     private void addEventHandlers() 
     {
         view.getLogOutButton().setOnAction(e -> {
-            this.updateViewToLogOut();
+            this.logOut();
+        });
+
+        view.getResetButton().setOnAction(e -> {
+            this.promptReset();
         });
     }
 
-    private void initializeScreenManager() 
+    private void initializeSubScreenManager() 
     {
         this.subScreenManager = new ScreenManager();
         WorldSelectView worldSelectView = new WorldSelectView();
-        WorldSelectPresenter worldSelectPresenter = new WorldSelectPresenter(worldSelectView, mainScreenManager, subScreenManager);
+        WorldSelectPresenter worldSelectPresenter = new WorldSelectPresenter(worldSelectView, this);
         subScreenManager.addScreen(worldSelectPresenter);
 
         this.view.setContent(subScreenManager.getRootNode());
     }
 
-    private void updateViewToLogOut() 
+    private void logOut() 
     {
-        if (mainScreenManager.screenExists("mainmenu")) {
-            mainScreenManager.switchScreen("mainmenu");
-        } else {
-            MainMenuView mainMenuView = new MainMenuView();
-            MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(mainMenuView, mainScreenManager);
-            mainScreenManager.addScreen(mainMenuPresenter);
-        }
+        mainScreenManager.reset();
+    }
+
+    private void promptReset() 
+    {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Reset progress");
+        alert.setHeaderText("Are you sure you want to reset your progress?");
+        alert.setContentText("This action cannot be undone and will reset your progress in the entire game.");
+
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(FillApplication.class.getResourceAsStream("images/fill-icon.png")));
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                loggedInUser.resetProgress();
+                loggedInUser.save();
+            }
+        });
     }
 
 
     // GETTERS
+
+    public User getLoggedInUser() 
+    {
+        return loggedInUser;
+    }
+
+    public ScreenManager getSubScreenManager() 
+    {
+        return subScreenManager;
+    }
+
+    public ScreenManager getMainScreenManager() 
+    {
+        return mainScreenManager;
+    }
+
+    public WorldLoader getWorldLoader() 
+    {
+        return worldLoader;
+    }
 
     @Override
     public GameMenuView getView() 

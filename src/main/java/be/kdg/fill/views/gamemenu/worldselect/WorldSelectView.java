@@ -19,7 +19,7 @@ public class WorldSelectView extends VBox {
 
     private void initializeNodes() 
     {
-        this.smallTitle = new Text("Hello {username}");
+        this.smallTitle = new Text("Hello");
         this.title = new Text("Select a world to play!");
         this.worldCards = new TilePane();
     }
@@ -44,6 +44,11 @@ public class WorldSelectView extends VBox {
         this.worldCards.setAlignment(javafx.geometry.Pos.CENTER);
 
         this.getChildren().addAll(vBox, this.worldCards);
+    }
+
+    public void setSmallTitle(String smallTitle) 
+    {
+        this.smallTitle.setText(smallTitle);
     }
 
     public void addWorldCard(WorldCard worldCard) 

@@ -1,4 +1,5 @@
 {
+    "id": 2,
     "name": "Night",
     "imagePath": "images/night-image.png",
     "difficulty": {

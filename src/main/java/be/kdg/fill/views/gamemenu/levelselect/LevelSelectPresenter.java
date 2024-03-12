@@ -7,6 +7,9 @@ import be.kdg.fill.models.core.World;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.compontents.LevelCard;
+import be.kdg.fill.views.game.GamePresenter;
+import be.kdg.fill.views.game.GameView;
+import be.kdg.fill.views.gamemenu.GameMenuPresenter;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import javafx.animation.RotateTransition;
 import javafx.util.Duration;
@@ -14,34 +17,42 @@ import javafx.util.Duration;
 public class LevelSelectPresenter implements Presenter {
     
     private LevelSelectView view;
-    private ScreenManager mainScreenManager;
-    private ScreenManager subScreenManager;
+    private GameMenuPresenter parent;
     private World world;
 
     public static final String SCREEN_NAME = "levelselect";
 
-    public LevelSelectPresenter(LevelSelectView levelSelectView, ScreenManager mainScreenManager, ScreenManager subScreenManager, World world) 
+    public LevelSelectPresenter(LevelSelectView levelSelectView, GameMenuPresenter parent) 
     {
         this.view = levelSelectView;
-        this.mainScreenManager = mainScreenManager;
-        this.subScreenManager = subScreenManager;
-        this.setWorld(world);
+        this.parent = parent;
         this.addEventHandlers();
     }
 
     private void addEventHandlers() 
     {
         view.getBackButton().setOnAction(e -> {
-            this.subScreenManager.switchBack();
+            parent.getSubScreenManager().switchBack();
 
-            WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) this.subScreenManager.getCurrentScreen();
+            WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
             worldSelectPresenter.reload();
         });
     }
 
     private void updateViewToGame(Level level) 
     {
-        
+        ScreenManager mainScreenManager = this.parent.getMainScreenManager();
+
+        if (mainScreenManager.screenExists("game")) {
+            mainScreenManager.switchScreen("game");
+            GamePresenter gamePresenter = (GamePresenter) mainScreenManager.getCurrentScreen();
+            gamePresenter.startGame(level);
+        } else {
+            GameView gameView = new GameView();
+            GamePresenter gamePresenter = new GamePresenter(gameView, this.parent.getMainScreenManager(), this.parent.getLoggedInUser());
+            mainScreenManager.addScreen(gamePresenter);
+            gamePresenter.startGame(level);
+        }
     }
 
 
@@ -66,14 +77,17 @@ public class LevelSelectPresenter implements Presenter {
     {
         this.world = world;
         this.view.getTitle().setText("The " + this.world.getName());
-        this.view.getLevelCount().setText("0/" + this.world.getLevelCount());
+        this.view.getLevelCount().setText(this.parent.getLoggedInUser().getWorldProgress(this.world.getId()) + "/" + this.world.getLevelCount());
         this.view.getLevelCards().getChildren().clear();
         
         LinkedList<Level> levels = this.world.getLevels();
 
         for (Level level: levels) {
-            boolean locked = level.getId() > 2 ? true : false;
-            LevelCard levelCard = new LevelCard(level.getId(),level.getId() == 1 ? true : false , locked);
+
+            int UserProgress = this.parent.getLoggedInUser().getWorldProgress(world.getId());
+            boolean locked = level.getId() > UserProgress + 1;
+            
+            LevelCard levelCard = new LevelCard(level.getId(), level.getId() <= UserProgress, locked);
             this.view.addLevelCard(levelCard);
 
             if (!locked) {
@@ -97,6 +111,7 @@ public class LevelSelectPresenter implements Presenter {
                     }
                 });
             }
+
         }
 
     }
