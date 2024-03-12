@@ -93,8 +93,6 @@ public class User {
             throw new IllegalArgumentException("Username cannot be null");
         } else if (username.length() < 3 || username.length() > 20) {
             throw new IllegalArgumentException("Username must be between 3 and 20 characters long");
-        } else if (username.matches(".*\\s.*")) {
-            throw new IllegalArgumentException("Username cannot contain spaces");
         } else if (UserFile.getUserDataByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
         }

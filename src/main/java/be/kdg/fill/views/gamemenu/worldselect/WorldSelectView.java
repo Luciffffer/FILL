@@ -1,11 +1,8 @@
 package be.kdg.fill.views.gamemenu.worldselect;
 
 import be.kdg.fill.views.compontents.WorldCard;
-import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class WorldSelectView extends VBox {
@@ -13,21 +10,17 @@ public class WorldSelectView extends VBox {
     private Text smallTitle;
     private Text title;
     private TilePane worldCards;
-    private String username;
 
-    public WorldSelectView(String username)
+    public WorldSelectView() 
     {
-        this.username = username;
         this.initializeNodes();
         this.layoutNodes();
     }
 
     private void initializeNodes() 
     {
-        this.smallTitle = new Text("Hello " + username + "!");
-        smallTitle.setFill(Color.web("#aa4bc4"));
+        this.smallTitle = new Text("Hello {username}");
         this.title = new Text("Select a world to play!");
-        title.setFill(Color.web("#c95c5c"));
         this.worldCards = new TilePane();
     }
 

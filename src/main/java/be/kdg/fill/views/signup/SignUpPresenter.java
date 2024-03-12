@@ -38,7 +38,6 @@ public class SignUpPresenter implements Presenter {
                     model.register();
                     updateViewToGameMenu();
                 } catch (Exception e) {
-                    signUpView.getSignUpMessageLabel().setText(e.getMessage());
                     throw new RuntimeException(e);
                 }
             }

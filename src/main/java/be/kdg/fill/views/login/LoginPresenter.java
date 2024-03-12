@@ -11,7 +11,6 @@ import be.kdg.fill.views.mainmenu.MainMenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 
@@ -42,8 +41,8 @@ public class LoginPresenter implements Presenter {
                 try {
                     user = User.login(username, password);
                     updateViewToGameMenu();
+
                 } catch (Exception e) {
-                    loginView.getLoginMessageLabel().setText(e.getMessage());
                     throw new RuntimeException(e);
                 }
             }
@@ -56,6 +55,7 @@ public class LoginPresenter implements Presenter {
                 updateViewToMainMenu();
             }
         });
+
     }
 
     private void updateViewToMainMenu() 
