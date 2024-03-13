@@ -24,6 +24,7 @@ public class GameView extends StackPane {
     private HoverClickable helpButton;
     private HoverClickable resetButton;
     private StackPane gameCenter;
+    private StackPane boardStack;
     private GridPane boardGrid;
 
     public static final int MENU_WIDTH = 350;
@@ -46,11 +47,14 @@ public class GameView extends StackPane {
         this.helpButton = new HoverClickable(100, 1.05);
         this.resetButton = new HoverClickable(100, 1.05);
         this.boardGrid = new GridPane();
+        this.boardStack = new StackPane();
         this.gameCenter = new StackPane();
     }
 
     private void layoutNodes() 
     {
+        this.setStyle("-fx-background-color: #FAF9FB;");
+
         // Layer 1: Background
         AnchorPane anchorPane = new AnchorPane();
 
@@ -116,10 +120,8 @@ public class GameView extends StackPane {
         gameBorderPane.setTop(gameTopMenu);
 
         // game center
-        this.gameCenter.setStyle("-fx-background-color: pink;");
-
-        this.gameCenter.getChildren().add(this.boardGrid);
-        this.boardGrid.setStyle("-fx-background-color: blue;");
+        this.boardStack.getChildren().add(this.boardGrid);
+        this.gameCenter.getChildren().add(this.boardStack);
 
         gameBorderPane.setCenter(this.gameCenter);
 
@@ -187,6 +189,11 @@ public class GameView extends StackPane {
     public HoverClickable getResetButton() 
     {
         return this.resetButton;
+    }
+
+    public StackPane getBoardStack() 
+    {
+        return this.boardStack;
     }
 
     public GridPane getBoardGrid() 

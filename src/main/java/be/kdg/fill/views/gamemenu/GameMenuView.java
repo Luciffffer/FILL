@@ -40,6 +40,8 @@ public class GameMenuView extends BorderPane {
 
     private void layoutNodes() 
     {
+        this.setStyle("-fx-background-color: #FAF9FB;");
+
         // Menu
         BorderPane menuPane = new BorderPane();
         menuPane.setPrefHeight(TOP_MENU_HEIGHT);

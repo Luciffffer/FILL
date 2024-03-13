@@ -87,16 +87,18 @@ public class GamePresenter implements Presenter {
         int height = (int) this.view.getGameCenter().getHeight() / this.game.getPattern().length;
         int screenHeigth = (int) this.view.getScene().getHeight();
         int finalHeight = height > screenHeigth / 5 ? screenHeigth / 5 : height;
+        int borderWidth = finalHeight / 20;
 
         this.view.getBoardGrid().getChildren().forEach(node -> {
             if (node instanceof Label) {
                 Label block = (Label) node;
                 block.setPrefSize(finalHeight, finalHeight);
+                block.setStyle("-fx-border-width: " + borderWidth + ";");
             }
         });
 
-        this.view.getBoardGrid().setMaxHeight(finalHeight * this.game.getPattern().length);
-        this.view.getBoardGrid().setMaxWidth(finalHeight * this.game.getPattern()[0].length);
+        this.view.getBoardStack().setMaxHeight(finalHeight * this.game.getPattern().length);
+        this.view.getBoardStack().setMaxWidth(finalHeight * this.game.getPattern()[0].length);
     }
 
     private void initializeBoard()

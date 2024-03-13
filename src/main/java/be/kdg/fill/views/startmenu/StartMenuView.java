@@ -28,6 +28,8 @@ public class StartMenuView extends StackPane {
 
     private void layoutNodes() 
     {
+        this.setStyle("-fx-background-color: #FAF9FB;");
+
         AnchorPane backgroundPane = new AnchorPane();
         
         this.sideImageLeft.setFitWidth(200);
