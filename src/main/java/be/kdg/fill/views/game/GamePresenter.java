@@ -103,6 +103,7 @@ public class GamePresenter implements Presenter {
 
     private void initializeBoard()
     {
+        this.view.getBoardGrid().getChildren().clear();
         int[][] pattern = this.game.getPattern();
 
         for (int i = 0; i < pattern.length; i++) 

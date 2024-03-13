@@ -42,7 +42,7 @@ public class Level implements Comparable<Level> {
     /**
      * getPattern
      * gets the pattern of the level.
-     * @return JSONArray
+     * @return int[][]
      */
     public int[][] getPattern()
     {

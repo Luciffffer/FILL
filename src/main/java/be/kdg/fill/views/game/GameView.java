@@ -120,6 +120,8 @@ public class GameView extends StackPane {
         gameBorderPane.setTop(gameTopMenu);
 
         // game center
+        BorderPane.setMargin(this.gameCenter, new Insets(12));
+
         this.boardStack.getChildren().add(this.boardGrid);
         this.gameCenter.getChildren().add(this.boardStack);
 
