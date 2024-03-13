@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 public class GameView extends StackPane {
@@ -19,6 +21,12 @@ public class GameView extends StackPane {
     private Label worldTitle;
     private Label levelCount;
     private Label timer;
+    private HoverClickable helpButton;
+    private HoverClickable resetButton;
+    private StackPane gameCenter;
+    private GridPane boardGrid;
+
+    public static final int MENU_WIDTH = 350;
 
     public GameView() 
     {
@@ -35,6 +43,10 @@ public class GameView extends StackPane {
         this.worldTitle = new Label("");
         this.levelCount = new Label("");
         this.timer = new Label("");
+        this.helpButton = new HoverClickable(100, 1.05);
+        this.resetButton = new HoverClickable(100, 1.05);
+        this.boardGrid = new GridPane();
+        this.gameCenter = new StackPane();
     }
 
     private void layoutNodes() 
@@ -59,11 +71,12 @@ public class GameView extends StackPane {
         this.getChildren().add(borderPane);
 
         // top menu
-        BorderPane topMenu = new BorderPane();
+        StackPane topMenu = new StackPane();
         topMenu.setPadding(new Insets(12));
-        topMenu.setLeft(this.backButton);
-        topMenu.setCenter(this.titel);
-        topMenu.setRight(this.logo);
+        topMenu.getChildren().addAll(this.backButton, this.titel, this.logo);
+
+        StackPane.setAlignment(this.backButton, javafx.geometry.Pos.CENTER_LEFT);
+        StackPane.setAlignment(this.logo, javafx.geometry.Pos.CENTER_RIGHT);
 
         ImageView backArrow = new ImageView(new Image(FillApplication.class.getResource("images/back-arrow.png").toExternalForm()));
         backArrow.setFitWidth(24);
@@ -86,8 +99,8 @@ public class GameView extends StackPane {
         gameBorderPane.setPadding(new Insets(24));
 
         // game top menu
-        BorderPane gameTopMenu = new BorderPane();
-        gameTopMenu.setMaxWidth(350);
+        StackPane gameTopMenu = new StackPane();
+        gameTopMenu.setMaxWidth(MENU_WIDTH);
         gameTopMenu.setPadding(new Insets(12));
         BorderPane.setAlignment(gameTopMenu, javafx.geometry.Pos.CENTER);
 
@@ -95,14 +108,67 @@ public class GameView extends StackPane {
         this.levelCount.getStyleClass().add("h3");
         this.timer.getStyleClass().add("body");
 
-        gameTopMenu.setLeft(this.worldTitle);
-        gameTopMenu.setCenter(this.levelCount);
-        gameTopMenu.setRight(this.timer);
+        gameTopMenu.getChildren().addAll(this.worldTitle, this.levelCount, this.timer);
 
-        this.timer.minWidthProperty().bind(this.worldTitle.widthProperty());
-        this.worldTitle.minWidthProperty().bind(this.levelCount.widthProperty());
+        StackPane.setAlignment(this.worldTitle, javafx.geometry.Pos.CENTER_LEFT);
+        StackPane.setAlignment(this.timer, javafx.geometry.Pos.CENTER_RIGHT);
 
         gameBorderPane.setTop(gameTopMenu);
+
+        // game center
+        this.gameCenter.setStyle("-fx-background-color: pink;");
+
+        this.gameCenter.getChildren().add(this.boardGrid);
+        this.boardGrid.setStyle("-fx-background-color: blue;");
+
+        gameBorderPane.setCenter(this.gameCenter);
+
+        // game bottom menu
+        HBox gameBottomMenu = new HBox();
+        gameBottomMenu.setSpacing(24);
+        gameBottomMenu.setMaxWidth(USE_PREF_SIZE);
+        gameBottomMenu.setPadding(new Insets(12));
+        BorderPane.setAlignment(gameBottomMenu, javafx.geometry.Pos.CENTER);
+
+
+        // help button
+        HBox helpButtonBox = new HBox();
+        helpButtonBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        helpButtonBox.setSpacing(12);
+
+        ImageView helpIcon = new ImageView(new Image(FillApplication.class.getResource("images/help-icon.png").toExternalForm()));
+        helpIcon.setFitWidth(24);
+        helpIcon.setPreserveRatio(true);
+
+        Label helpLabel = new Label("How to play");
+        helpLabel.getStyleClass().add("body");
+
+        helpButtonBox.getChildren().addAll(helpIcon, helpLabel);
+
+        this.helpButton.setGraphic(helpButtonBox);
+        this.helpButton.getStyleClass().add("button-reset");
+
+        // reset button
+
+        HBox resetButtonBox = new HBox();
+        resetButtonBox.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+        resetButtonBox.setSpacing(12);
+
+        ImageView resetIcon = new ImageView(new Image(FillApplication.class.getResource("images/reset-icon.png").toExternalForm()));
+        resetIcon.setFitWidth(24);
+        resetIcon.setPreserveRatio(true);
+
+        Label resetLabel = new Label("Reset");
+        resetLabel.getStyleClass().add("body");
+
+        resetButtonBox.getChildren().addAll(resetIcon, resetLabel);
+
+        this.resetButton.setGraphic(resetButtonBox);
+        this.resetButton.getStyleClass().add("button-reset");
+
+        gameBottomMenu.getChildren().addAll(this.helpButton, this.resetButton);
+
+        gameBorderPane.setBottom(gameBottomMenu);
     }
 
 
@@ -111,6 +177,26 @@ public class GameView extends StackPane {
     public HoverClickable getBackButton() 
     {
         return this.backButton;
+    }
+
+    public HoverClickable getHelpButton() 
+    {
+        return this.helpButton;
+    }
+
+    public HoverClickable getResetButton() 
+    {
+        return this.resetButton;
+    }
+
+    public GridPane getBoardGrid() 
+    {
+        return this.boardGrid;
+    }
+
+    public StackPane getGameCenter() 
+    {
+        return this.gameCenter;
     }
 
 
@@ -129,6 +215,13 @@ public class GameView extends StackPane {
     public void setTimer(String timer) 
     {
         this.timer.setText(timer);
+    }
+
+    public void addBlock(int i, int j) 
+    {
+        Label block = new Label();
+        block.getStyleClass().add("block");
+        this.boardGrid.add(block, j, i);
     }
 
 }

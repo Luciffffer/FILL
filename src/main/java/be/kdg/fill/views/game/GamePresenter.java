@@ -12,6 +12,7 @@ import be.kdg.fill.views.ScreenManager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 
 public class GamePresenter implements Presenter {
@@ -37,6 +38,12 @@ public class GamePresenter implements Presenter {
             this.mainScreenManager.switchScreen("gamemenu");
             if (this.timer != null) this.timer.cancel();
         });
+
+        Platform.runLater(() -> {
+            this.view.getScene().heightProperty().addListener((obs, oldVal, newVal) -> {
+                resizeBlocks();
+            });
+        });
     }
 
     public void startGame(Level level) 
@@ -45,6 +52,10 @@ public class GamePresenter implements Presenter {
         this.view.setWorldTitle(level.getWorld().getName());
         this.view.setLevelCount(level.getId() + "/" + level.getWorld().getLevelCount());
         this.startTimer();
+        Platform.runLater(() -> {
+            this.initializeBoard();
+            this.resizeBlocks();
+        });
     }
 
     private void startTimer() 
@@ -69,6 +80,39 @@ public class GamePresenter implements Presenter {
                 });
             }
         }, 0, 1000);
+    }
+
+    private void resizeBlocks() 
+    {
+        int height = (int) this.view.getGameCenter().getHeight() / this.game.getPattern().length;
+        int screenHeigth = (int) this.view.getScene().getHeight();
+        int finalHeight = height > screenHeigth / 5 ? screenHeigth / 5 : height;
+
+        this.view.getBoardGrid().getChildren().forEach(node -> {
+            if (node instanceof Label) {
+                Label block = (Label) node;
+                block.setPrefSize(finalHeight, finalHeight);
+            }
+        });
+
+        this.view.getBoardGrid().setMaxHeight(finalHeight * this.game.getPattern().length);
+        this.view.getBoardGrid().setMaxWidth(finalHeight * this.game.getPattern()[0].length);
+    }
+
+    private void initializeBoard()
+    {
+        int[][] pattern = this.game.getPattern();
+
+        for (int i = 0; i < pattern.length; i++) 
+        {
+            for (int j = 0; j < pattern[i].length; j++) 
+            {
+                if (pattern[i][j] != 0) 
+                {
+                    this.view.addBlock(i, j);
+                }
+            }
+        }
     }
 
     private void askForBreak() 

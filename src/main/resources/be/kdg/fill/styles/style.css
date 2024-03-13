@@ -94,3 +94,8 @@
 .locked {
     -fx-border-color: linear-gradient(to bottom right, #B4B4B4, #9F9F9F);
 }
+
+.block {
+    -fx-border-color: white;
+    -fx-background-color: #DFE1E4;
+}

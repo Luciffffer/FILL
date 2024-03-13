@@ -6,7 +6,7 @@ import org.json.simple.JSONArray;
 
 public class Game {
     private Level level;
-    private JSONArray state;
+    private int[][] state;
     private LocalDateTime startTime;
 
 
@@ -27,5 +27,9 @@ public class Game {
         long minutes = seconds / 60;
         seconds = seconds % 60;
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    public int[][] getPattern() {
+        return this.level.getPattern();
     }
 }
