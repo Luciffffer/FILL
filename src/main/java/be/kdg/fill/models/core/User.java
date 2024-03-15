@@ -9,6 +9,7 @@ public class User {
     private String username;
     private String password;
     private HashMap<Integer, Integer> progress;
+    private boolean isAdmin;
     private UserFile userFile;
 
 
@@ -24,6 +25,7 @@ public class User {
         this.username = null;
         this.password = null;
         this.progress = new HashMap<Integer, Integer>();
+        this.isAdmin = false;
         this.userFile = userFile;
     }
     
@@ -81,6 +83,16 @@ public class User {
         }
     }
 
+    /**
+     * isAdmin
+     * returns whether the user is an admin
+     * @return boolean
+     */
+    public boolean isAdmin()
+    {
+        return this.isAdmin;
+    }
+
 
     // SETTERS
     
@@ -124,6 +136,12 @@ public class User {
         }
 
         this.password = Cryptography.hashStringPBKDF2(password, Cryptography.generateSalt());
+        return this;
+    }
+
+    public User setAdmin(boolean isAdmin)
+    {
+        this.isAdmin = isAdmin;
         return this;
     }
 
@@ -190,7 +208,8 @@ public class User {
 
         String[] userDataArray = userData.split("::");
         String[] passwordData = userDataArray[1].split(":");
-        String[] progressData = userDataArray.length > 2 ? userDataArray[2].split(":") : new String[]{};
+        boolean isAdmin = userDataArray[2].equals("true") ? true : false;
+        String[] progressData = userDataArray.length > 3 ? userDataArray[2].split(":") : new String[]{};
 
         String hashedPassword = Cryptography.hashStringPBKDF2(password, passwordData[1], Integer.parseInt(passwordData[3]), Integer.parseInt(passwordData[4]));
 
@@ -200,6 +219,7 @@ public class User {
 
         this.username = userDataArray[0];
         this.password = userDataArray[1];
+        this.isAdmin = isAdmin;
         this.progress = new HashMap<Integer, Integer>();
         
         for (String worldProgress: progressData) {

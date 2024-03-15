@@ -110,7 +110,7 @@ public class UserFile {
      */
     public void addUser(User user) 
     {
-        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgressString();
+        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + String.valueOf(user.isAdmin()) + "::" + user.getProgressString();
         data.add(dataString);
 
         this.save();
@@ -124,7 +124,7 @@ public class UserFile {
      */
     public void updateUser(User user)
     {
-        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + user.getProgressString();
+        String dataString = user.getUsername() + "::" + user.getPassword() + "::" + String.valueOf(user.isAdmin()) + "::" + user.getProgressString();
 
         for (int i = 0; i < data.size(); i++) {
             String[] userData = data.get(i).split("::");
@@ -162,7 +162,7 @@ public class UserFile {
             System.err.println(e);
             ErrorLog error = new ErrorLog(e);
             error.save();
-            throw new RuntimeException("Something went wrong, please try again later.");
+            throw new RuntimeException("Something went wrong saving the user data. Please check the error log.");
 
         }
     }
