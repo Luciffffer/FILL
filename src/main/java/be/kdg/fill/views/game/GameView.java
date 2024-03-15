@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class GameView extends StackPane {
     
@@ -26,6 +27,13 @@ public class GameView extends StackPane {
     private StackPane gameCenter;
     private StackPane boardStack;
     private GridPane boardGrid;
+
+    private StackPane gameOverlay;
+    private VBox gameOverlayBox;
+    private StackPane gameOverlayContent;
+    private HoverClickable closeOverlayButton;
+    private Label overlayTitle;
+    private VBox howToPlayContent;
 
     public static final int MENU_WIDTH = 350;
 
@@ -49,6 +57,13 @@ public class GameView extends StackPane {
         this.boardGrid = new GridPane();
         this.boardStack = new StackPane();
         this.gameCenter = new StackPane();
+
+        this.gameOverlay = new StackPane();
+        this.gameOverlayBox = new VBox();
+        this.howToPlayContent = new VBox();
+        this.closeOverlayButton = new HoverClickable(100, 1.05);
+        this.overlayTitle = new Label("");
+        this.gameOverlayContent = new StackPane();
     }
 
     private void layoutNodes() 
@@ -173,6 +188,49 @@ public class GameView extends StackPane {
         gameBottomMenu.getChildren().addAll(this.helpButton, this.resetButton);
 
         gameBorderPane.setBottom(gameBottomMenu);
+
+        // game overlay
+        this.gameOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        this.gameOverlay.setPadding(new Insets(48));
+        this.gameOverlay.setVisible(false);
+        this.getChildren().add(this.gameOverlay);
+
+        this.gameOverlayBox.setAlignment(javafx.geometry.Pos.CENTER);
+        StackPane.setAlignment(this.gameOverlayBox, javafx.geometry.Pos.CENTER);
+        this.gameOverlayBox.setSpacing(24);
+        this.gameOverlayBox.setPadding(new Insets(24));
+        this.gameOverlayBox.setStyle("-fx-background-color: #FAF9FB; -fx-background-radius: 12px;");
+        this.gameOverlayBox.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
+        this.gameOverlayBox.setMaxWidth(350);
+        this.gameOverlay.getChildren().add(this.gameOverlayBox);
+
+        StackPane overlayTopmenu = new StackPane();
+
+        this.closeOverlayButton.getStyleClass().add("button-reset");
+        this.closeOverlayButton.setPadding(new Insets(0));
+        ImageView backArrowIcon = new ImageView(new Image(FillApplication.class.getResource("images/back-arrow.png").toExternalForm()));
+        backArrowIcon.setFitWidth(24);
+        backArrowIcon.setPreserveRatio(true);
+        this.closeOverlayButton.setGraphic(backArrowIcon);
+
+        StackPane.setAlignment(this.closeOverlayButton, javafx.geometry.Pos.CENTER_LEFT);
+        overlayTopmenu.getChildren().add(this.closeOverlayButton);
+
+        this.overlayTitle.getStyleClass().add("h2");
+
+        StackPane.setAlignment(this.overlayTitle, javafx.geometry.Pos.CENTER);
+        overlayTopmenu.getChildren().add(this.overlayTitle);
+
+        this.gameOverlayBox.getChildren().addAll(overlayTopmenu, gameOverlayContent);
+
+        // how to play content
+        this.howToPlayContent.setSpacing(12);
+
+        Label howToPlayParagraph1 = new Label("Fill is a classic puzzle game where you're given a grid with some blocks and a starting point. The goal is to fill the grid with a line that starts at the starting point. Fill the entire grid to win the game!");
+        howToPlayParagraph1.getStyleClass().add("body");
+        howToPlayParagraph1.setWrapText(true);
+
+        this.howToPlayContent.getChildren().add(howToPlayParagraph1);
     }
 
 
@@ -208,6 +266,16 @@ public class GameView extends StackPane {
         return this.gameCenter;
     }
 
+    public StackPane getGameOverlay() 
+    {
+        return this.gameOverlay;
+    }
+
+    public HoverClickable getCloseOverlayButton() 
+    {
+        return this.closeOverlayButton;
+    }
+
 
     // SETTERS
 
@@ -231,6 +299,17 @@ public class GameView extends StackPane {
         Label block = new Label();
         block.getStyleClass().add("block");
         this.boardGrid.add(block, j, i);
+    }
+
+
+    // METHODS
+
+    public void showHowToPlay() 
+    {
+        this.overlayTitle.setText("How to play");
+        this.gameOverlayContent.getChildren().clear();
+        this.gameOverlayContent.getChildren().add(this.howToPlayContent);
+        this.gameOverlay.setVisible(true);
     }
 
 }

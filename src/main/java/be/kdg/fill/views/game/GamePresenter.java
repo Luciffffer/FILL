@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.VBox;
 
 public class GamePresenter implements Presenter {
     private GameView view;
@@ -37,6 +38,14 @@ public class GamePresenter implements Presenter {
         this.view.getBackButton().setOnAction(e -> {
             this.mainScreenManager.switchScreen("gamemenu");
             if (this.timer != null) this.timer.cancel();
+        });
+
+        this.view.getHelpButton().setOnAction(e -> {
+            this.view.showHowToPlay();
+        });
+
+        this.view.getCloseOverlayButton().setOnAction(e -> {
+            this.view.getGameOverlay().setVisible(false);
         });
 
         Platform.runLater(() -> {
