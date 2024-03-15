@@ -2,8 +2,6 @@ package be.kdg.fill.models.core;
 
 import java.time.LocalDateTime;
 
-import org.json.simple.JSONArray;
-
 public class Game {
     private Level level;
     private int[][] state;

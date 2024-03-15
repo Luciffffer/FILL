@@ -59,7 +59,7 @@ public class UserFile {
             System.err.println(e);
             ErrorLog error = new ErrorLog(e);
             error.save();
-            throw new RuntimeException("Something went wrong, please check the error log.");
+            throw new RuntimeException("Something went wrong loading the user file. Please check the error log.");
 
         }
     }

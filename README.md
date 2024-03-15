@@ -5,6 +5,13 @@ Feel free to test it out and give feedback!
 
 ![FILL title screen](https://lucifarian.be/wp-content/uploads/2024/02/fill-title-screen.jpg)
 
+## Log in information
+
+There is 1 admin account in the application used for adding worlds and levels. The log in information is as follows:
+
+username: admin
+password: 123456789
+
 ## To Contributors
 
 ### Design

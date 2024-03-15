@@ -124,7 +124,6 @@ public class GamePresenter implements Presenter {
         alert.setTitle("Time for a break?");
         alert.setHeaderText("You have been playing for 5 minutes.");
         alert.setContentText("Maybe it's time for a break... Would you like to take a break?");
-        alert.showAndWait();
 
         // create buttons
         ButtonType yesButton = new ButtonType("Yes");
