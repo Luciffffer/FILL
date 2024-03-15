@@ -3,6 +3,10 @@ package be.kdg.fill.views.startmenu.signup;
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.startmenu.StartMenuPresenter;
+import be.kdg.fill.views.startmenu.login.LoginPresenter;
+import be.kdg.fill.views.startmenu.login.LoginView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -22,29 +26,64 @@ public class SignUpPresenter implements Presenter {
 
     private void addEventHandlers() 
     {
-        signUpView.getSignUpButton().setOnAction(new EventHandler<ActionEvent>() {
+        // auto check if username is valid when typed
+        signUpView.getUsernameField().getField().textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
-                String username = String.valueOf((signUpView.getUsernameTextField().getText()));
-                String password = String.valueOf((signUpView.getPasswordPasswordField().getText()));
-
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 try {
-                    User user = parent.getModel();
-
-                    user.setUsername(username);
-                    user.setPassword(password);
-                    user.register();
-                    parent.updateViewToGameMenu();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    parent.getModel().setUsername(newValue);
+                    signUpView.getUsernameField().clearError();;
+                } catch (IllegalArgumentException e) {
+                    signUpView.getUsernameField().setError(e.getMessage());
                 }
             }
         });
 
-        signUpView.getCancelButton().setOnAction(new EventHandler<ActionEvent>() {
+        // auto check if password is valid when typed
+        signUpView.getPasswordField().getField().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    parent.getModel().setPassword(newValue);
+                    signUpView.getPasswordField().clearError();
+                } catch (IllegalArgumentException e) {
+                    signUpView.getPasswordField().setError(e.getMessage());
+                }
+            }
+        });
+
+        // go back to main menu
+        signUpView.getBackButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 updateViewToMainMenu();
+            }
+        });
+
+        // sign up button clicked
+        signUpView.getSignUpButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String username = String.valueOf(signUpView.getUsernameField().getField().getText());
+                String password = String.valueOf(signUpView.getPasswordField().getField().getText());
+
+                try {
+                    User user = parent.getModel();
+                    user.setUsername(username);
+                    user.setPassword(password);
+                    user.register();
+                    parent.updateViewToGameMenu();
+                } catch (IllegalArgumentException e) {
+                    // do nothing because errors are already displayed
+                }
+            }
+        });
+
+        // login button clicked
+        signUpView.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                updateViewToLogin();
             }
         });
     }
@@ -52,6 +91,17 @@ public class SignUpPresenter implements Presenter {
     private void updateViewToMainMenu() 
     {
         parent.getSubScreenManager().switchScreen("mainmenu");
+    }
+
+    private void updateViewToLogin() 
+    {
+        if (!parent.getSubScreenManager().screenExists("login")) {
+            LoginView loginView = new LoginView();
+            LoginPresenter loginPresenter = new LoginPresenter(loginView, this.parent);
+            parent.getSubScreenManager().addScreen(loginPresenter);
+        } else {
+            parent.getSubScreenManager().switchScreen("login");
+        }
     }
 
     @Override

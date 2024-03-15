@@ -2,6 +2,8 @@ package be.kdg.fill.views.startmenu.login;
 
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.startmenu.StartMenuPresenter;
+import be.kdg.fill.views.startmenu.signup.SignUpPresenter;
+import be.kdg.fill.views.startmenu.signup.SignUpView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -21,30 +23,49 @@ public class LoginPresenter implements Presenter {
 
     private void addEventHandlers() 
     {
-        loginView.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String username = String.valueOf(loginView.getUsernameTextField().getText());
-                String password = String.valueOf(loginView.getPasswordPasswordField().getText());
-
-                try {
-
-                    parent.getModel().login(username, password);
-                    parent.updateViewToGameMenu();
-
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        loginView.getCancelButton().setOnAction(new EventHandler<ActionEvent>() {
+        // back button pressed
+        loginView.getBackButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 updateViewToMainMenu();
             }
         });
 
+        // login button pressed
+        loginView.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String username = String.valueOf(loginView.getUsernameField().getField().getText());
+                String password = String.valueOf(loginView.getPasswordField().getField().getText());
+
+                try {
+                    parent.getModel().login(username, password);
+                    parent.updateViewToGameMenu();
+                } catch (IllegalArgumentException e) {
+                    loginView.getErrorLabel().setText(e.getMessage());
+                }
+            }
+        });
+
+        // sign up button pressed
+        loginView.getSignUpButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                updateViewToSignUp();
+            }
+        });
+
+    }
+
+    private void updateViewToSignUp()
+    {
+        if (!parent.getSubScreenManager().screenExists("signup")) {
+            SignUpView signUpView = new SignUpView();
+            SignUpPresenter signUpPresenter = new SignUpPresenter(signUpView, this.parent);
+            parent.getSubScreenManager().addScreen(signUpPresenter);
+        } else {
+            parent.getSubScreenManager().switchScreen("signup");
+        }
     }
 
     private void updateViewToMainMenu() 

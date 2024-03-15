@@ -1,29 +1,26 @@
 package be.kdg.fill.views.startmenu.login;
 
 import be.kdg.fill.FillApplication;
+import be.kdg.fill.views.compontents.FillTextField;
+import be.kdg.fill.views.compontents.HoverClickable;
 import be.kdg.fill.views.compontents.PrimaryButton;
-import be.kdg.fill.views.compontents.SecondaryButton;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
-public class LoginView extends BorderPane {
+public class LoginView extends StackPane {
     private ImageView logo;
-    private Button loginButton;
-    private TextField usernameTextField;
-    private Label usernameLabel;
-    private PasswordField passwordPasswordField;
-    private Label passwordLabel;
-    private Text loginMessageLabel;
-    private Button cancelButton;
+    private FillTextField usernameTextField;
+    private FillTextField passwordPasswordField;
+    private Label title;
+    private HoverClickable backButton;
+    private PrimaryButton loginButton;
+    private Button signUpButton;
+    private Label errorLabel;
     
     public LoginView() 
     {
@@ -35,66 +32,115 @@ public class LoginView extends BorderPane {
     {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
 
+        this.title = new Label("Log in");
+        this.backButton = new HoverClickable(100, 1.05);
+
+        this.usernameTextField = new FillTextField("Username", false);
+        this.passwordPasswordField = new FillTextField("Password", true);
+
         this.loginButton = new PrimaryButton("Log in");
-        this.cancelButton = new SecondaryButton("Cancel");
+        this.signUpButton = new Button("Sign up");
 
-        this.usernameLabel = new Label("Username");
-        this.usernameLabel.setFont(Font.font("Arial", 15));
-
-        this.passwordLabel = new Label("Password");
-        this.passwordLabel.setFont(Font.font("Arial", 15));
-
-        this.usernameTextField = new TextField();
-        this.usernameTextField.setPromptText("Type your username here");
-
-        this.passwordPasswordField = new PasswordField();
-        this.passwordPasswordField.setPromptText("Type your password here");
-
-        this.loginMessageLabel = new Text();
-        this.loginMessageLabel.setText("");
-        this.loginMessageLabel.setFill(Color.web("#e42e2e"));
+        this.errorLabel = new Label();
     }
 
     private void layoutNodes()
     {
-        BorderPane outerBorderPane = new BorderPane();
-        outerBorderPane.setPrefSize(800, 600);
+        VBox contentPane = new VBox();
+        contentPane.setAlignment(Pos.CENTER);
+        contentPane.setSpacing(36.0);
 
-        BorderPane innerBorderPane = new BorderPane();
-        innerBorderPane.setPrefSize(600, 400);
+        // logo
+        this.logo.setPreserveRatio(true);
+        this.logo.setFitWidth(175);
 
+        contentPane.getChildren().add(logo);
 
-        VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(logo, usernameLabel, usernameTextField, passwordLabel, passwordPasswordField, loginMessageLabel,
-                loginButton, cancelButton);
+        // title & backbutton
+        VBox mainBox = new VBox();
+        mainBox.setSpacing(24.0);
+        mainBox.setAlignment(Pos.CENTER);
+        contentPane.getChildren().add(mainBox);
 
-        vbox.setAlignment(Pos.CENTER_LEFT);
-        innerBorderPane.setCenter(vbox);
-        outerBorderPane.setCenter(innerBorderPane);
+        StackPane titlePane = new StackPane();
+        titlePane.setMaxWidth(350);
 
-        this.setRight(innerBorderPane);
+        this.title.getStyleClass().add("h2");
+        StackPane.setAlignment(title, Pos.CENTER);
 
-        logo.setFitHeight(120);
+        ImageView backArrow = new ImageView(new Image(FillApplication.class.getResource("images/back-arrow.png").toExternalForm()));
+        backArrow.setFitWidth(24);
+        backArrow.setPreserveRatio(true);
+        this.backButton.setGraphic(backArrow);
+        this.backButton.getStyleClass().add("button-reset");
+        StackPane.setAlignment(this.backButton, Pos.CENTER_LEFT);
 
-        usernameTextField.setMaxWidth(300);
-        passwordPasswordField.setMaxWidth(300);
-        loginButton.setMinWidth(200);
-        cancelButton.setMinWidth(200);
+        titlePane.getChildren().addAll(this.backButton, this.title);
+        mainBox.getChildren().add(titlePane);
+
+        // error label
+        this.errorLabel.getStyleClass().add("body");
+        this.errorLabel.setStyle("-fx-text-fill: red;");
+        mainBox.getChildren().add(this.errorLabel);
+
+        // input fields
+        VBox inputBox = new VBox();
+        inputBox.setSpacing(6.0);
+        inputBox.setAlignment(Pos.CENTER);
+
+        usernameTextField.setMaxWidth(330);
+        passwordPasswordField.setMaxWidth(330);
+
+        inputBox.getChildren().addAll(usernameTextField, passwordPasswordField);
+
+        mainBox.getChildren().add(inputBox);
+
+        // buttons
+        VBox buttonBox = new VBox();
+        buttonBox.setSpacing(12.0);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setPadding(new javafx.geometry.Insets(12, 0, 0, 0));
+
+        this.loginButton.setMinWidth(175);
+        this.signUpButton.getStyleClass().add("button-reset");
+        this.signUpButton.getStyleClass().add("text-button");
+
+        buttonBox.getChildren().addAll(this.loginButton, this.signUpButton);
+        mainBox.getChildren().add(buttonBox);
+
+        this.getChildren().add(contentPane);
     }
 
-    public Button getLoginButton() {
-        return loginButton;
+
+    // GETTERS
+
+    public FillTextField getUsernameField()
+    {
+        return this.usernameTextField;
     }
 
-    public TextField getUsernameTextField() {
-        return usernameTextField;
+    public FillTextField getPasswordField() 
+    {
+        return this.passwordPasswordField;
     }
 
-    public PasswordField getPasswordPasswordField() {
-        return passwordPasswordField;
+    public HoverClickable getBackButton() 
+    {
+        return this.backButton;
     }
 
-    public Button getCancelButton() {
-        return cancelButton;
+    public PrimaryButton getLoginButton()
+    {
+        return this.loginButton;
+    }
+
+    public Button getSignUpButton()
+    {
+        return this.signUpButton;
+    }
+
+    public Label getErrorLabel()
+    {
+        return this.errorLabel;
     }
 }

@@ -63,6 +63,14 @@
     -fx-border-width: 2;
 }
 
+.text-button {
+    -fx-text-fill: #B78BBE;
+}
+
+.text-button:focused {
+    -fx-text-fill: #A26CE6;
+}
+
 .text-button:hover {
     -fx-text-fill: #A26CE6;
 }
@@ -76,6 +84,12 @@
     -fx-font-size: 14px;
     -fx-font-family: 'Inter Regular', sans-serif;
     -fx-text-fill: #626262;
+}
+
+.small-error {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Inter Regular', sans-serif;
+    -fx-text-fill: red;
 }
 
 .level-card {
@@ -98,4 +112,26 @@
 .block {
     -fx-border-color: #FAF9FB;
     -fx-background-color: #c8c9cc;
+}
+
+.text-field-reset {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: black;
+}
+
+.indicator-line-background {
+    -fx-fill: #B78BBE;
+}
+
+.indicator-line {
+    -fx-fill: #9b5fe4;
+}
+
+.password-field {
+    -fx-font-family: sans-serif;
+    -fx-font-size: 16px;
 }
