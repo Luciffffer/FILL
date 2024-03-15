@@ -27,6 +27,7 @@ public class GameMenuPresenter implements Presenter {
         this.mainScreenManager = mainScreenManager;
         this.loggedInUser = loggedInUser;
         this.worldLoader = new WorldLoader("worlds");
+        if (loggedInUser.isAdmin()) this.view.addAddWorldButton();
         this.initializeSubScreenManager();
         this.addEventHandlers();
     }
@@ -39,6 +40,10 @@ public class GameMenuPresenter implements Presenter {
 
         view.getResetButton().setOnAction(e -> {
             this.promptReset();
+        });
+
+        view.getAddWorldButton().setOnAction(e -> {
+            this.updateViewToAddWorld();
         });
     }
 
@@ -72,6 +77,11 @@ public class GameMenuPresenter implements Presenter {
                 loggedInUser.save();
             }
         });
+    }
+
+    private void updateViewToAddWorld() 
+    {
+        // temporary
     }
 
 

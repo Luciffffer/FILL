@@ -16,9 +16,11 @@ public class GameMenuView extends BorderPane {
     private ImageView logo;
     private Button resetButton;
     private Button logOutButton;
+    private Button addWorldButton;
     private StackPane contentPane;
     private Pane content;
     private AnchorPane backgroundPane;
+    private HBox menuButtons;
 
     public static final int TOP_MENU_HEIGHT = 56;
 
@@ -34,8 +36,10 @@ public class GameMenuView extends BorderPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
         this.resetButton = new Button("Reset Game");
         this.logOutButton = new Button("Log Out");
+        this.addWorldButton = new Button("Add World");
         this.contentPane = new StackPane();
         this.backgroundPane = new AnchorPane();
+        this.menuButtons = new HBox();
     }
 
     private void layoutNodes() 
@@ -58,19 +62,19 @@ public class GameMenuView extends BorderPane {
         menuPane.setLeft(this.logo);
 
         // Menu buttons
-        HBox menuButtons = new HBox();
-
         this.resetButton.getStyleClass().add("button-reset");
         this.logOutButton.getStyleClass().add("button-reset");
+        this.addWorldButton.getStyleClass().add("button-reset");
         this.resetButton.getStyleClass().add("text-button");
         this.logOutButton.getStyleClass().add("text-button");
+        this.addWorldButton.getStyleClass().add("text-button");
 
-        menuButtons.setAlignment(javafx.geometry.Pos.CENTER);
-        menuButtons.getChildren().addAll(this.resetButton, this.logOutButton);
-        menuButtons.setSpacing(12);
+        this.menuButtons.setAlignment(javafx.geometry.Pos.CENTER);
+        this.menuButtons.getChildren().addAll(this.resetButton, this.logOutButton);
+        this.menuButtons.setSpacing(12);
 
-        BorderPane.setAlignment(menuButtons, javafx.geometry.Pos.CENTER);
-        menuPane.setRight(menuButtons);
+        BorderPane.setAlignment(this.menuButtons, javafx.geometry.Pos.CENTER);
+        menuPane.setRight(this.menuButtons);
 
         this.setTop(menuPane);
 
@@ -117,5 +121,19 @@ public class GameMenuView extends BorderPane {
     public Button getLogOutButton() 
     {
         return logOutButton;
+    }
+
+    public Button getAddWorldButton() 
+    {
+        return addWorldButton;
+    }
+
+
+    // SETTERS
+
+    public void addAddWorldButton()
+    {
+        this.menuButtons.getChildren().clear();
+        this.menuButtons.getChildren().addAll(this.addWorldButton, this.resetButton, this.logOutButton);
     }
 }

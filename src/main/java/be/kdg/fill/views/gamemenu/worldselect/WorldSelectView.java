@@ -1,14 +1,14 @@
 package be.kdg.fill.views.gamemenu.worldselect;
 
 import be.kdg.fill.views.compontents.WorldCard;
+import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class WorldSelectView extends VBox {
     
-    private Text smallTitle;
-    private Text title;
+    private Label smallTitle;
+    private Label title;
     private TilePane worldCards;
 
     public WorldSelectView() 
@@ -19,8 +19,8 @@ public class WorldSelectView extends VBox {
 
     private void initializeNodes() 
     {
-        this.smallTitle = new Text("Hello");
-        this.title = new Text("Select a world to play!");
+        this.smallTitle = new Label("Hello");
+        this.title = new Label("Select a world to play!");
         this.worldCards = new TilePane();
     }
 
@@ -36,6 +36,7 @@ public class WorldSelectView extends VBox {
 
         this.smallTitle.getStyleClass().add("body");
         this.title.getStyleClass().add("h1");
+        this.title.setStyle("-fx-text-fill: #E66C6C;");
 
         vBox.getChildren().addAll(this.smallTitle, this.title);
 
