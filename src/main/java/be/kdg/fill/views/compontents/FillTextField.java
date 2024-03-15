@@ -51,7 +51,6 @@ public class FillTextField extends StackPane {
     {
         this.setFocusTraversable(true);
         this.setPadding(new javafx.geometry.Insets(20, 0, 24, 0));
-        //this.setBorder(new javafx.scene.layout.Border(new javafx.scene.layout.BorderStroke(javafx.scene.paint.Color.valueOf("#A87EDC"), javafx.scene.layout.BorderStrokeStyle.SOLID, new javafx.scene.layout.CornerRadii(5), new javafx.scene.layout.BorderWidths(1))));
 
         // TextField
         this.textField.getStyleClass().add("text-field-reset");
