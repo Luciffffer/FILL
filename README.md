@@ -10,6 +10,7 @@ Feel free to test it out and give feedback!
 There is 1 admin account in the application used for adding worlds and levels. The log in information is as follows:
 
 username: admin
+
 password: 123456789
 
 ## To Contributors
