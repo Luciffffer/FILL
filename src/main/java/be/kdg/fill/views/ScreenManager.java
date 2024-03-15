@@ -2,7 +2,10 @@ package be.kdg.fill.views;
 
 import java.util.Stack;
 
-import be.kdg.fill.views.startmenu.mainmenu.MainMenuPresenter;
+import be.kdg.fill.models.core.User;
+import be.kdg.fill.models.helpers.UserFile;
+import be.kdg.fill.views.startmenu.StartMenuPresenter;
+import be.kdg.fill.views.startmenu.StartMenuView;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -76,12 +79,12 @@ public class ScreenManager {
 
     public void reset()
     {
-        this.switchScreen("mainmenu");
-        
-        MainMenuPresenter mainMenuPresenter = (MainMenuPresenter) screens.peek();
-
         this.screens.clear();
-        this.screens.push(mainMenuPresenter);
+
+        StartMenuView startMenuView = new StartMenuView();
+        StartMenuPresenter startMenuPresenter = new StartMenuPresenter(startMenuView, this, new User(new UserFile("user-data.bin")));
+
+        this.addScreen(startMenuPresenter);
     }
 
 }
