@@ -5,6 +5,8 @@ import be.kdg.fill.models.core.User;
 import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
+import be.kdg.fill.views.gamemenu.addworld.AddWorldPresenter;
+import be.kdg.fill.views.gamemenu.addworld.AddWorldView;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectView;
 import javafx.scene.control.Alert;
@@ -81,7 +83,15 @@ public class GameMenuPresenter implements Presenter {
 
     private void updateViewToAddWorld() 
     {
-        // temporary
+        if (!this.subScreenManager.screenExists("addworld")) {
+            AddWorldView addWorldView = new AddWorldView();
+            AddWorldPresenter addWorldPresenter = new AddWorldPresenter(addWorldView, this);
+            this.subScreenManager.addScreen(addWorldPresenter);
+        } else {
+            this.subScreenManager.switchScreen("addworld");
+            AddWorldPresenter addWorldPresenter = (AddWorldPresenter) this.subScreenManager.getCurrentScreen();
+            addWorldPresenter.reset();
+        }
     }
 
 

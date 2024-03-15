@@ -10,7 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class LevelSelectView extends VBox {
-    
     Text title;
     Button backButton;
     Text levelCount;
