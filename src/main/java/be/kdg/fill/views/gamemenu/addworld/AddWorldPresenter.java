@@ -4,7 +4,7 @@ import be.kdg.fill.models.core.Level;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.compontents.CheckBoxes;
 import be.kdg.fill.views.compontents.LevelCreationBox;
-import be.kdg.fill.views.compontents.World;
+import be.kdg.fill.views.compontents.AddWorld;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -107,7 +107,8 @@ public class AddWorldPresenter implements Presenter {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
         // Sla de levels op naar JSON-bestanden
-        World world = new World(worldName, difficultyName);
+
+        AddWorld world = new AddWorld(worldName, difficultyName);
         for (Level level : levels) {
             world.addLevel(level);
         }
