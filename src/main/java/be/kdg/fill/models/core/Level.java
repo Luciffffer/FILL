@@ -26,6 +26,12 @@ public class Level implements Comparable<Level> {
         this.world = world;
     }
 
+    public Level(int id, int[][] pattern, JSONArray startPos) {
+        this.id = id;
+        this.pattern = pattern;
+        this.startPos = startPos;
+    }
+
 
     // GETTERS
 
@@ -59,6 +65,9 @@ public class Level implements Comparable<Level> {
         return this.world;
     }
 
+    public JSONArray getStartPos() {
+        return startPos;
+    }
 
     // METHODS
 
@@ -67,5 +76,4 @@ public class Level implements Comparable<Level> {
     {
         return Integer.compare(this.id, o.id);
     }
-
 }
