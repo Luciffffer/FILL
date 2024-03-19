@@ -151,16 +151,14 @@ public class Game {
      * UpdateLine
      * updates the line of the game if a valid move is made.
      * If all blocks are connected, sets gameFinished to true.
-     * Throws IllegalStateException if game is already finished.
+     * will do nothing if the game is already finished, the move is out of bounds, the move is on an empty space or the move is not next to the last element in the line.
      * @param row
      * @param col
-     * @throws IllegalStateException
      */
-    public void updateLine(int row, int col) throws IllegalStateException
+    public void updateLine(int row, int col)
     {
-        // check if game is finished
         if (this.gameFinished) {
-            throw new IllegalStateException("Game is already finished");
+            return;
         }
 
         // check if out of bounds
