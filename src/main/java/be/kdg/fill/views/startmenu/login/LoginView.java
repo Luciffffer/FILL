@@ -81,6 +81,8 @@ public class LoginView extends StackPane {
         // error label
         this.errorLabel.getStyleClass().add("body");
         this.errorLabel.setStyle("-fx-text-fill: red;");
+        this.errorLabel.visibleProperty().bind(this.errorLabel.textProperty().isNotEmpty());
+        this.errorLabel.managedProperty().bind(this.errorLabel.visibleProperty());
         mainBox.getChildren().add(this.errorLabel);
 
         // input fields
