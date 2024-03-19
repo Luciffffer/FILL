@@ -3,13 +3,14 @@ package be.kdg.fill.views.gamemenu.addworld;
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.Level;
 import be.kdg.fill.views.Presenter;
-import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
 import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
 import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
 import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
+import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
@@ -43,6 +44,15 @@ public class AddWorldPresenter implements Presenter {
     }
 
     private void addEventHandlers() {
+        view.getBackButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                parent.getSubScreenManager().switchBack();
+                WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
+                worldSelectPresenter.reload();
+                resetTheListsAndView();
+            }
+        });
         view.getAddButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -85,15 +95,19 @@ public class AddWorldPresenter implements Presenter {
                     view.getErrorLabel().setText(e.getMessage());
                 }
 
-                for (LevelCreationBox box : levelCreationBoxes) {
-                    try {
+
+                try {
+                    for (LevelCreationBox box : levelCreationBoxes) {
                         box.getErrorsLabelLevelCreationBox().setText("");
                         levelCreationBoxInputControl(box);
+                    }
 
-                        addWorldAndLevels();
-                        resetTheListsAndView();
-                    } catch (Exception e) {
-                        levelCreationBox.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                    addWorldAndLevels();
+                    lastDialog();
+                    resetTheListsAndView();
+                } catch (Exception e) {
+                    for (LevelCreationBox box : levelCreationBoxes) {
+                        box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
                     }
                 }
             }
@@ -205,25 +219,30 @@ public class AddWorldPresenter implements Presenter {
         this.nextId = 1;
         view.getErrorLabel().setText("");
         view.getvBox().getChildren().clear();
+    }
 
+    private void lastDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("World succesfully added!");
         dialog.setHeaderText("What's next?");
         ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(new Image(FillApplication.class.getResourceAsStream("images/fill-icon.png")));
 
-        ButtonType backButton = new ButtonType("Leave");
-        ButtonType addAnotherWorldButton = new ButtonType("Add another world");
+        ButtonType backButton = new ButtonType("Leave", ButtonBar.ButtonData.OK_DONE);
+        ButtonType addAnotherWorldButton = new ButtonType("Add another world", ButtonBar.ButtonData.OK_DONE);
 
         dialog.getDialogPane().getButtonTypes().addAll(backButton, addAnotherWorldButton);
         dialog.showAndWait().ifPresent(choice -> {
             if (choice == backButton) {
-                ScreenManager screenManager = parent.getMainScreenManager();
-                if (screenManager.screenExists("gamemenu")) {
-                    System.out.println(true);
-                    screenManager.switchScreen("gamemenu");
-                } else if (choice == addAnotherWorldButton) {
-                    screenManager.switchScreen("addworld");
-                }
+                //restTheListsAndViews();
+
+                parent.getSubScreenManager().switchBack();
+
+                WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
+                worldSelectPresenter.reload();
+
+            } else if (choice == addAnotherWorldButton) {
+                //restTheListsAndViews();
+                parent.getSubScreenManager().getCurrentScreen();
             }
         });
     }
