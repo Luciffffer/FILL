@@ -3,20 +3,15 @@ package be.kdg.fill.views.gamemenu.addworld;
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.views.compontents.FillTextField;
 import be.kdg.fill.views.compontents.HoverClickable;
-import be.kdg.fill.views.compontents.LevelCreationBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.paint.Color;
 
 public class AddWorldView extends VBox {
     private Label title;
@@ -28,6 +23,7 @@ public class AddWorldView extends VBox {
     private HoverClickable addButton;
     private HoverClickable confirmitionButton;
     private HoverClickable savingButton;
+    private Label errorLabel;
     public VBox vBox;
 
     public AddWorldView()
@@ -47,6 +43,7 @@ public class AddWorldView extends VBox {
         this.addButton = new HoverClickable(100, 1.05);
         this.confirmitionButton = new HoverClickable(100, 1.05);
         this.savingButton = new HoverClickable(100, 1.05);
+        this.errorLabel = new Label();
         this.vBox = new VBox();
     }
 
@@ -90,7 +87,8 @@ public class AddWorldView extends VBox {
         this.worldName.setMaxWidth(400);
         this.difficultyName.setMaxWidth(400);
 
-        stepOneButtonBox.getChildren().addAll(this.worldName, this.difficultyName);
+        this.errorLabel.setTextFill(Color.web("FF0000"));
+        stepOneButtonBox.getChildren().addAll(this.worldName, this.difficultyName, this.errorLabel);
         stepOneBox.getChildren().addAll(this.stepOne, stepOneButtonBox);
         this.getChildren().addAll(stepOneBox);
 
@@ -161,5 +159,9 @@ public class AddWorldView extends VBox {
 
     public HoverClickable getSavingButton() {
         return savingButton;
+    }
+
+    public Label getErrorLabel() {
+        return errorLabel;
     }
 }

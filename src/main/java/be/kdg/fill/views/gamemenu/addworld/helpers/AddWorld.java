@@ -1,4 +1,4 @@
-package be.kdg.fill.views.compontents;
+package be.kdg.fill.views.gamemenu.addworld.helpers;
 
 import be.kdg.fill.models.core.Level;
 import org.json.simple.JSONArray;
@@ -35,12 +35,10 @@ public class AddWorld {
         String filename = "world-" + (fileCount + 1) + ".json";
         int worldAndDifId = fileCount + 1;
 
-        //JSONObject difficultyObject = new JSONObject();
         Map<String, Object> difficultyObject = new LinkedHashMap<>();
         difficultyObject.put("id", worldAndDifId);
         difficultyObject.put("name", difficulty);
 
-        System.out.println("Aantal files" + fileCount);
         Map<String, Object> worldMap = new LinkedHashMap<>();
         worldMap.put("id", worldAndDifId);
         worldMap.put("name", name);

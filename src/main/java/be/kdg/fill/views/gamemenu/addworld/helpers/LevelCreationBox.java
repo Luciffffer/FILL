@@ -1,4 +1,4 @@
-package be.kdg.fill.views.compontents;
+package be.kdg.fill.views.gamemenu.addworld.helpers;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,6 +17,7 @@ public class LevelCreationBox extends BorderPane {
     private TextField positionTextField1;
     private TextField positionTextField2;
     private Label positionLabel;
+    private Label errorsLabelLevelCreationBox;
     public int id;
 
     public LevelCreationBox() {
@@ -33,6 +34,7 @@ public class LevelCreationBox extends BorderPane {
         this.positionTextField1 = new TextField();
         this.positionTextField2 = new TextField();
         this.positionLabel = new Label("Start position:");
+        this.errorsLabelLevelCreationBox = new Label();
     }
 
     private void layoutNodes() {
@@ -46,6 +48,7 @@ public class LevelCreationBox extends BorderPane {
         positionTextField2.setPromptText("Y");
         positionTextField2.setMaxWidth(40);
         positionLabel.setTextFill(Color.web("#A26CE6"));
+        errorsLabelLevelCreationBox.setTextFill(Color.web("FF0000"));
 
         HBox hBoxRow = new HBox(5, rowLabel, rowTextField);
         hBoxRow.setAlignment(Pos.CENTER_LEFT);
@@ -54,7 +57,7 @@ public class LevelCreationBox extends BorderPane {
         HBox hBoxPosition = new HBox(5, positionLabel, positionTextField1, positionTextField2);
         hBoxPosition.setAlignment(Pos.CENTER_LEFT);
 
-        VBox vBox = new VBox(20, idLabel, hBoxRow, hBoxColumn, hBoxPosition);
+        VBox vBox = new VBox(20, idLabel, hBoxRow, hBoxColumn, hBoxPosition, errorsLabelLevelCreationBox);
         this.setLeft(vBox);
     }
 
@@ -65,10 +68,6 @@ public class LevelCreationBox extends BorderPane {
 
     public void updateIdLabel() {
         idLabel.setText("id: " + id);
-    }
-
-    public Label getIdLabel() {
-        return idLabel;
     }
 
     public TextField getRowTextField() {
@@ -86,16 +85,47 @@ public class LevelCreationBox extends BorderPane {
     public TextField getPositionTextField2() {
         return positionTextField2;
     }
+
     public int getRows() {
-        return Integer.parseInt(getRowTextField().getText());
+        if(getRowTextField().getText().isEmpty()){
+            throw new IllegalArgumentException("Rows cannot be empty!");
+        }
+        try {
+            return Integer.parseInt(getRowTextField().getText());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Rows value must be integer!");
+        }
     }
 
     public int getCols() {
-        return Integer.parseInt(getColumnTextField().getText());
+        if (getColumnTextField().getText().isEmpty()){
+            throw new IllegalArgumentException("Column cannot be empty");
+        } else {
+            try {
+                return Integer.parseInt(getColumnTextField().getText());
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Column value must be integer!");
+            }
+        }
     }
-    public int[] startPosCoordination(){
-        int x = Integer.parseInt(getPositionTextField1().getText());
-        int y = Integer.parseInt(getPositionTextField2().getText());
-        return new int[]{x, y};
+
+    public int[] startPosCoordination() {
+        if (getPositionTextField1().getText().isEmpty()) {
+            throw new IllegalArgumentException("X-value cannot be empty!");
+        } else if (getPositionTextField2().getText().isEmpty()) {
+            throw new IllegalArgumentException("Y-value cannot be empty!");
+        } else {
+            try {
+                int x = Integer.parseInt(getPositionTextField1().getText());
+                int y = Integer.parseInt(getPositionTextField2().getText());
+                return new int[]{x, y};
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("X and Y must be Integer!");
+            }
+        }
+    }
+
+    public Label getErrorsLabelLevelCreationBox() {
+        return errorsLabelLevelCreationBox;
     }
 }

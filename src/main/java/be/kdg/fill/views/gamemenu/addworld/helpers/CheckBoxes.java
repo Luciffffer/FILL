@@ -1,24 +1,15 @@
-package be.kdg.fill.views.compontents;
+package be.kdg.fill.views.gamemenu.addworld.helpers;
 
-import be.kdg.fill.views.gamemenu.addworld.AddWorldPresenter;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CheckBoxes extends GridPane {
     private int rows;
     private int cols;
     private CheckBox[][] checkBoxes;
-
-    public CheckBoxes(){
-        this.initializeNodes();
-        this.layoutNodes();
-    }
 
     public CheckBoxes(int rows, int cols){
         this.rows = rows;
@@ -61,7 +52,6 @@ public class CheckBoxes extends GridPane {
                 checkBoxStatus[i][j] = checkBoxes[i][j].isSelected() ? 1 : 0;
             }
         }
-
         return checkBoxStatus;
     }
 }

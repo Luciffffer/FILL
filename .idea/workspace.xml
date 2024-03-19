@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="Admin 1e versie">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ObjectMapper-0.2.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/kogito-api-incubation-common-objectmapper-3.0.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="Admin 2e versie">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/compontents/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/compontents/AddWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/FillApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/core/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/compontents/AddWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/helpers/AddWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/compontents/CheckBoxes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/helpers/CheckBoxes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/compontents/LevelCreationBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/helpers/LevelCreationBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +47,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -154,7 +154,9 @@
       <workItem from="1710690653263" duration="10571000" />
       <workItem from="1710735151369" duration="17362000" />
       <workItem from="1710758143470" duration="247000" />
-      <workItem from="1710758395717" duration="4071000" />
+      <workItem from="1710758395717" duration="4260000" />
+      <workItem from="1710776120821" duration="11158000" />
+      <workItem from="1710792109289" duration="25970000" />
     </task>
     <task id="LOCAL-00001" summary="Admin 1e versie">
       <option name="closed" value="true" />
@@ -164,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710754717298</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Admin 2e versie">
+      <option name="closed" value="true" />
+      <created>1710762652506</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710762652506</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,7 +182,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Admin 1e versie" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin 1e versie" />
+    <MESSAGE value="Admin 2e versie" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin 2e versie" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

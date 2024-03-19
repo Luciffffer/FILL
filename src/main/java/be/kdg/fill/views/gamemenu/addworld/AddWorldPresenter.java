@@ -1,13 +1,21 @@
 package be.kdg.fill.views.gamemenu.addworld;
 
+import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.Level;
 import be.kdg.fill.views.Presenter;
-import be.kdg.fill.views.compontents.CheckBoxes;
-import be.kdg.fill.views.compontents.LevelCreationBox;
-import be.kdg.fill.views.compontents.AddWorld;
+import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
+import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
+import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
+import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
@@ -19,9 +27,8 @@ public class AddWorldPresenter implements Presenter {
     private GameMenuPresenter parent;
     private List<LevelCreationBox> levelCreationBoxes;
     private List<CheckBoxes> checkBoxesList;
-    //private List<Integer> checkBoxesStatusList;
+    private LevelCreationBox levelCreationBox;
     private List<Level> levels;
-    private JSONArray startPosArray;
     private int nextId = 1;
     public static final String SCREEN_NAME = "addworld";
 
@@ -30,9 +37,8 @@ public class AddWorldPresenter implements Presenter {
         this.parent = parent;
         this.levelCreationBoxes = new ArrayList<>();
         this.checkBoxesList = new ArrayList<>();
-        //this.checkBoxesStatusList = new ArrayList<>();
         this.levels = new ArrayList<>();
-        this.startPosArray = new JSONArray();
+        this.levelCreationBox = new LevelCreationBox();
         addEventHandlers();
     }
 
@@ -40,21 +46,56 @@ public class AddWorldPresenter implements Presenter {
         view.getAddButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                addLevelInputInfo();
+                try {
+                    AddWorldInputControl();
+                    addLevelInputInfo();
+                    view.getErrorLabel().setText("");
+                } catch (Exception e) {
+                    view.getErrorLabel().setText(e.getMessage());
+                }
             }
         });
         view.getConfirmitionButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-                //view.getvBox().getChildren().clear();
-                addCheckBoxes();
+                try {
+                    AddWorldInputControl();
+                    view.getErrorLabel().setText("");
+                } catch (Exception e) {
+                    view.getErrorLabel().setText(e.getMessage());
+                }
+                for (LevelCreationBox box : levelCreationBoxes) {
+                    try {
+                        box.getErrorsLabelLevelCreationBox().setText("");
+                        levelCreationBoxInputControl(box);
+                        addCheckBoxes();
+                    } catch (Exception e) {
+                        box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                    }
+                }
             }
         });
         view.getSavingButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                addWorldAndLevels();
+                try {
+                    AddWorldInputControl();
+                    view.getErrorLabel().setText("");
+                } catch (Exception e) {
+                    view.getErrorLabel().setText(e.getMessage());
+                }
+
+                for (LevelCreationBox box : levelCreationBoxes) {
+                    try {
+                        box.getErrorsLabelLevelCreationBox().setText("");
+                        levelCreationBoxInputControl(box);
+
+                        addWorldAndLevels();
+                        resetTheListsAndView();
+                    } catch (Exception e) {
+                        levelCreationBox.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                    }
+                }
             }
         });
     }
@@ -62,57 +103,129 @@ public class AddWorldPresenter implements Presenter {
     public void addLevelInputInfo() {
         LevelCreationBox levelCreationBox = new LevelCreationBox();
         levelCreationBox.setId(nextId++);
-        this.levelCreationBoxes.add(levelCreationBox);
+        levelCreationBoxes.add(levelCreationBox);
         view.getvBox().getChildren().addAll(levelCreationBox);
     }
 
     public void addCheckBoxes() {
+        VBox vBox = new VBox(20);
 
+        checkBoxesList.clear();
         for (LevelCreationBox box : levelCreationBoxes) {
             int rows = box.getRows();
             int cols = box.getCols();
-
-
+            GridPane gridPane = new GridPane();
+            gridPane.add(box, 0, 0);
             CheckBoxes checkBoxes = new CheckBoxes(rows, cols);
             checkBoxesList.add(checkBoxes);
-            view.getvBox().getChildren().addAll(checkBoxes);
+            gridPane.add(checkBoxes, 1, 0);
+            vBox.getChildren().addAll(gridPane);
         }
+        view.getvBox().getChildren().clear();
+        view.getvBox().getChildren().add(vBox);
     }
+
 
     public void addWorldAndLevels() {
         List<int[][]> checkBoxesStatusMatrix = new ArrayList<>();
 
         for (CheckBoxes checkBoxes : checkBoxesList) {
             int[][] checkBoxStatus = checkBoxes.getCheckBoxStatus();
+            for (int[] rox : checkBoxStatus) {
+                for (int cols : rox) {
+                    System.out.println(cols + " ");
+                }
+            }
             checkBoxesStatusMatrix.add(checkBoxStatus);
         }
 
+
         int idJsonLevel = 0;
-        for (int[][] matrix : checkBoxesStatusMatrix) {
-            idJsonLevel++;
-            startPosArray = new JSONArray();
-            for (int[] row : matrix) {
-                for (int status : row) {
-                    System.out.print(status);
-                }
-                System.out.println();
-            }
-            LevelCreationBox levelCreationBox = levelCreationBoxes.get(levels.size()); // Krijg het overeenkomstige LevelCreationBox-object
+        for (LevelCreationBox levelCreationBox : levelCreationBoxes) {
+            JSONArray startPosArray = new JSONArray();
+
+            System.out.println("checkBoxesListv: " + checkBoxesList.size());
+            System.out.println("idJsonLevel: " + idJsonLevel);
+            System.out.println("checkBoxesStatusMatrix: " + checkBoxesStatusMatrix.size());
+            System.out.println("levels: " + levels.size());
+            System.out.println("levelCreationBoxes: " + levelCreationBoxes.size());
+
             int[] startPos = levelCreationBox.startPosCoordination();
             startPosArray.add(startPos[0]);
             startPosArray.add(startPos[1]);
 
-            levels.add(new Level(idJsonLevel, matrix, startPosArray));
+
+            levels.add(new Level(idJsonLevel + 1, checkBoxesStatusMatrix.get(idJsonLevel), startPosArray));
+            idJsonLevel++;
         }
+
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
-        // Sla de levels op naar JSON-bestanden
 
         AddWorld world = new AddWorld(worldName, difficultyName);
         for (Level level : levels) {
             world.addLevel(level);
         }
         world.saveToJson();
+    }
+
+    private void AddWorldInputControl() {
+        String worldName = String.valueOf(view.getWorldName().getField().getText());
+        String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
+        if (worldName == null || worldName.length() < 4 || worldName.length() > 10) {
+            throw new IllegalArgumentException("World name must be between 4 and 10 characters long");
+        } else if (difficultyName == null || difficultyName.length() < 4 || difficultyName.length() > 10) {
+            throw new IllegalArgumentException("Difficulty name must be between 4 and 10 characters long");
+        }
+    }
+
+    private void levelCreationBoxInputControl(LevelCreationBox box) {
+        int rows = box.getRows();
+        int cols = box.getCols();
+
+        if (rows > 30 || rows < 1) {
+            throw new IllegalArgumentException("Rows value must be between 1 and 30!");
+        } else if (cols > 30 || cols < 1) {
+            throw new IllegalArgumentException("Columns value must be between 1 and 30!");
+        }
+        int[] positionCheck = box.startPosCoordination();
+        if (positionCheck[0] >= rows || positionCheck[0] < 0) {
+            throw new IllegalArgumentException("The X-coordinate must be within the range of 0 to (row - 1)");
+        } else if (positionCheck[1] >= cols || positionCheck[1] < 0) {
+            throw new IllegalArgumentException("The Y-coordinate must be within the range of 0 to (column - 1)");
+        }
+    }
+
+    private void resetTheListsAndView() {
+        view.getWorldName().getField().clear();
+        view.getDifficultyName().getField().clear();
+        levelCreationBoxes.clear();
+        checkBoxesList.clear();
+        levels.clear();
+        this.nextId = 1;
+        view.getErrorLabel().setText("");
+        view.getvBox().getChildren().clear();
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("World succesfully added!");
+        dialog.setHeaderText("What's next?");
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(new Image(FillApplication.class.getResourceAsStream("images/fill-icon.png")));
+
+        ButtonType backButton = new ButtonType("Leave");
+        ButtonType addAnotherWorldButton = new ButtonType("Add another world");
+
+        dialog.getDialogPane().getButtonTypes().addAll(backButton, addAnotherWorldButton);
+        dialog.showAndWait().ifPresent(choice -> {
+            if (choice == backButton) {
+                ScreenManager screenManager = parent.getMainScreenManager();
+                if (screenManager.screenExists("gamemenu")) {
+                    System.out.println(true);
+                    screenManager.switchScreen("gamemenu");
+                } else if (choice == addAnotherWorldButton) {
+                    screenManager.switchScreen("addworld");
+                }
+            }
+        });
     }
 
     public void reset() {
