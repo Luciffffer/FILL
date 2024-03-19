@@ -156,7 +156,7 @@ public class FillTextField extends StackPane {
         });
     }
 
-    private void labelAnimation(int durationMS, double scale, int translateY)
+    public void labelAnimation(int durationMS, double scale, int translateY)
     {
         double translateX = scale == 1 ? 0 : (-1 + scale) * label.getWidth() / 2 + 1;
 

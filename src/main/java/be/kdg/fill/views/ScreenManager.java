@@ -34,12 +34,18 @@ public class ScreenManager {
 
     public void switchScreen(String screenName)
     {
-        for (Presenter screen: screens) {
+        for (Presenter screen: this.screens) {
             if (screen.getScreenName().equals(screenName)) {
-                screens.remove(screen);
-                screens.push(screen);
+                this.screens.remove(screen);
+                this.screens.push(screen);
                 this.rootNode.getChildren().clear();
                 this.rootNode.getChildren().add(screen.getView());
+                
+                // reload the screen if it is reloadable
+                if (screen instanceof Reloadable) {
+                    ((Reloadable) screen).reload();
+                }
+
                 return;
             }
         }

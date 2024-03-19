@@ -43,7 +43,7 @@ public class StartMenuPresenter implements Presenter {
         GameMenuPresenter gameMenuPresenter = new GameMenuPresenter(gameMenuView, mainScreenManager, model);
         mainScreenManager.addScreen(gameMenuPresenter);
     }
-
+    
 
     // GETTERS
 

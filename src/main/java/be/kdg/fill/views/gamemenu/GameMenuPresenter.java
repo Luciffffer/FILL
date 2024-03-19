@@ -4,6 +4,7 @@ import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
+import be.kdg.fill.views.Reloadable;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.gamemenu.addworld.AddWorldPresenter;
 import be.kdg.fill.views.gamemenu.addworld.AddWorldView;
@@ -14,7 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class GameMenuPresenter implements Presenter {
+public class GameMenuPresenter implements Presenter, Reloadable {
  
     public static final String SCREEN_NAME = "gamemenu";
     private GameMenuView view;
@@ -77,6 +78,7 @@ public class GameMenuPresenter implements Presenter {
             if (response == javafx.scene.control.ButtonType.OK) {
                 loggedInUser.resetProgress();
                 loggedInUser.save();
+                reload();
             }
         });
     }
@@ -91,6 +93,16 @@ public class GameMenuPresenter implements Presenter {
             this.subScreenManager.switchScreen("addworld");
             AddWorldPresenter addWorldPresenter = (AddWorldPresenter) this.subScreenManager.getCurrentScreen();
             addWorldPresenter.reset();
+        }
+    }
+
+    @Override
+    public void reload() 
+    {
+        Presenter subScreenPresenter = this.subScreenManager.getCurrentScreen();
+        
+        if (subScreenPresenter instanceof Reloadable) {
+            ((Reloadable) subScreenPresenter).reload();
         }
     }
 

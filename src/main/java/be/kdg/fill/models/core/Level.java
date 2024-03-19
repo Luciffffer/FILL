@@ -7,7 +7,7 @@ public class Level implements Comparable<Level> {
     
     private int id;
     private int[][] pattern;
-    private JSONArray startPos;
+    private int[] startPos;
     private World world;
     
     public Level(JSONObject levelObject, World world) 
@@ -22,7 +22,7 @@ public class Level implements Comparable<Level> {
                 this.pattern[i][j] = ((Long) row.get(j)).intValue();
             }
         }
-        this.startPos = (JSONArray) levelObject.get("startPos");
+        this.startPos = new int[] {((Long) ((JSONArray) levelObject.get("start")).get(0)).intValue(), ((Long) ((JSONArray) levelObject.get("start")).get(1)).intValue()};
         this.world = world;
     }
 
@@ -57,6 +57,16 @@ public class Level implements Comparable<Level> {
     public World getWorld()
     {
         return this.world;
+    }
+
+    /**
+     * getStartPos
+     * gets the start position of the level.
+     * @return int[]
+     */
+    public int[] getStartPos()
+    {
+        return this.startPos;
     }
 
 

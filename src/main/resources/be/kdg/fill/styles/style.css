@@ -114,6 +114,10 @@
     -fx-background-color: #c8c9cc;
 }
 
+.block-border {
+    -fx-border-color: #FAF9FB;
+}
+
 .text-field-reset {
     -fx-background-color: transparent;
     -fx-border-color: transparent;

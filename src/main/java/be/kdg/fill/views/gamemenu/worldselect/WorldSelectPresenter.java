@@ -4,13 +4,14 @@ import java.util.LinkedList;
 
 import be.kdg.fill.models.core.World;
 import be.kdg.fill.views.Presenter;
+import be.kdg.fill.views.Reloadable;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.compontents.WorldCard;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
 import be.kdg.fill.views.gamemenu.levelselect.LevelSelectPresenter;
 import be.kdg.fill.views.gamemenu.levelselect.LevelSelectView;
 
-public class WorldSelectPresenter implements Presenter {
+public class WorldSelectPresenter implements Presenter, Reloadable {
     
     private WorldSelectView view;
     private GameMenuPresenter parent;
@@ -56,6 +57,7 @@ public class WorldSelectPresenter implements Presenter {
         }
     }
 
+    @Override
     public void reload() 
     {
         this.view.clearWorldCards();
