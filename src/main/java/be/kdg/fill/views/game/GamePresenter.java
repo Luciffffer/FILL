@@ -12,6 +12,7 @@ import be.kdg.fill.models.core.World;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.ScreenManager;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
@@ -83,6 +84,10 @@ public class GamePresenter implements Presenter {
         }
     };
 
+    private ChangeListener<Number> handleResize = (obs, oldVal, newVal) -> {
+        resizeBlocks();
+    };
+
     public GamePresenter(GameView gameView, ScreenManager mainScreenManager, User loggedInUser) 
     {
         this.view = gameView;
@@ -95,6 +100,7 @@ public class GamePresenter implements Presenter {
     {
         this.view.getBackButton().setOnAction(e -> {
             if (this.timer != null) this.timer.cancel();
+            this.view.getScene().heightProperty().removeListener(handleResize);
             this.mainScreenManager.switchScreen("gamemenu");
         });
 
@@ -109,12 +115,6 @@ public class GamePresenter implements Presenter {
 
         this.view.getCloseOverlayButton().setOnAction(e -> {
             this.view.getGameOverlay().setVisible(false);
-        });
-
-        Platform.runLater(() -> {
-            this.view.getScene().heightProperty().addListener((obs, oldVal, newVal) -> {
-                resizeBlocks();
-            });
         });
     }
 
@@ -139,6 +139,7 @@ public class GamePresenter implements Presenter {
         });
 
         this.view.getBackToMenuButton().setOnAction(e -> {
+            this.view.getScene().heightProperty().removeListener(handleResize);;
             this.mainScreenManager.switchScreen("gamemenu");
         });
 
@@ -156,6 +157,10 @@ public class GamePresenter implements Presenter {
 
         this.view.getBoardStack().addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             this.view.getBoardStack().setOnMouseDragged(null);
+        });
+
+        Platform.runLater(() -> {
+            this.view.getScene().heightProperty().addListener(handleResize);
         });
     }
 
