@@ -200,14 +200,8 @@ public class User {
         this.progress = new HashMap<Integer, Integer>();
     }
 
-    /**
-     * login
-     * logs the user in
-     * @param username
-     * @param password
-     * @return User
-     * @throws illegalArgumentException
-     */
+
+
     public void login(String username, String password) throws IllegalArgumentException
     {
         String userData = this.userFile.getUserDataByUsername(username);
