@@ -14,6 +14,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,6 +32,7 @@ public class AddWorldPresenter implements Presenter {
     private LevelCreationBox levelCreationBox;
     private List<Level> levels;
     private int nextId = 1;
+    boolean thirdStepControled;
     public static final String SCREEN_NAME = "addworld";
 
     public AddWorldPresenter(AddWorldView addWorldView, GameMenuPresenter parent) {
@@ -65,15 +67,21 @@ public class AddWorldPresenter implements Presenter {
                 }
             }
         });
+
         view.getConfirmitionButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                boolean firstStepControled;
+
                 try {
                     AddWorldInputControl();
                     view.getErrorLabel().setText("");
+                    firstStepControled = true;
                 } catch (Exception e) {
                     view.getErrorLabel().setText(e.getMessage());
+                    firstStepControled = false;
                 }
+
                 for (LevelCreationBox box : levelCreationBoxes) {
                     try {
                         box.getErrorsLabelLevelCreationBox().setText("");
@@ -83,31 +91,92 @@ public class AddWorldPresenter implements Presenter {
                         box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
                     }
                 }
+                if (firstStepControled && levelCreationBoxes.isEmpty()) {
+                    view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
+                }
             }
         });
         view.getSavingButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                boolean firstStepControled = false;
+                boolean secondStepControled = false;
+                boolean worldAddedSuccesfully = false;
+
+                //input eerste stap checken
                 try {
                     AddWorldInputControl();
                     view.getErrorLabel().setText("");
+                    firstStepControled = true;
                 } catch (Exception e) {
                     view.getErrorLabel().setText(e.getMessage());
                 }
 
-
-                try {
+                //input 2e stap checken
+                if (firstStepControled) {
                     for (LevelCreationBox box : levelCreationBoxes) {
-                        box.getErrorsLabelLevelCreationBox().setText("");
-                        levelCreationBoxInputControl(box);
+                        try {
+                            box.getErrorsLabelLevelCreationBox().setText("");
+                            levelCreationBoxInputControl(box);
+                            checkBoxesListControl();
+                            secondStepControled = true;
+                        } catch (Exception e) {
+                            box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                        }
                     }
+                }
 
-                    addWorldAndLevels();
-                    lastDialog();
+                //3e stap opslaan van de world
+                if (secondStepControled) {
+                    try {
+                        for (LevelCreationBox box : levelCreationBoxes) {
+                            box.getErrorsLabelLevelCreationBox().setText("");
+                            levelCreationBoxInputControl(box);
+                            checkBoxesListControl();
+                        }
+
+                        AddWorldInputControl();
+                        view.getErrorLabel().setText("");
+
+                        //nagaan of de positie 1 is
+                        addLevels();
+
+                        //alle opgeslagen data van de levels wissen
+                        levels.clear();
+
+                        //wanneer de exceptions zijn opgevangen
+                        //dan met deze boolean alle levels opslaan in de world
+                        //en deze operatie beeindigen
+                        worldAddedSuccesfully = true;
+
+                    } catch (Exception e) {
+                        for (LevelCreationBox box : levelCreationBoxes) {
+                            box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                        }
+                    }
+                }
+                if (!worldAddedSuccesfully) {
+                    if (firstStepControled && levelCreationBoxes.isEmpty()) {
+                        view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
+                    }
+                }
+                if (worldAddedSuccesfully) {
+                    addLevels();
+                    addWorld();
                     resetTheListsAndView();
-                } catch (Exception e) {
-                    for (LevelCreationBox box : levelCreationBoxes) {
-                        box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
+                    lastDialog();
+                }
+                if (worldAddedSuccesfully) {
+                boolean worldLoaded = false;
+
+                while (!worldLoaded) {
+
+                        try {
+                            parent.getWorldLoader().loadWorlds();
+                            worldLoaded = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -140,31 +209,25 @@ public class AddWorldPresenter implements Presenter {
     }
 
 
-    public void addWorldAndLevels() {
+    public void addLevels() {
         List<int[][]> checkBoxesStatusMatrix = new ArrayList<>();
 
         for (CheckBoxes checkBoxes : checkBoxesList) {
             int[][] checkBoxStatus = checkBoxes.getCheckBoxStatus();
-            for (int[] rox : checkBoxStatus) {
-                for (int cols : rox) {
-                    System.out.println(cols + " ");
-                }
-            }
             checkBoxesStatusMatrix.add(checkBoxStatus);
         }
-
 
         int idJsonLevel = 0;
         for (LevelCreationBox levelCreationBox : levelCreationBoxes) {
             JSONArray startPosArray = new JSONArray();
 
-            System.out.println("checkBoxesListv: " + checkBoxesList.size());
-            System.out.println("idJsonLevel: " + idJsonLevel);
-            System.out.println("checkBoxesStatusMatrix: " + checkBoxesStatusMatrix.size());
-            System.out.println("levels: " + levels.size());
-            System.out.println("levelCreationBoxes: " + levelCreationBoxes.size());
-
             int[] startPos = levelCreationBox.startPosCoordination();
+
+            if (checkBoxesStatusMatrix.get(idJsonLevel)[startPos[0]][startPos[1]] == 0) {
+                levels.clear();
+                throw new IllegalStateException("Value at start position cannot be 0!");
+            }
+
             startPosArray.add(startPos[0]);
             startPosArray.add(startPos[1]);
 
@@ -172,7 +235,9 @@ public class AddWorldPresenter implements Presenter {
             levels.add(new Level(idJsonLevel + 1, checkBoxesStatusMatrix.get(idJsonLevel), startPosArray));
             idJsonLevel++;
         }
+    }
 
+    private void addWorld() {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
 
@@ -181,7 +246,9 @@ public class AddWorldPresenter implements Presenter {
             world.addLevel(level);
         }
         world.saveToJson();
+        parent.getWorldLoader().loadWorlds();
     }
+
 
     private void AddWorldInputControl() {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
@@ -190,6 +257,12 @@ public class AddWorldPresenter implements Presenter {
             throw new IllegalArgumentException("World name must be between 4 and 10 characters long");
         } else if (difficultyName == null || difficultyName.length() < 4 || difficultyName.length() > 10) {
             throw new IllegalArgumentException("Difficulty name must be between 4 and 10 characters long");
+        }
+    }
+
+    private void checkBoxesListControl() {
+        if (checkBoxesList.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("First you need to get checkboxes!");
         }
     }
 
@@ -221,10 +294,14 @@ public class AddWorldPresenter implements Presenter {
         view.getvBox().getChildren().clear();
     }
 
-    private void lastDialog(){
+    private void lastDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("World succesfully added!");
         dialog.setHeaderText("What's next?");
+        ImageView imageView = new ImageView(new Image(FillApplication.class.getResourceAsStream("images/fill-icon.png")));
+        dialog.setGraphic(imageView);
+        dialog.setContentText("You can leave this page or add some more levels.");
+
         ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(new Image(FillApplication.class.getResourceAsStream("images/fill-icon.png")));
 
         ButtonType backButton = new ButtonType("Leave", ButtonBar.ButtonData.OK_DONE);
@@ -233,15 +310,14 @@ public class AddWorldPresenter implements Presenter {
         dialog.getDialogPane().getButtonTypes().addAll(backButton, addAnotherWorldButton);
         dialog.showAndWait().ifPresent(choice -> {
             if (choice == backButton) {
-                //restTheListsAndViews();
-
+                //resetTheListsAndView();
                 parent.getSubScreenManager().switchBack();
 
                 WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
                 worldSelectPresenter.reload();
 
             } else if (choice == addAnotherWorldButton) {
-                //restTheListsAndViews();
+                //resetTheListsAndView();
                 parent.getSubScreenManager().getCurrentScreen();
             }
         });

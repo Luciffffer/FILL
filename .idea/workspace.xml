@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="Admin 3e versie">
+    <list default="true" id="da0445cb-eff7-4c9b-a2af-a46b679002c8" name="Changes" comment="Admin betere versie">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/helpers/WorldLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/models/helpers/WorldLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/kdg/fill/views/gamemenu/addworld/AddWorldPresenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,7 +160,9 @@
       <workItem from="1710792109289" duration="32112000" />
       <workItem from="1710837659975" duration="1703000" />
       <workItem from="1710839371163" duration="9986000" />
-      <workItem from="1710864335671" duration="2347000" />
+      <workItem from="1710864335671" duration="6294000" />
+      <workItem from="1710872747858" duration="13069000" />
+      <workItem from="1710888746088" duration="10048000" />
     </task>
     <task id="LOCAL-00001" summary="Admin 1e versie">
       <option name="closed" value="true" />
@@ -185,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710831063212</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Admin betere versie">
+      <option name="closed" value="true" />
+      <created>1710866918782</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710866918782</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +206,8 @@
     <MESSAGE value="Admin 1e versie" />
     <MESSAGE value="Admin 2e versie" />
     <MESSAGE value="Admin 3e versie" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin 3e versie" />
+    <MESSAGE value="Admin betere versie" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin betere versie" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

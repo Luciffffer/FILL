@@ -67,7 +67,7 @@ public class WorldLoader {
      * loadWorlds
      * loads the worlds from the files
      */
-    private void loadWorlds() throws RuntimeException
+    public void loadWorlds() throws RuntimeException
     {
         if (worlds != null) {
             worlds.clear();
