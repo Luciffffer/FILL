@@ -89,6 +89,8 @@ public class LevelCreationBox extends BorderPane {
     public int getRows() {
         if(getRowTextField().getText().isEmpty()){
             throw new IllegalArgumentException("Rows cannot be empty!");
+        } else if (getRowTextField().getText().matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Rows cannot contain spaces!");
         }
         try {
             return Integer.parseInt(getRowTextField().getText());
@@ -99,12 +101,14 @@ public class LevelCreationBox extends BorderPane {
 
     public int getCols() {
         if (getColumnTextField().getText().isEmpty()){
-            throw new IllegalArgumentException("Column cannot be empty");
+            throw new IllegalArgumentException("Columns cannot be empty!");
+        } else if (getColumnTextField().getText().matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Columns cannot contain spaces!");
         } else {
             try {
                 return Integer.parseInt(getColumnTextField().getText());
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Column value must be integer!");
+                throw new IllegalArgumentException("Columns value must be integer!");
             }
         }
     }
@@ -112,8 +116,12 @@ public class LevelCreationBox extends BorderPane {
     public int[] startPosCoordination() {
         if (getPositionTextField1().getText().isEmpty()) {
             throw new IllegalArgumentException("X-value cannot be empty!");
+        } else if (getPositionTextField1().getText().matches(".*\\s.*")) {
+            throw new IllegalArgumentException("X-value cannot contain spaces!");
         } else if (getPositionTextField2().getText().isEmpty()) {
             throw new IllegalArgumentException("Y-value cannot be empty!");
+        } else if (getPositionTextField2().getText().matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Y-value cannot contain spaces!");
         } else {
             try {
                 int x = Integer.parseInt(getPositionTextField1().getText());

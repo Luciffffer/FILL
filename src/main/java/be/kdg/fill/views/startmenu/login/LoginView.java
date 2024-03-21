@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class LoginView extends StackPane {
     private ImageView logo;
@@ -33,6 +34,7 @@ public class LoginView extends StackPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
 
         this.title = new Label("Log in");
+        this.title.setTextFill(Color.web("#A26CE6"));
         this.backButton = new HoverClickable(100, 1.05);
 
         this.usernameTextField = new FillTextField("Username", false);

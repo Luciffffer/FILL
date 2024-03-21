@@ -141,3 +141,24 @@
     -fx-font-family: sans-serif;
     -fx-font-size: 16px;
 }
+
+.checkbox {
+    -fx-font-size: 14px;
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.4s;
+}
+
+.checkbox:hover, .checkbox:focused{
+    -fx-background-color: #bfb;
+    -fx-text-fill: red;
+    -fx-scale-x: 1.25;
+    -fx-scale-y: 1.25;
+}
+
+.checkbox:selected {
+    -fx-background-color: #00ff00;
+    -fx-text-fill: black;
+}

@@ -35,6 +35,7 @@ public class WorldSelectView extends VBox {
         vBox.setSpacing(6);
 
         this.smallTitle.getStyleClass().add("body");
+        this.smallTitle.setStyle("-fx-text-fill: #A26CE6; -fx-font-size: 18px");
         this.title.getStyleClass().add("h1");
         this.title.setStyle("-fx-text-fill: #E66C6C;");
 

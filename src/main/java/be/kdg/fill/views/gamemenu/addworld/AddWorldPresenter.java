@@ -9,7 +9,6 @@ import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
 import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -45,141 +44,136 @@ public class AddWorldPresenter implements Presenter {
     }
 
     private void addEventHandlers() {
-        view.getBackButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                parent.getSubScreenManager().switchBack();
-                WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
-                worldSelectPresenter.reload();
-                resetTheListsAndView();
+        view.getBackButton().setOnAction(this::handleBackButton);
+        view.getAddButton().setOnAction(this::handleAddButton);
+        view.getConfirmitionButton().setOnAction(this::handleConfirmationButton);
+        view.getSavingButton().setOnAction(this::handleSavingButton);
+    }
+
+    private void handleBackButton(ActionEvent event) {
+        parent.getSubScreenManager().switchBack();
+        WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
+        worldSelectPresenter.reload();
+        resetTheListsAndView();
+    }
+
+    private void handleAddButton(ActionEvent actionEvent) {
+        try {
+            AddWorldInputControl();
+            addLevelInputInfo();
+            view.getErrorLabel().setText("");
+        } catch (Exception e) {
+            view.getErrorLabel().setText(e.getMessage());
+        }
+    }
+
+    private void handleConfirmationButton(ActionEvent actionEvent) {
+        boolean firstStepControled;
+
+        try {
+            AddWorldInputControl();
+            view.getErrorLabel().setText("");
+            firstStepControled = true;
+        } catch (Exception e) {
+            view.getErrorLabel().setText(e.getMessage());
+            firstStepControled = false;
+        }
+
+        for (LevelCreationBox box : levelCreationBoxes) {
+            try {
+                box.getErrorsLabelLevelCreationBox().setText("");
+                levelCreationBoxInputControl(box);
+                addCheckBoxes();
+            } catch (Exception e) {
+                box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
             }
-        });
-        view.getAddButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        }
+        if (firstStepControled && levelCreationBoxes.isEmpty()) {
+            view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
+        }
+    }
+
+    private void handleSavingButton(ActionEvent actionEvent) {
+        boolean firstStepControled = false;
+        boolean secondStepControled = false;
+        boolean worldAddedSuccesfully = false;
+
+        //input eerste stap checken
+        try {
+            AddWorldInputControl();
+            view.getErrorLabel().setText("");
+            firstStepControled = true;
+        } catch (Exception e) {
+            view.getErrorLabel().setText(e.getMessage());
+        }
+
+        //input 2e stap checken
+        if (firstStepControled) {
+            for (LevelCreationBox box : levelCreationBoxes) {
                 try {
-                    AddWorldInputControl();
-                    addLevelInputInfo();
-                    view.getErrorLabel().setText("");
+                    box.getErrorsLabelLevelCreationBox().setText("");
+                    levelCreationBoxInputControl(box);
+                    checkBoxesListControl();
+                    secondStepControled = true;
                 } catch (Exception e) {
-                    view.getErrorLabel().setText(e.getMessage());
+                    box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
                 }
             }
-        });
+        }
 
-        view.getConfirmitionButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                boolean firstStepControled;
-
-                try {
-                    AddWorldInputControl();
-                    view.getErrorLabel().setText("");
-                    firstStepControled = true;
-                } catch (Exception e) {
-                    view.getErrorLabel().setText(e.getMessage());
-                    firstStepControled = false;
-                }
-
+        //3e stap opslaan van de world
+        if (secondStepControled) {
+            try {
                 for (LevelCreationBox box : levelCreationBoxes) {
-                    try {
-                        box.getErrorsLabelLevelCreationBox().setText("");
-                        levelCreationBoxInputControl(box);
-                        addCheckBoxes();
-                    } catch (Exception e) {
-                        box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
-                    }
+                    box.getErrorsLabelLevelCreationBox().setText("");
+                    levelCreationBoxInputControl(box);
+                    checkBoxesListControl();
                 }
-                if (firstStepControled && levelCreationBoxes.isEmpty()) {
-                    view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
+
+                AddWorldInputControl();
+                view.getErrorLabel().setText("");
+
+                //nagaan of de positie 1 is
+                addLevels();
+
+                //alle opgeslagen data van de levels wissen
+                levels.clear();
+
+                //wanneer de exceptions zijn opgevangen
+                //dan met deze boolean alle levels opslaan in de world
+                //en deze operatie beeindigen
+                worldAddedSuccesfully = true;
+
+            } catch (Exception e) {
+                for (LevelCreationBox box : levelCreationBoxes) {
+                    box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
                 }
             }
-        });
-        view.getSavingButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                boolean firstStepControled = false;
-                boolean secondStepControled = false;
-                boolean worldAddedSuccesfully = false;
+        }
+        if (!worldAddedSuccesfully) {
+            if (firstStepControled && levelCreationBoxes.isEmpty()) {
+                view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
+            }
+        }
+        if (worldAddedSuccesfully) {
+            addLevels();
+            addWorld();
+            resetTheListsAndView();
+            lastDialog();
+        }
+        if (worldAddedSuccesfully) {
+            boolean worldLoaded = false;
 
-                //input eerste stap checken
+            while (!worldLoaded) {
+
                 try {
-                    AddWorldInputControl();
-                    view.getErrorLabel().setText("");
-                    firstStepControled = true;
+                    parent.getWorldLoader().loadWorlds();
+                    worldLoaded = true;
                 } catch (Exception e) {
-                    view.getErrorLabel().setText(e.getMessage());
-                }
-
-                //input 2e stap checken
-                if (firstStepControled) {
-                    for (LevelCreationBox box : levelCreationBoxes) {
-                        try {
-                            box.getErrorsLabelLevelCreationBox().setText("");
-                            levelCreationBoxInputControl(box);
-                            checkBoxesListControl();
-                            secondStepControled = true;
-                        } catch (Exception e) {
-                            box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
-                        }
-                    }
-                }
-
-                //3e stap opslaan van de world
-                if (secondStepControled) {
-                    try {
-                        for (LevelCreationBox box : levelCreationBoxes) {
-                            box.getErrorsLabelLevelCreationBox().setText("");
-                            levelCreationBoxInputControl(box);
-                            checkBoxesListControl();
-                        }
-
-                        AddWorldInputControl();
-                        view.getErrorLabel().setText("");
-
-                        //nagaan of de positie 1 is
-                        addLevels();
-
-                        //alle opgeslagen data van de levels wissen
-                        levels.clear();
-
-                        //wanneer de exceptions zijn opgevangen
-                        //dan met deze boolean alle levels opslaan in de world
-                        //en deze operatie beeindigen
-                        worldAddedSuccesfully = true;
-
-                    } catch (Exception e) {
-                        for (LevelCreationBox box : levelCreationBoxes) {
-                            box.getErrorsLabelLevelCreationBox().setText(e.getMessage());
-                        }
-                    }
-                }
-                if (!worldAddedSuccesfully) {
-                    if (firstStepControled && levelCreationBoxes.isEmpty()) {
-                        view.getErrorLabel().setText("This action can be taken after you add some levels to this world!");
-                    }
-                }
-                if (worldAddedSuccesfully) {
-                    addLevels();
-                    addWorld();
-                    resetTheListsAndView();
-                    lastDialog();
-                }
-                if (worldAddedSuccesfully) {
-                boolean worldLoaded = false;
-
-                while (!worldLoaded) {
-
-                        try {
-                            parent.getWorldLoader().loadWorlds();
-                            worldLoaded = true;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    e.printStackTrace();
                 }
             }
-        });
+        }
     }
 
     public void addLevelInputInfo() {
@@ -252,10 +246,10 @@ public class AddWorldPresenter implements Presenter {
     private void AddWorldInputControl() {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
-        if (worldName == null || worldName.length() < 4 || worldName.length() > 10) {
-            throw new IllegalArgumentException("World name must be between 4 and 10 characters long");
-        } else if (difficultyName == null || difficultyName.length() < 4 || difficultyName.length() > 10) {
-            throw new IllegalArgumentException("Difficulty name must be between 4 and 10 characters long");
+        if (worldName == null || worldName.length() < 4 || worldName.length() > 15) {
+            throw new IllegalArgumentException("World name must be between 4 and 15 characters long");
+        } else if (difficultyName == null || difficultyName.length() < 4 || difficultyName.length() > 15) {
+            throw new IllegalArgumentException("Difficulty name must be between 4 and 15 characters long");
         }
     }
 
@@ -269,10 +263,10 @@ public class AddWorldPresenter implements Presenter {
         int rows = box.getRows();
         int cols = box.getCols();
 
-        if (rows > 30 || rows < 1) {
-            throw new IllegalArgumentException("Rows value must be between 1 and 30!");
-        } else if (cols > 30 || cols < 1) {
-            throw new IllegalArgumentException("Columns value must be between 1 and 30!");
+        if (rows > 20 || rows < 1) {
+            throw new IllegalArgumentException("Rows value must be between 1 and 20!");
+        } else if (cols > 20 || cols < 1) {
+            throw new IllegalArgumentException("Columns value must be between 1 and 20!");
         }
         int[] positionCheck = box.startPosCoordination();
         if (positionCheck[0] >= rows || positionCheck[0] < 0) {
