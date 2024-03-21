@@ -32,9 +32,11 @@ public class AddWorldPresenter implements Presenter {
     private LevelCreationBox levelCreationBox;
     private List<Level> levels;
     private int nextId = 1;
+
     public static final String SCREEN_NAME = "addworld";
 
-    public AddWorldPresenter(AddWorldView addWorldView, GameMenuPresenter parent) {
+    public AddWorldPresenter(AddWorldView addWorldView, GameMenuPresenter parent) 
+    {
         this.view = addWorldView;
         this.parent = parent;
         this.levelCreationBoxes = new ArrayList<>();
@@ -44,21 +46,24 @@ public class AddWorldPresenter implements Presenter {
         addEventHandlers();
     }
 
-    private void addEventHandlers() {
+    private void addEventHandlers() 
+    {
         view.getBackButton().setOnAction(this::handleBackButton);
         view.getAddButton().setOnAction(this::handleAddButton);
         view.getConfirmationButton().setOnAction(this::handleConfirmationButton);
         view.getSavingButton().setOnAction(this::handleSavingButton);
     }
 
-    private void handleBackButton(ActionEvent event) {
+    private void handleBackButton(ActionEvent event) 
+    {
         parent.getSubScreenManager().switchBack();
         WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
         worldSelectPresenter.reload();
         resetTheListsAndView();
     }
 
-    private void handleAddButton(ActionEvent actionEvent) {
+    private void handleAddButton(ActionEvent actionEvent) 
+    {
         try {
             AddWorldInputControl();
             addLevelInputInfo();
@@ -68,7 +73,8 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void handleConfirmationButton(ActionEvent actionEvent) {
+    private void handleConfirmationButton(ActionEvent actionEvent) 
+    {
         boolean firstStepControled;
 
         try {
@@ -94,7 +100,8 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void handleSavingButton(ActionEvent actionEvent) {
+    private void handleSavingButton(ActionEvent actionEvent) 
+    {
         boolean firstStepControled = false;
         boolean secondStepControled = false;
         boolean worldAddedSuccesfully = false;
@@ -179,14 +186,16 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    public void addLevelInputInfo() {
+    public void addLevelInputInfo() 
+    {
         LevelCreationBox levelCreationBox = new LevelCreationBox();
         levelCreationBox.setId(nextId++);
         levelCreationBoxes.add(levelCreationBox);
         view.getvBox().getChildren().addAll(levelCreationBox);
     }
 
-    public void addCheckBoxes() {
+    public void addCheckBoxes() 
+    {
         VBox vBox = new VBox(20);
 
         checkBoxesList.clear();
@@ -205,7 +214,8 @@ public class AddWorldPresenter implements Presenter {
     }
 
 
-    public void addLevels() {
+    public void addLevels() 
+    {
         List<int[][]> checkBoxesStatusMatrix = new ArrayList<>();
 
         for (CheckBoxes checkBoxes : checkBoxesList) {
@@ -233,7 +243,8 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void addWorld() {
+    private void addWorld() 
+    {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
 
@@ -246,7 +257,8 @@ public class AddWorldPresenter implements Presenter {
     }
 
 
-    private void AddWorldInputControl() {
+    private void AddWorldInputControl() 
+    {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
         if (worldName == null || worldName.length() < 4 || worldName.length() > 15) {
@@ -256,13 +268,15 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void checkBoxesListControl() {
+    private void checkBoxesListControl() 
+    {
         if (checkBoxesList.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("First you need to get checkboxes!");
         }
     }
 
-    private void levelCreationBoxInputControl(LevelCreationBox box) {
+    private void levelCreationBoxInputControl(LevelCreationBox box) 
+    {
         int rows = box.getRows();
         int cols = box.getCols();
 
@@ -279,7 +293,8 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void resetTheListsAndView() {
+    private void resetTheListsAndView() 
+    {
         view.getWorldName().getField().clear();
         view.getDifficultyName().getField().clear();
         levelCreationBoxes.clear();
@@ -290,7 +305,8 @@ public class AddWorldPresenter implements Presenter {
         view.getvBox().getChildren().clear();
     }
 
-    private void lastDialog() {
+    private void lastDialog() 
+    {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("World succesfully added!");
         dialog.setHeaderText("What's next?");
@@ -309,28 +325,27 @@ public class AddWorldPresenter implements Presenter {
 
         dialog.showAndWait().ifPresent(choice -> {
             if (choice == backButton) {
-                parent.getSubScreenManager().switchBack();
-
-                WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
-                worldSelectPresenter.reload();
-
+                parent.getSubScreenManager().switchScreen("worldselect");
             } else if (choice == addAnotherWorldButton) {
                 parent.getSubScreenManager().getCurrentScreen();
             }
         });
     }
 
-    public void reset() {
+    public void reset() 
+    {
         // temp
     }
 
     @Override
-    public AddWorldView getView() {
+    public AddWorldView getView() 
+    {
         return this.view;
     }
 
     @Override
-    public String getScreenName() {
+    public String getScreenName() 
+    {
         return SCREEN_NAME;
     }
 }

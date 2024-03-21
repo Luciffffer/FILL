@@ -49,7 +49,6 @@ public class MainMenuView extends StackPane {
         this.title.getStyleClass().add("h1");
         this.title.setFill(Color.web("#A26CE6"));
         this.subtitle.getStyleClass().add("body");
-        this.subtitle.setFill(Color.web("FF0B0B"));
 
         textGroup.getChildren().addAll(title, subtitle);
 
