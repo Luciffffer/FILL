@@ -8,6 +8,7 @@ import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
 import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
 import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
+import be.kdg.fill.views.gamemenu.worldselect.WorldSelectView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -46,7 +47,7 @@ public class AddWorldPresenter implements Presenter {
     private void addEventHandlers() {
         view.getBackButton().setOnAction(this::handleBackButton);
         view.getAddButton().setOnAction(this::handleAddButton);
-        view.getConfirmitionButton().setOnAction(this::handleConfirmationButton);
+        view.getConfirmationButton().setOnAction(this::handleConfirmationButton);
         view.getSavingButton().setOnAction(this::handleSavingButton);
     }
 
@@ -167,6 +168,8 @@ public class AddWorldPresenter implements Presenter {
             while (!worldLoaded) {
 
                 try {
+                    WorldSelectPresenter worldSelectPresenter = new WorldSelectPresenter(new WorldSelectView(), parent);
+                    worldSelectPresenter.reload();
                     parent.getWorldLoader().loadWorlds();
                     worldLoaded = true;
                 } catch (Exception e) {
@@ -218,7 +221,7 @@ public class AddWorldPresenter implements Presenter {
 
             if (checkBoxesStatusMatrix.get(idJsonLevel)[startPos[0]][startPos[1]] == 0) {
                 levels.clear();
-                throw new IllegalStateException("Value at start position cannot be 0!");
+                throw new IllegalStateException("Checkbox value at start position cannot be 0!");
             }
 
             startPosArray.add(startPos[0]);
@@ -301,16 +304,17 @@ public class AddWorldPresenter implements Presenter {
         ButtonType addAnotherWorldButton = new ButtonType("Add another world", ButtonBar.ButtonData.OK_DONE);
 
         dialog.getDialogPane().getButtonTypes().addAll(backButton, addAnotherWorldButton);
+
+        dialog.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> dialog.close());
+
         dialog.showAndWait().ifPresent(choice -> {
             if (choice == backButton) {
-                //resetTheListsAndView();
                 parent.getSubScreenManager().switchBack();
 
                 WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
                 worldSelectPresenter.reload();
 
             } else if (choice == addAnotherWorldButton) {
-                //resetTheListsAndView();
                 parent.getSubScreenManager().getCurrentScreen();
             }
         });

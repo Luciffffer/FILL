@@ -42,8 +42,7 @@ public class LoginPresenter implements Presenter, Reloadable {
                 try {
                     parent.getModel().login(username, password);
                     parent.updateViewToGameMenu();
-                } catch (IllegalArgumentException e) {
-                    loginView.getErrorLabel().setText(e.getMessage());
+                } catch (IllegalArgumentException e) {loginView.getErrorLabel().setText(e.getMessage());
                 }
             }
         });

@@ -121,7 +121,7 @@ public class AddWorldView extends VBox {
         savingButtonImage.setPreserveRatio(true);
         savingButton.setGraphic(savingButtonImage);
 
-        HBox hBoxButtons = new HBox(addButton, confirmitionButton, savingButton);
+        HBox hBoxButtons = new HBox(15, addButton, confirmitionButton, savingButton);
         hBoxButtons.setAlignment(Pos.CENTER);
 
 
@@ -153,7 +153,7 @@ public class AddWorldView extends VBox {
         return addButton;
     }
 
-    public HoverClickable getConfirmitionButton() {
+    public HoverClickable getConfirmationButton() {
         return confirmitionButton;
     }
 
