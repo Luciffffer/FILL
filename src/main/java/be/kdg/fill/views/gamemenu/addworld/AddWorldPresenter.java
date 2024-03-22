@@ -55,8 +55,6 @@ public class AddWorldPresenter implements Presenter {
     private void handleBackButton(ActionEvent event) 
     {
         parent.getSubScreenManager().switchBack();
-        WorldSelectPresenter worldSelectPresenter = (WorldSelectPresenter) parent.getSubScreenManager().getCurrentScreen();
-        worldSelectPresenter.reload();
         resetTheListsAndView();
     }
 

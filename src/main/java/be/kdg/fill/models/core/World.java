@@ -20,6 +20,7 @@ public class World implements Comparable<World> {
 
     /**
      * Constructor for the World class.
+     * Uses a JSONObject to create a World object.
      * @param worldObject
      * @param fileName
      */
@@ -46,13 +47,17 @@ public class World implements Comparable<World> {
 
     /**
      * Constructor for the World class.
-     * 
+     * Uses a name, image path and difficulty name to create a World object.
+     * @param name
+     * @param imagePath
+     * @param difficultyName
+     * @throws IllegalArgumentException
      */
-    public World(String name, String imagePath, String difficultyName)
+    public World(String name, String imagePath, String difficultyName) throws IllegalArgumentException
     {
-        this.name = name;
+        this.setName(name);
+        this.setDifficultyName(difficultyName);
         this.imagePath = imagePath;
-        this.difficultyName = difficultyName;
         this.levels = new LinkedList<>();
     }
 
@@ -142,6 +147,29 @@ public class World implements Comparable<World> {
     // SETTERS
 
     /**
+     * setName
+     * sets the name of the world.
+     * @param name
+     * @throws IllegalArgumentException
+     */
+    public void setName(String name) throws IllegalArgumentException
+    {
+        this.validateName(name);
+        this.name = name;
+    }
+
+    /**
+     * setDifficultyName
+     * sets the difficulty name of the world.
+     * @param difficultyName
+     */
+    public void setDifficultyName(String difficultyName)
+    {   
+        this.validateName(difficultyName);
+        this.difficultyName = difficultyName;
+    }
+
+    /**
      * addLevel
      * adds a level to the world.
      * @param level
@@ -156,9 +184,14 @@ public class World implements Comparable<World> {
      * setId
      * sets the id of the world.
      * @param id
+     * @throws IllegalArgumentException
      */
-    public void setId(int id)
+    public void setId(int id) throws IllegalArgumentException
     {
+        if (id < 1) {
+            throw new IllegalArgumentException("Id cannot be less than one.");
+        }
+
         this.id = id;
     }
 
@@ -166,9 +199,14 @@ public class World implements Comparable<World> {
      * setDifficultyId
      * sets the difficulty id of the world.
      * @param difficultyId
+     * @throws IllegalArgumentException
      */
-    public void setDifficultyId(short difficultyId)
+    public void setDifficultyId(short difficultyId) throws IllegalArgumentException
     {
+        if (difficultyId < 1) {
+            throw new IllegalArgumentException("Difficulty id cannot be less than one.");
+        }
+
         this.difficultyId = difficultyId;
     }
 
@@ -185,6 +223,29 @@ public class World implements Comparable<World> {
 
     // METHODS
 
+    /**
+     * validateName
+     * validates the name of the world.
+     * @param name
+     * @throws IllegalArgumentException
+     */
+    private void validateName(String name) throws IllegalArgumentException
+    {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        } else if (name.length() > 15 || name.length() < 3) {
+            throw new IllegalArgumentException("Name must be between 3 and 15 characters long.");
+        } else if (name.matches(".*\\s.*")) {
+            throw new IllegalArgumentException("Name cannot contain spaces.");
+        }
+    }
+
+    /**
+     * compareTo
+     * compares the difficulty id of the world.
+     * @param world
+     * @return int
+     */
     @Override
     public int compareTo(World world) 
     {
