@@ -326,11 +326,6 @@ public class AddWorldPresenter implements Presenter {
         });
     }
 
-    public void reset() 
-    {
-        // temp
-    }
-
     @Override
     public AddWorldView getView() 
     {

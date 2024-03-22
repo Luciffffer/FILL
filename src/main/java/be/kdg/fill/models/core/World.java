@@ -236,8 +236,6 @@ public class World implements Comparable<World> {
             throw new IllegalArgumentException("Name cannot be empty");
         } else if (name.length() > 15 || name.length() < 3) {
             throw new IllegalArgumentException("Name must be between 3 and 15 characters long.");
-        } else if (name.matches(".*\\s.*")) {
-            throw new IllegalArgumentException("Name cannot contain spaces.");
         }
     }
 

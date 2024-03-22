@@ -268,7 +268,22 @@ public class GameView extends StackPane {
         howToPlayParagraph1.getStyleClass().add("body");
         howToPlayParagraph1.setWrapText(true);
 
-        this.howToPlayContent.getChildren().add(howToPlayParagraph1);
+        Label oneStarParagraph = new Label("1 star: 3 minutes");
+        oneStarParagraph.getStyleClass().add("body");
+
+        Label twoStarParagraph = new Label("2 stars: 1 minute");
+        twoStarParagraph.getStyleClass().add("body");
+
+        Label threeStarParagraph = new Label("3 stars: 30 seconds");
+        threeStarParagraph.getStyleClass().add("body");
+
+        Label fourStarParagraph = new Label("4 stars: 20 seconds");
+        fourStarParagraph.getStyleClass().add("body");
+
+        Label fiveStarParagraph = new Label("5 stars: 10 seconds");
+        fiveStarParagraph.getStyleClass().add("body");
+
+        this.howToPlayContent.getChildren().addAll(howToPlayParagraph1, oneStarParagraph, twoStarParagraph, threeStarParagraph, fourStarParagraph, fiveStarParagraph);
     }
 
     private void layoutGameFinishedContent() 

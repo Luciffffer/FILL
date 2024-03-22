@@ -91,8 +91,6 @@ public class GameMenuPresenter implements Presenter, Reloadable {
             this.subScreenManager.addScreen(addWorldPresenter);
         } else {
             this.subScreenManager.switchScreen("addworld");
-            AddWorldPresenter addWorldPresenter = (AddWorldPresenter) this.subScreenManager.getCurrentScreen();
-            addWorldPresenter.reset();
         }
     }
 
