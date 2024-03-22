@@ -305,6 +305,7 @@ public class GamePresenter implements Presenter {
 
         if (result.isPresent() && result.get() == yesButton) {
             this.timer.cancel();
+            this.view.getScene().heightProperty().removeListener(handleResize);
             this.mainScreenManager.switchScreen("gamemenu");
         }
     }
