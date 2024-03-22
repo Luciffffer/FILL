@@ -2,9 +2,11 @@ package be.kdg.fill.views.gamemenu.addworld;
 
 import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.Level;
+import be.kdg.fill.models.core.World;
+import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
-import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
+// import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
 import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
 import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
@@ -225,8 +227,6 @@ public class AddWorldPresenter implements Presenter {
 
         int idJsonLevel = 0;
         for (LevelCreationBox levelCreationBox : levelCreationBoxes) {
-            JSONArray startPosArray = new JSONArray();
-
             int[] startPos = levelCreationBox.startPosCoordination();
 
             if (checkBoxesStatusMatrix.get(idJsonLevel)[startPos[0]][startPos[1]] == 0) {
@@ -234,11 +234,7 @@ public class AddWorldPresenter implements Presenter {
                 throw new IllegalStateException("Checkbox value at start position cannot be 0!");
             }
 
-            startPosArray.add(startPos[0]);
-            startPosArray.add(startPos[1]);
-
-
-            levels.add(new Level(idJsonLevel + 1, checkBoxesStatusMatrix.get(idJsonLevel), startPosArray));
+            levels.add(new Level(idJsonLevel + 1, checkBoxesStatusMatrix.get(idJsonLevel), startPos));
             idJsonLevel++;
         }
     }
@@ -248,12 +244,17 @@ public class AddWorldPresenter implements Presenter {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
         String difficultyName = String.valueOf(view.getDifficultyName().getField().getText());
 
-        AddWorld world = new AddWorld(worldName, difficultyName);
+        World world = new World(worldName, "images/admin-foto.jpg", difficultyName);
+
+        WorldLoader worldLoader = parent.getWorldLoader();
+
         for (Level level : levels) {
             world.addLevel(level);
         }
-        world.saveToJson();
-        parent.getWorldLoader().loadWorlds();
+
+        worldLoader.addWorld(world);
+        worldLoader.saveWorld(world.getId());
+        
     }
 
 

@@ -15,7 +15,7 @@ public class World implements Comparable<World> {
     private short difficultyId;
     private String difficultyName;
     private LinkedList<Level> levels;
-    private String filePath;
+    private String fileName;
 
 
     // CONSTRUCTORS
@@ -23,15 +23,15 @@ public class World implements Comparable<World> {
     /**
      * Constructor for the World class.
      * @param worldObject
-     * @param filePath
+     * @param fileName
      */
-    public World(JSONObject worldObject, String filePath) 
+    public World(JSONObject worldObject, String fileName) 
     {
         this.id = ((Long) worldObject.get("id")).intValue();
         this.name = (String) worldObject.get("name");
-        this.imagePath = FillApplication.class.getResource((String) worldObject.get("imagePath")).toExternalForm();
+        this.imagePath = (String) worldObject.get("imagePath");
         this.levels = new LinkedList<>();
-        this.filePath = filePath;
+        this.fileName = fileName;
 
         JSONObject difficulty = (JSONObject) worldObject.get("difficulty");
         this.difficultyId = ((Long) difficulty.get("id")).shortValue();
@@ -44,6 +44,18 @@ public class World implements Comparable<World> {
         }
 
         Collections.sort(this.levels);
+    }
+
+    /**
+     * Constructor for the World class.
+     * 
+     */
+    public World(String name, String imagePath, String difficultyName)
+    {
+        this.name = name;
+        this.imagePath = imagePath;
+        this.difficultyName = difficultyName;
+        this.levels = new LinkedList<>();
     }
 
 
@@ -106,7 +118,70 @@ public class World implements Comparable<World> {
      */
     public int getId() 
     {
-        return id;
+        return this.id;
+    }
+
+    /**
+     * getDifficultyId
+     * gets the difficulty id of the world.
+     * @return short
+     */
+    public short getDifficultyId()
+    {
+        return this.difficultyId;
+    }
+
+    /**
+     * getFileName
+     * gets the file name of the world.
+     * @return String
+     */
+    public String getFileName()
+    {
+        return this.fileName;
+    }
+
+    // SETTERS
+
+    /**
+     * addLevel
+     * adds a level to the world.
+     * @param level
+     */
+    public void addLevel(Level level)
+    {
+        level.setWorld(this);
+        levels.add(level);
+    }
+
+    /**
+     * setId
+     * sets the id of the world.
+     * @param id
+     */
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    /**
+     * setDifficultyId
+     * sets the difficulty id of the world.
+     * @param difficultyId
+     */
+    public void setDifficultyId(short difficultyId)
+    {
+        this.difficultyId = difficultyId;
+    }
+
+    /**
+     * setFileName
+     * sets the file name of the world.
+     * @param fileName
+     */
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
     }
 
 

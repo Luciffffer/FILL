@@ -1,6 +1,8 @@
 package be.kdg.fill.views.compontents;
 
+import be.kdg.fill.FillApplication;
 import be.kdg.fill.models.core.World;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -24,7 +26,7 @@ public class WorldCard extends HoverClickable {
     private void initializeNodes(World world, int completedLevels) 
     {
         this.title = new Text(world.getName());
-        this.image = new ImageView(world.getImagePath());
+        this.image = new ImageView(new Image(FillApplication.class.getResource(world.getImagePath()).toExternalForm()));
         this.difficulty = new Text(world.getDifficultyName());
         this.completedLevels = new Text(completedLevels + "/" + world.getLevelCount());
     }
