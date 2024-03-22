@@ -265,12 +265,6 @@ public class AddWorldPresenter implements Presenter {
         }
     }
 
-    private void checkBoxesListControl() {
-        if (checkBoxesList.isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException("First you need to get checkboxes!");
-        }
-    }
-
     private void checkBoxesListControl() 
     {
         if (checkBoxesList.isEmpty()) {
