@@ -29,7 +29,6 @@ public class AddWorldPresenter implements Presenter {
     private GameMenuPresenter parent;
     private List<LevelCreationBox> levelCreationBoxes;
     private List<CheckBoxes> checkBoxesList;
-    private LevelCreationBox levelCreationBox;
     private List<Level> levels;
     private int nextId = 1;
 
@@ -42,7 +41,6 @@ public class AddWorldPresenter implements Presenter {
         this.levelCreationBoxes = new ArrayList<>();
         this.checkBoxesList = new ArrayList<>();
         this.levels = new ArrayList<>();
-        this.levelCreationBox = new LevelCreationBox();
         addEventHandlers();
     }
 
