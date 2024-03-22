@@ -6,7 +6,6 @@ import be.kdg.fill.models.core.World;
 import be.kdg.fill.models.helpers.WorldLoader;
 import be.kdg.fill.views.Presenter;
 import be.kdg.fill.views.gamemenu.GameMenuPresenter;
-// import be.kdg.fill.views.gamemenu.addworld.helpers.AddWorld;
 import be.kdg.fill.views.gamemenu.addworld.helpers.CheckBoxes;
 import be.kdg.fill.views.gamemenu.addworld.helpers.LevelCreationBox;
 import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
@@ -20,7 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import be.kdg.fill.FillApplication;
-
 public class World implements Comparable<World> {
     private int id;
     private String name;
