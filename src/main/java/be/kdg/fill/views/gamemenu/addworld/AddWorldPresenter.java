@@ -254,7 +254,6 @@ public class AddWorldPresenter implements Presenter {
         
     }
 
-
     private void AddWorldInputControl() 
     {
         String worldName = String.valueOf(view.getWorldName().getField().getText());
@@ -263,6 +262,12 @@ public class AddWorldPresenter implements Presenter {
             throw new IllegalArgumentException("World name must be between 4 and 15 characters long");
         } else if (difficultyName == null || difficultyName.length() < 4 || difficultyName.length() > 15) {
             throw new IllegalArgumentException("Difficulty name must be between 4 and 15 characters long");
+        }
+    }
+
+    private void checkBoxesListControl() {
+        if (checkBoxesList.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("First you need to get checkboxes!");
         }
     }
 
