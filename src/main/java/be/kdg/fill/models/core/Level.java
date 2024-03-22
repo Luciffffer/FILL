@@ -15,8 +15,8 @@ public class Level implements Comparable<Level> {
     /**
      * Constructor for the Level class.
      * Uses a JSONObject to create a Level object.
-     * @param levelObject
-     * @param world
+     * @param JSONObject levelObject
+     * @param World world
      */
     public Level(JSONObject levelObject, World world)
     {
@@ -37,9 +37,9 @@ public class Level implements Comparable<Level> {
     /**
      * Constructor for the Level class.
      * Uses an id, pattern and start position to create a Level object.
-     * @param id
-     * @param pattern
-     * @param startPos
+     * @param int id
+     * @param int[][] pattern
+     * @param int[] startPos
      * @throws IllegalArgumentException
      */
     public Level(int id, int[][] pattern, int[] startPos) throws IllegalArgumentException
@@ -98,7 +98,8 @@ public class Level implements Comparable<Level> {
     /**
      * setId
      * sets the id of the level.
-     * @param id
+     * @param int id
+     * @return Level
      * @throws IllegalArgumentException
      */
     public Level setId(int id) throws IllegalArgumentException
@@ -114,7 +115,8 @@ public class Level implements Comparable<Level> {
     /**
      * setPattern
      * sets the pattern of the level.
-     * @param pattern
+     * @param int[][] pattern
+     * @return Level
      * @throws IllegalArgumentException
      */
     public Level setPattern(int[][] pattern) throws IllegalArgumentException
@@ -162,7 +164,8 @@ public class Level implements Comparable<Level> {
     /**
      * setStartPos
      * sets the start position of the level.
-     * @param startPos
+     * @param int[] startPos
+     * @return Level
      * @throws IllegalArgumentException
      */
     public Level setStartPos(int[] startPos) throws IllegalArgumentException
@@ -187,7 +190,8 @@ public class Level implements Comparable<Level> {
     /**
      * setWorld
      * sets the world of the level.
-     * @param world
+     * @param World world
+     * @return Level
      */
     public Level setWorld(World world)
     {
@@ -200,7 +204,7 @@ public class Level implements Comparable<Level> {
     /**
      * compareTo
      * compares two levels based on their id.
-     * @param level
+     * @param Level level
      * @return int
      */
     @Override

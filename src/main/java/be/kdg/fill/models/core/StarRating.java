@@ -12,6 +12,12 @@ public enum StarRating {
     private final double secondsSolved;
     private final String explanation;
 
+    /**
+     * Constructor for the StarRating enum.
+     * @param int value
+     * @param double secondsSolved
+     * @param String explanation
+     */
     StarRating(int value, double secondsSolved, String explanation) 
     {
         this.value = value;
@@ -19,16 +25,31 @@ public enum StarRating {
         this.explanation = explanation;
     }
 
+    /**
+     * getValue
+     * gets the numeric value of the StarRating.
+     * @return int
+     */
     public int getValue() 
     {
         return value;
     }
 
+    /**
+     * getSecondsSolved
+     * gets the time in seconds that the level should be solved in to get this rating.
+     * @return double
+     */
     public double getSecondsSolved() 
     {
         return secondsSolved;
     }
 
+    /**
+     * getExplanation
+     * gets a String explaining when that StarRating is earned.
+     * @return String
+     */
     public String getExplanation() 
     {
         return explanation;

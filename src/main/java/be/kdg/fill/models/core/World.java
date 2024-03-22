@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class World implements Comparable<World> {
+    
     private int id;
     private String name;
     private String imagePath;
@@ -21,8 +22,8 @@ public class World implements Comparable<World> {
     /**
      * Constructor for the World class.
      * Uses a JSONObject to create a World object.
-     * @param worldObject
-     * @param fileName
+     * @param JSONObject worldObject
+     * @param String fileName
      */
     public World(JSONObject worldObject, String fileName) 
     {
@@ -48,9 +49,9 @@ public class World implements Comparable<World> {
     /**
      * Constructor for the World class.
      * Uses a name, image path and difficulty name to create a World object.
-     * @param name
-     * @param imagePath
-     * @param difficultyName
+     * @param String name
+     * @param String imagePath
+     * @param String difficultyName
      * @throws IllegalArgumentException
      */
     public World(String name, String imagePath, String difficultyName) throws IllegalArgumentException
@@ -149,75 +150,75 @@ public class World implements Comparable<World> {
     /**
      * setName
      * sets the name of the world.
-     * @param name
+     * @param String name
+     * @return World
      * @throws IllegalArgumentException
      */
-    public void setName(String name) throws IllegalArgumentException
+    public World setName(String name) throws IllegalArgumentException
     {
         this.validateName(name);
         this.name = name;
+        return this;
     }
 
     /**
      * setDifficultyName
      * sets the difficulty name of the world.
-     * @param difficultyName
+     * @param String difficultyName
+     * @return World
+     * @throws IllegalArgumentException
      */
-    public void setDifficultyName(String difficultyName)
+    public World setDifficultyName(String difficultyName) throws IllegalArgumentException
     {   
         this.validateName(difficultyName);
         this.difficultyName = difficultyName;
-    }
-
-    /**
-     * addLevel
-     * adds a level to the world.
-     * @param level
-     */
-    public void addLevel(Level level)
-    {
-        level.setWorld(this);
-        levels.add(level);
+        return this;
     }
 
     /**
      * setId
      * sets the id of the world.
-     * @param id
+     * @param int id
+     * @return World
      * @throws IllegalArgumentException
      */
-    public void setId(int id) throws IllegalArgumentException
+    public World setId(int id) throws IllegalArgumentException
     {
         if (id < 1) {
             throw new IllegalArgumentException("Id cannot be less than one.");
         }
 
         this.id = id;
+        return this;
     }
 
     /**
      * setDifficultyId
      * sets the difficulty id of the world.
-     * @param difficultyId
+     * @param short difficultyId
+     * @return World
      * @throws IllegalArgumentException
      */
-    public void setDifficultyId(short difficultyId) throws IllegalArgumentException
+    public World setDifficultyId(short difficultyId) throws IllegalArgumentException
     {
         if (difficultyId < 1) {
             throw new IllegalArgumentException("Difficulty id cannot be less than one.");
         }
 
         this.difficultyId = difficultyId;
+        return this;
     }
 
     /**
      * setFileName
      * sets the file name of the world.
-     * @param fileName
+     * @param String fileName
+     * @return World
      */
-    public void setFileName(String fileName)
+    public World setFileName(String fileName)
     {
         this.fileName = fileName;
+        return this;
     }
 
 
@@ -226,7 +227,7 @@ public class World implements Comparable<World> {
     /**
      * validateName
      * validates the name of the world.
-     * @param name
+     * @param String name
      * @throws IllegalArgumentException
      */
     private void validateName(String name) throws IllegalArgumentException
@@ -241,9 +242,20 @@ public class World implements Comparable<World> {
     }
 
     /**
+     * addLevel
+     * adds a level to the world.
+     * @param Level level
+     */
+    public void addLevel(Level level)
+    {
+        level.setWorld(this);
+        levels.add(level);
+    }
+
+    /**
      * compareTo
      * compares the difficulty id of the world.
-     * @param world
+     * @param World world
      * @return int
      */
     @Override

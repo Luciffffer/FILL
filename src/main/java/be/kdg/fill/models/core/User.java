@@ -18,7 +18,7 @@ public class User {
     /**
      * User
      * creates a new user
-     * @param userFile
+     * @param Userfile userFile
      */
     public User(UserFile userFile) 
     {
@@ -71,13 +71,13 @@ public class User {
     /**
      * getWorldProgress
      * returns the user's progress in a specific world
-     * @param world
+     * @param int worldId
      * @return int
      */
-    public int getWorldProgress(int world)
+    public int getWorldProgress(int worldId)
     {
-        if (this.progress.containsKey(world)) {
-            return this.progress.get(world);
+        if (this.progress.containsKey(worldId)) {
+            return this.progress.get(worldId);
         } else {
             return 0;
         }
@@ -99,7 +99,7 @@ public class User {
     /**
      * setUsername
      * sets the username of the user
-     * @param username
+     * @param String username
      * @return User
      * @throws IllegalArgumentException
      */
@@ -122,9 +122,9 @@ public class User {
     /**
      * setPassword
      * sets the password of the user
-     * @param password
+     * @param String password
      * @return User
-     * @throws Exception
+     * @throws RunTimeException
      * @throws IllegalArgumentException
      */
     public User setPassword(String password) throws RuntimeException, IllegalArgumentException 
@@ -142,7 +142,7 @@ public class User {
     /**
      * setAdmin
      * sets whether the user is an admin
-     * @param isAdmin
+     * @param boolean isAdmin
      * @return User
      */
     public User setAdmin(boolean isAdmin)
@@ -154,8 +154,8 @@ public class User {
     /**
      * setWorldProgress
      * sets the progress of the user
-     * @param worldId
-     * @param levelId
+     * @param int worldId
+     * @param int levelId
      * @return User
      */
     public User setWorldProgress(int worldId, int levelId) 
@@ -174,6 +174,7 @@ public class User {
     /**
      * register
      * registers the user
+     * @return void
      */
     public void register() throws RuntimeException
     {
@@ -203,9 +204,9 @@ public class User {
     /**
      * login
      * logs the user in
-     * @param username
-     * @param password
-     * @return User
+     * @param String username
+     * @param String password
+     * @return void
      * @throws illegalArgumentException
      */
     public void login(String username, String password) throws IllegalArgumentException

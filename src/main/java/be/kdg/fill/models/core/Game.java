@@ -18,7 +18,7 @@ public class Game {
 
     /**
      * Constructor for a new game
-     * @param level
+     * @param Level level
      */
     public Game(Level level) 
     {
@@ -152,8 +152,8 @@ public class Game {
      * updates the line of the game if a valid move is made.
      * If all blocks are connected, sets gameFinished to true.
      * will do nothing if the game is already finished, the move is out of bounds, the move is on an empty space or the move is not next to the last element in the line.
-     * @param row
-     * @param col
+     * @param int row
+     * @param int col
      */
     public void updateLine(int row, int col)
     {
