@@ -35,7 +35,8 @@ public class AddWorldPresenter implements Presenter {
 
     public static final String SCREEN_NAME = "addworld";
 
-    public AddWorldPresenter(AddWorldView addWorldView, GameMenuPresenter parent) {
+    public AddWorldPresenter(AddWorldView addWorldView, GameMenuPresenter parent) 
+    {
         this.view = addWorldView;
         this.parent = parent;
         this.levelCreationBoxes = new ArrayList<>();
