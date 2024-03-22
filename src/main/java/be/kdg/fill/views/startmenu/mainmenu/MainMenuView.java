@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainMenuView extends StackPane {
@@ -46,6 +47,7 @@ public class MainMenuView extends StackPane {
         textGroup.setSpacing(16.0);
 
         this.title.getStyleClass().add("h1");
+        this.title.setFill(Color.web("#A26CE6"));
         this.subtitle.getStyleClass().add("body");
 
         textGroup.getChildren().addAll(title, subtitle);

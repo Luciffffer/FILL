@@ -31,7 +31,7 @@ public class LevelSelectView extends VBox {
 
     private void layoutNodes() 
     {
-        this.paddingProperty().setValue(new javafx.geometry.Insets(36, 24, 12, 24));
+        this.paddingProperty().setValue(new javafx.geometry.Insets(36, 24, 48, 24));
         this.setSpacing(48);
         this.setFillWidth(true);
 

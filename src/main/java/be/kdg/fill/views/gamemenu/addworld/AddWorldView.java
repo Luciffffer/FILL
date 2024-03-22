@@ -49,10 +49,10 @@ public class AddWorldView extends VBox {
 
     private void layoutNodes()
     {
-        this.paddingProperty().setValue(new javafx.geometry.Insets(36, 12, 12, 12));
+        this.paddingProperty().setValue(new Insets(36, 12, 12, 12));
         this.setSpacing(48);
         this.setFillWidth(true);
-        this.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+        this.setAlignment(Pos.TOP_CENTER);
 
         // Top menu (contains back button and title)
         StackPane topMenu = new StackPane();
@@ -62,26 +62,26 @@ public class AddWorldView extends VBox {
         backButtonImage.setPreserveRatio(true);
 
         this.backButton.getStyleClass().add("button-reset");
-        this.backButton.paddingProperty().setValue(new javafx.geometry.Insets(0));
+        this.backButton.paddingProperty().setValue(new Insets(0));
         this.backButton.setGraphic(backButtonImage);
-        StackPane.setAlignment(this.backButton, javafx.geometry.Pos.CENTER_LEFT);
+        StackPane.setAlignment(this.backButton, Pos.CENTER_LEFT);
 
         this.title.getStyleClass().add("h1");
         this.title.setStyle("-fx-text-fill: #E66C6C;");
-        StackPane.setAlignment(this.title, javafx.geometry.Pos.CENTER);
+        StackPane.setAlignment(this.title, Pos.CENTER);
 
         topMenu.getChildren().addAll(this.backButton, this.title);
         this.getChildren().add(topMenu);
 
         // Step one: basic info
         VBox stepOneBox = new VBox();
-        stepOneBox.setAlignment(javafx.geometry.Pos.CENTER);
+        stepOneBox.setAlignment(Pos.CENTER);
         stepOneBox.setSpacing(24);
 
         this.stepOne.getStyleClass().add("h3");
 
         VBox stepOneButtonBox = new VBox();
-        stepOneButtonBox.setAlignment(javafx.geometry.Pos.CENTER);
+        stepOneButtonBox.setAlignment(Pos.CENTER);
         stepOneButtonBox.setSpacing(0);
 
         this.worldName.setMaxWidth(400);
@@ -94,7 +94,7 @@ public class AddWorldView extends VBox {
 
         // Step two: add levels
         VBox stepTwoBox = new VBox();
-        stepTwoBox.setAlignment(javafx.geometry.Pos.CENTER);
+        stepTwoBox.setAlignment(Pos.CENTER);
         stepTwoBox.setSpacing(24);
 
         this.stepTwo.getStyleClass().add("h3");
@@ -121,7 +121,7 @@ public class AddWorldView extends VBox {
         savingButtonImage.setPreserveRatio(true);
         savingButton.setGraphic(savingButtonImage);
 
-        HBox hBoxButtons = new HBox(addButton, confirmitionButton, savingButton);
+        HBox hBoxButtons = new HBox(15, addButton, confirmitionButton, savingButton);
         hBoxButtons.setAlignment(Pos.CENTER);
 
 
@@ -153,7 +153,7 @@ public class AddWorldView extends VBox {
         return addButton;
     }
 
-    public HoverClickable getConfirmitionButton() {
+    public HoverClickable getConfirmationButton() {
         return confirmitionButton;
     }
 

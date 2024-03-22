@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class SignUpView extends StackPane {
     private ImageView logo;
@@ -33,6 +34,7 @@ public class SignUpView extends StackPane {
         this.logo = new ImageView(FillApplication.class.getResource("images/fill-logo.png").toExternalForm());
 
         this.title = new Label("Sign up");
+        this.title.setTextFill(Color.web("#A26CE6"));
         this.backButton = new HoverClickable(100, 1.05);
 
         this.usernameTextField = new FillTextField("Username", false);
@@ -42,6 +44,7 @@ public class SignUpView extends StackPane {
         this.logInButton = new Button("Log in");
 
         this.description = new Label("Create an account to start playing!");
+        this.description.setTextFill(Color.web("FF0B0B"));
     }
 
     private void layoutNodes()

@@ -139,6 +139,12 @@ public class User {
         return this;
     }
 
+    /**
+     * setAdmin
+     * sets whether the user is an admin
+     * @param isAdmin
+     * @return User
+     */
     public User setAdmin(boolean isAdmin)
     {
         this.isAdmin = isAdmin;
@@ -148,13 +154,17 @@ public class User {
     /**
      * setWorldProgress
      * sets the progress of the user
-     * @param world
-     * @param progress
+     * @param worldId
+     * @param levelId
      * @return User
      */
-    public User setWorldProgress(int world, int progress) 
+    public User setWorldProgress(int worldId, int levelId) 
     {
-        this.progress.put(world, progress);
+        if (this.progress.containsKey(worldId) && this.progress.get(worldId) > levelId) {
+            return this;
+        }
+
+        this.progress.put(worldId, levelId);
         return this;
     }
 
@@ -190,6 +200,14 @@ public class User {
         this.progress = new HashMap<Integer, Integer>();
     }
 
+    /**
+     * login
+     * logs the user in
+     * @param username
+     * @param password
+     * @return User
+     * @throws illegalArgumentException
+     */
     public void login(String username, String password) throws IllegalArgumentException
     {
         String userData = this.userFile.getUserDataByUsername(username);
@@ -201,7 +219,7 @@ public class User {
         String[] userDataArray = userData.split("::");
         String[] passwordData = userDataArray[1].split(":");
         boolean isAdmin = userDataArray[2].equals("true") ? true : false;
-        String[] progressData = userDataArray.length > 3 ? userDataArray[2].split(":") : new String[]{};
+        String[] progressData = userDataArray.length > 3 ? userDataArray[3].split(":") : new String[]{};
 
         String hashedPassword = Cryptography.hashStringPBKDF2(password, passwordData[1], Integer.parseInt(passwordData[3]), Integer.parseInt(passwordData[4]));
 

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import be.kdg.fill.models.core.Level;
 import be.kdg.fill.models.core.World;
 import be.kdg.fill.views.Presenter;
+import be.kdg.fill.views.Reloadable;
 import be.kdg.fill.views.ScreenManager;
 import be.kdg.fill.views.compontents.LevelCard;
 import be.kdg.fill.views.game.GamePresenter;
@@ -14,7 +15,7 @@ import be.kdg.fill.views.gamemenu.worldselect.WorldSelectPresenter;
 import javafx.animation.RotateTransition;
 import javafx.util.Duration;
 
-public class LevelSelectPresenter implements Presenter {
+public class LevelSelectPresenter implements Presenter, Reloadable {
     
     private LevelSelectView view;
     private GameMenuPresenter parent;
@@ -53,6 +54,12 @@ public class LevelSelectPresenter implements Presenter {
             mainScreenManager.addScreen(gamePresenter);
             gamePresenter.startGame(level);
         }
+    }
+
+    @Override
+    public void reload() 
+    {
+        this.setWorld(this.world);
     }
 
 

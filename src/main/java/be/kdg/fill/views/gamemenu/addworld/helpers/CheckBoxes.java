@@ -27,6 +27,7 @@ public class CheckBoxes extends GridPane {
                 int row = i + 1;
                 int column = j + 1;
                 checkBoxes[i][j] = new CheckBox(row + "x" + column);
+                checkBoxes[i][j].getStyleClass().add("checkbox");
             }
         }
     }

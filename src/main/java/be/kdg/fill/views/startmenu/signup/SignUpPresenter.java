@@ -2,6 +2,7 @@ package be.kdg.fill.views.startmenu.signup;
 
 import be.kdg.fill.models.core.User;
 import be.kdg.fill.views.Presenter;
+import be.kdg.fill.views.Reloadable;
 import be.kdg.fill.views.startmenu.StartMenuPresenter;
 import be.kdg.fill.views.startmenu.login.LoginPresenter;
 import be.kdg.fill.views.startmenu.login.LoginView;
@@ -10,7 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class SignUpPresenter implements Presenter {
+public class SignUpPresenter implements Presenter, Reloadable {
 
     private SignUpView signUpView;
     private StartMenuPresenter parent;
@@ -103,6 +104,20 @@ public class SignUpPresenter implements Presenter {
             parent.getSubScreenManager().switchScreen("login");
         }
     }
+
+    @Override
+    public void reload() 
+    {
+        this.signUpView.getUsernameField().getField().clear();
+        this.signUpView.getUsernameField().labelAnimation(200, 1, 0);
+        this.signUpView.getUsernameField().clearError();
+        this.signUpView.getPasswordField().getField().clear();
+        this.signUpView.getUsernameField().labelAnimation(200, 1, 0);
+        this.signUpView.getPasswordField().clearError();
+    }
+
+
+    // GETTERS
 
     @Override
     public SignUpView getView() 
